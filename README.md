@@ -4,7 +4,7 @@ This application was generated using JHipster 7.9.4, you can find documentation 
 
 ## This repository belongs to team x
 
-- (insert the list of team mates)
+- Chun Hei Alexander Law(chl203@student.bham.ac.uk)
 
 ## changes for Teamproject
 
