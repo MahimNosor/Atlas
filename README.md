@@ -2,9 +2,10 @@
 
 This application was generated using JHipster 7.9.4, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.9.4](https://www.jhipster.tech/documentation-archive/v7.9.4).
 
-## This repository belongs to team x
+## This repository belongs to team 15
 
 - Chun Hei Alexander Law(chl203@student.bham.ac.uk)
+- Arnav Kumar(axk1314@student.bham.ac.uk)
 
 ## changes for Teamproject
 
