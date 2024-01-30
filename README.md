@@ -7,6 +7,7 @@ This application was generated using JHipster 7.9.4, you can find documentation 
 - Chun Hei Alexander Law(chl203@student.bham.ac.uk)
 - Arnav Kumar(axk1314@student.bham.ac.uk)
 - Mohammad Nosor(man256@student.bham.ac.uk)
+- Muhammad Ali Shah (mas248@student.bham.ac.uk)
 
 ## changes for Teamproject
 
