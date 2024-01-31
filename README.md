@@ -10,6 +10,7 @@ This application was generated using JHipster 7.9.4, you can find documentation 
 - Muhammad Ali Shah (mas248@student.bham.ac.uk)
 - Chi Wang Chan (cwc172@student.bham.ac.uk)
 - Saif Azeez (sxa1641@student.bham.ac.uk) 
+- Tonny Kilonzi(tmk125@student.bham.ac.uk)
 
 ## changes for Teamproject
 
