@@ -8,7 +8,8 @@ This application was generated using JHipster 7.9.4, you can find documentation 
 - Arnav Kumar(axk1314@student.bham.ac.uk)
 - Mohammad Nosor(man256@student.bham.ac.uk)
 - Muhammad Ali Shah (mas248@student.bham.ac.uk)
-- Chi Wang Chan (cwc172@student.bham.ac.uk) 
+- Chi Wang Chan (cwc172@student.bham.ac.uk)
+- Saif Azeez (sxa1641@student.bham.ac.uk) 
 
 ## changes for Teamproject
 
