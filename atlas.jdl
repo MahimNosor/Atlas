@@ -1,0 +1,63 @@
+entity AppUser {
+    numRoutes Integer
+    numReviews Integer
+}
+
+
+entity Route {
+    distance Double
+    stops Integer
+    cost Double
+    duration Integer
+    tagName String
+}
+
+entity Tag {
+    name String
+}
+
+
+entity City {
+    name String required
+    rating Integer
+    numRoutes Integer
+}
+
+entity Stop {
+    name String required,
+    description String,
+    latitude Double,
+    longitude Double,
+    sequenceNumber Integer
+    rating Integer
+}
+
+entity Review {
+    username String required
+    title String required,
+    content String required,
+    rating Integer required, // Ensure in application logic: 1 <= rating <= 5
+    reviewDate LocalDate
+}
+
+
+relationship OneToOne {
+    AppUser{user(login)} to User
+}
+
+
+relationship ManyToOne {
+    Route{city(id)} to City
+    Review{appUser(id)} to AppUser
+    Review{route(id)} to Route
+    Stop{route(id)} to Route
+
+}
+
+relationship ManyToMany {
+    Tag{route(id)} to Route{tag(id)}
+}
+
+paginate all with pagination
+service all with serviceClass
+
