@@ -1,8 +1,7 @@
 <nav data-cy="navbar" class="navbar navbar-light navbar-expand-md bg-light">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-      <span class="logo-img"></span>
-      <span class="navbar-title">Teamproject</span>
+      <span class="navbar-title">Atlas</span>
       <span class="navbar-version">{{ version }}</span>
     </a>
     <a
@@ -20,10 +19,10 @@
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+          <a class="nav-link" routerLink="/mapDisplay" (click)="collapseNavbar()">
             <span>
-              <fa-icon icon="home"></fa-icon>
-              <span>Home</span>
+              <fa-icon icon="map"></fa-icon>
+              <span>Map</span>
             </span>
           </a>
         </li>
