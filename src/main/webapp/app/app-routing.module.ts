@@ -32,6 +32,10 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           path: '',
           loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),
         },
+        {
+          path: 'mapDisplay',
+          loadChildren: () => import('./feature/map-display/map-display.module').then(m => m.MapDisplayModule),
+        },
         navbarRoute,
         ...errorRoute,
       ],
