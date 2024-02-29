@@ -48,6 +48,14 @@ public class CacheConfiguration {
             createCache(cm, team.bham.domain.User.class.getName());
             createCache(cm, team.bham.domain.Authority.class.getName());
             createCache(cm, team.bham.domain.User.class.getName() + ".authorities");
+            createCache(cm, team.bham.domain.AppUser.class.getName());
+            createCache(cm, team.bham.domain.Route.class.getName());
+            createCache(cm, team.bham.domain.Route.class.getName() + ".tags");
+            createCache(cm, team.bham.domain.Tag.class.getName());
+            createCache(cm, team.bham.domain.Tag.class.getName() + ".routes");
+            createCache(cm, team.bham.domain.City.class.getName());
+            createCache(cm, team.bham.domain.Stop.class.getName());
+            createCache(cm, team.bham.domain.Review.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

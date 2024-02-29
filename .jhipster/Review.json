@@ -1,0 +1,53 @@
+{
+  "applications": "*",
+  "changelogDate": "20240229213500",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "review",
+  "fields": [
+    {
+      "fieldName": "username",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "content",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "rating",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "reviewDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Review",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "appUser",
+      "relationshipName": "appUser",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "route",
+      "relationshipName": "route",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

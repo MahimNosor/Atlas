@@ -1,0 +1,32 @@
+{
+  "applications": "*",
+  "changelogDate": "20240229213455",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "app_user",
+  "fields": [
+    {
+      "fieldName": "numRoutes",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "numReviews",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "AppUser",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

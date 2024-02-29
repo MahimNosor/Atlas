@@ -1,0 +1,65 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-route-heading" data-cy="RouteCreateUpdateHeading">Create or edit a Route</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_distance">Distance</label>
+          <input type="number" class="form-control" name="distance" id="field_distance" data-cy="distance" formControlName="distance" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_stops">Stops</label>
+          <input type="number" class="form-control" name="stops" id="field_stops" data-cy="stops" formControlName="stops" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_cost">Cost</label>
+          <input type="number" class="form-control" name="cost" id="field_cost" data-cy="cost" formControlName="cost" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_duration">Duration</label>
+          <input type="number" class="form-control" name="duration" id="field_duration" data-cy="duration" formControlName="duration" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_tagName">Tag Name</label>
+          <input type="text" class="form-control" name="tagName" id="field_tagName" data-cy="tagName" formControlName="tagName" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_city">City</label>
+          <select class="form-control" id="field_city" data-cy="city" name="city" formControlName="city" [compareWith]="compareCity">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="cityOption" *ngFor="let cityOption of citiesSharedCollection">{{ cityOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
