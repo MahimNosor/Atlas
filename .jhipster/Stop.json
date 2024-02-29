@@ -1,0 +1,48 @@
+{
+  "applications": "*",
+  "changelogDate": "20240229213459",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "stop",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "latitude",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "longitude",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "sequenceNumber",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "rating",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Stop",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "route",
+      "relationshipName": "route",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

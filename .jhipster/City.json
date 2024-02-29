@@ -1,0 +1,29 @@
+{
+  "applications": "*",
+  "changelogDate": "20240229213458",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "city",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "rating",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "numRoutes",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "City",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

@@ -1,0 +1,105 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-review-heading" data-cy="ReviewCreateUpdateHeading">Create or edit a Review</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_username">Username</label>
+          <input type="text" class="form-control" name="username" id="field_username" data-cy="username" formControlName="username" />
+          <div *ngIf="editForm.get('username')!.invalid && (editForm.get('username')!.dirty || editForm.get('username')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('username')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+          <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('title')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_content">Content</label>
+          <input type="text" class="form-control" name="content" id="field_content" data-cy="content" formControlName="content" />
+          <div *ngIf="editForm.get('content')!.invalid && (editForm.get('content')!.dirty || editForm.get('content')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('content')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_rating">Rating</label>
+          <input type="number" class="form-control" name="rating" id="field_rating" data-cy="rating" formControlName="rating" />
+          <div *ngIf="editForm.get('rating')!.invalid && (editForm.get('rating')!.dirty || editForm.get('rating')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('rating')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('rating')?.errors?.number"> This field should be a number. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_reviewDate">Review Date</label>
+          <div class="input-group">
+            <input
+              id="field_reviewDate"
+              data-cy="reviewDate"
+              type="text"
+              class="form-control"
+              name="reviewDate"
+              ngbDatepicker
+              #reviewDateDp="ngbDatepicker"
+              formControlName="reviewDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="reviewDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_appUser">App User</label>
+          <select
+            class="form-control"
+            id="field_appUser"
+            data-cy="appUser"
+            name="appUser"
+            formControlName="appUser"
+            [compareWith]="compareAppUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="appUserOption" *ngFor="let appUserOption of appUsersSharedCollection">{{ appUserOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_route">Route</label>
+          <select class="form-control" id="field_route" data-cy="route" name="route" formControlName="route" [compareWith]="compareRoute">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="routeOption" *ngFor="let routeOption of routesSharedCollection">{{ routeOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
