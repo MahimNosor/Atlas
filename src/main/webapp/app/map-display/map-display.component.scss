@@ -1,0 +1,20 @@
+.divContainer {
+  display: flex;
+  height: 900px;
+}
+
+.mapMenu {
+  background-color: #2f2d2d;
+  color: white;
+  height: auto;
+  width: 30%;
+}
+
+.mapContainer {
+  height: auto;
+  width: 70%;
+}
+
+#map {
+  height: 900px;
+}
