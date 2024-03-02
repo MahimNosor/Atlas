@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { MAP_DISPLAY_ROUTE } from './map-display-route';
 import { MapDisplayComponent } from './map-display.component';
 import { RouterModule } from '@angular/router';
