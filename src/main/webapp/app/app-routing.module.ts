@@ -36,6 +36,10 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           path: 'mapDisplay',
           loadChildren: () => import('./feature/map-display/map-display.module').then(m => m.MapDisplayModule),
         },
+        {
+          path: 'search',
+          loadChildren: () => import('./search/search-module').then(m => m.SearchModule),
+        },
         navbarRoute,
         ...errorRoute,
       ],
