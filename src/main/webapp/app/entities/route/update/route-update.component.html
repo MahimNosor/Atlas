@@ -14,11 +14,21 @@
         <div class="row mb-3">
           <label class="form-label" for="field_distance">Distance</label>
           <input type="number" class="form-control" name="distance" id="field_distance" data-cy="distance" formControlName="distance" />
+          <div *ngIf="editForm.get('distance')!.invalid && (editForm.get('distance')!.dirty || editForm.get('distance')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('distance')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('distance')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="row mb-3">
           <label class="form-label" for="field_stops">Stops</label>
           <input type="number" class="form-control" name="stops" id="field_stops" data-cy="stops" formControlName="stops" />
+          <div *ngIf="editForm.get('stops')!.invalid && (editForm.get('stops')!.dirty || editForm.get('stops')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('stops')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('stops')?.errors?.number"> This field should be a number. </small>
+          </div>
         </div>
 
         <div class="row mb-3">
@@ -29,6 +39,12 @@
         <div class="row mb-3">
           <label class="form-label" for="field_duration">Duration</label>
           <input type="number" class="form-control" name="duration" id="field_duration" data-cy="duration" formControlName="duration" />
+          <div *ngIf="editForm.get('duration')!.invalid && (editForm.get('duration')!.dirty || editForm.get('duration')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('duration')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('duration')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="row mb-3">

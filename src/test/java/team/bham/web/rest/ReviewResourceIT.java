@@ -208,6 +208,23 @@ class ReviewResourceIT {
 
     @Test
     @Transactional
+    void checkReviewDateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = reviewRepository.findAll().size();
+        // set the field null
+        review.setReviewDate(null);
+
+        // Create the Review, which fails.
+
+        restReviewMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(review)))
+            .andExpect(status().isBadRequest());
+
+        List<Review> reviewList = reviewRepository.findAll();
+        assertThat(reviewList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllReviews() throws Exception {
         // Initialize the database
         reviewRepository.saveAndFlush(review);

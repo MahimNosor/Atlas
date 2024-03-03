@@ -48,9 +48,15 @@ export class StopFormService {
         validators: [Validators.required],
       }),
       description: new FormControl(stopRawValue.description),
-      latitude: new FormControl(stopRawValue.latitude),
-      longitude: new FormControl(stopRawValue.longitude),
-      sequenceNumber: new FormControl(stopRawValue.sequenceNumber),
+      latitude: new FormControl(stopRawValue.latitude, {
+        validators: [Validators.required],
+      }),
+      longitude: new FormControl(stopRawValue.longitude, {
+        validators: [Validators.required],
+      }),
+      sequenceNumber: new FormControl(stopRawValue.sequenceNumber, {
+        validators: [Validators.required],
+      }),
       rating: new FormControl(stopRawValue.rating),
       route: new FormControl(stopRawValue.route),
     });

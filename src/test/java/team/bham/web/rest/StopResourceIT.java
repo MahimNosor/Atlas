@@ -161,6 +161,57 @@ class StopResourceIT {
 
     @Test
     @Transactional
+    void checkLatitudeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = stopRepository.findAll().size();
+        // set the field null
+        stop.setLatitude(null);
+
+        // Create the Stop, which fails.
+
+        restStopMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(stop)))
+            .andExpect(status().isBadRequest());
+
+        List<Stop> stopList = stopRepository.findAll();
+        assertThat(stopList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkLongitudeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = stopRepository.findAll().size();
+        // set the field null
+        stop.setLongitude(null);
+
+        // Create the Stop, which fails.
+
+        restStopMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(stop)))
+            .andExpect(status().isBadRequest());
+
+        List<Stop> stopList = stopRepository.findAll();
+        assertThat(stopList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkSequenceNumberIsRequired() throws Exception {
+        int databaseSizeBeforeTest = stopRepository.findAll().size();
+        // set the field null
+        stop.setSequenceNumber(null);
+
+        // Create the Stop, which fails.
+
+        restStopMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(stop)))
+            .andExpect(status().isBadRequest());
+
+        List<Stop> stopList = stopRepository.findAll();
+        assertThat(stopList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllStops() throws Exception {
         // Initialize the database
         stopRepository.saveAndFlush(stop);

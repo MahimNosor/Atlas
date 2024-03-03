@@ -31,13 +31,16 @@ public class Stop implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "latitude")
+    @NotNull
+    @Column(name = "latitude", nullable = false)
     private Double latitude;
 
-    @Column(name = "longitude")
+    @NotNull
+    @Column(name = "longitude", nullable = false)
     private Double longitude;
 
-    @Column(name = "sequence_number")
+    @NotNull
+    @Column(name = "sequence_number", nullable = false)
     private Integer sequenceNumber;
 
     @Column(name = "rating")

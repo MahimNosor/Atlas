@@ -39,7 +39,9 @@ export class TagFormService {
           validators: [Validators.required],
         }
       ),
-      name: new FormControl(tagRawValue.name),
+      name: new FormControl(tagRawValue.name, {
+        validators: [Validators.required],
+      }),
       routes: new FormControl(tagRawValue.routes ?? []),
     });
   }

@@ -15,16 +15,16 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="distance" type="double">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="stops" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="cost" type="double">
                 <constraints nullable="true" />
             </column>
             <column name="duration" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="tag_name" type="varchar(255)">
                 <constraints nullable="true" />

@@ -128,6 +128,23 @@ class TagResourceIT {
 
     @Test
     @Transactional
+    void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = tagRepository.findAll().size();
+        // set the field null
+        tag.setName(null);
+
+        // Create the Tag, which fails.
+
+        restTagMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(tag)))
+            .andExpect(status().isBadRequest());
+
+        List<Tag> tagList = tagRepository.findAll();
+        assertThat(tagList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllTags() throws Exception {
         // Initialize the database
         tagRepository.saveAndFlush(tag);

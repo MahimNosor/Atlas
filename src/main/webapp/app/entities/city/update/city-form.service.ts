@@ -43,8 +43,12 @@ export class CityFormService {
       name: new FormControl(cityRawValue.name, {
         validators: [Validators.required],
       }),
-      rating: new FormControl(cityRawValue.rating),
-      numRoutes: new FormControl(cityRawValue.numRoutes),
+      rating: new FormControl(cityRawValue.rating, {
+        validators: [Validators.required],
+      }),
+      numRoutes: new FormControl(cityRawValue.numRoutes, {
+        validators: [Validators.required],
+      }),
     });
   }
 

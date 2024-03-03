@@ -27,7 +27,8 @@
     },
     {
       "fieldName": "reviewDate",
-      "fieldType": "LocalDate"
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,

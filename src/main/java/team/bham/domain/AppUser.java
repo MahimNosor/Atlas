@@ -2,6 +2,7 @@ package team.bham.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -22,10 +23,12 @@ public class AppUser implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "num_routes")
+    @NotNull
+    @Column(name = "num_routes", nullable = false)
     private Integer numRoutes;
 
-    @Column(name = "num_reviews")
+    @NotNull
+    @Column(name = "num_reviews", nullable = false)
     private Integer numReviews;
 
     @OneToOne

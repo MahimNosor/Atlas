@@ -56,7 +56,9 @@ export class ReviewFormService {
       rating: new FormControl(reviewRawValue.rating, {
         validators: [Validators.required],
       }),
-      reviewDate: new FormControl(reviewRawValue.reviewDate),
+      reviewDate: new FormControl(reviewRawValue.reviewDate, {
+        validators: [Validators.required],
+      }),
       appUser: new FormControl(reviewRawValue.appUser),
       route: new FormControl(reviewRawValue.route),
     });

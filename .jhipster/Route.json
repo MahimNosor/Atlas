@@ -7,11 +7,13 @@
   "fields": [
     {
       "fieldName": "distance",
-      "fieldType": "Double"
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "stops",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "cost",
@@ -19,7 +21,8 @@
     },
     {
       "fieldName": "duration",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "tagName",

@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,7 +56,7 @@ public class RouteResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/routes")
-    public ResponseEntity<Route> createRoute(@RequestBody Route route) throws URISyntaxException {
+    public ResponseEntity<Route> createRoute(@Valid @RequestBody Route route) throws URISyntaxException {
         log.debug("REST request to save Route : {}", route);
         if (route.getId() != null) {
             throw new BadRequestAlertException("A new route cannot already have an ID", ENTITY_NAME, "idexists");
@@ -77,7 +79,7 @@ public class RouteResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/routes/{id}")
-    public ResponseEntity<Route> updateRoute(@PathVariable(value = "id", required = false) final Long id, @RequestBody Route route)
+    public ResponseEntity<Route> updateRoute(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Route route)
         throws URISyntaxException {
         log.debug("REST request to update Route : {}, {}", id, route);
         if (route.getId() == null) {
@@ -110,8 +112,10 @@ public class RouteResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/routes/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Route> partialUpdateRoute(@PathVariable(value = "id", required = false) final Long id, @RequestBody Route route)
-        throws URISyntaxException {
+    public ResponseEntity<Route> partialUpdateRoute(
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody Route route
+    ) throws URISyntaxException {
         log.debug("REST request to partial update Route partially : {}, {}", id, route);
         if (route.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

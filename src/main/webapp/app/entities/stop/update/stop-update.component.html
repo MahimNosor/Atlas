@@ -34,11 +34,23 @@
         <div class="row mb-3">
           <label class="form-label" for="field_latitude">Latitude</label>
           <input type="number" class="form-control" name="latitude" id="field_latitude" data-cy="latitude" formControlName="latitude" />
+          <div *ngIf="editForm.get('latitude')!.invalid && (editForm.get('latitude')!.dirty || editForm.get('latitude')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('latitude')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('latitude')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="row mb-3">
           <label class="form-label" for="field_longitude">Longitude</label>
           <input type="number" class="form-control" name="longitude" id="field_longitude" data-cy="longitude" formControlName="longitude" />
+          <div *ngIf="editForm.get('longitude')!.invalid && (editForm.get('longitude')!.dirty || editForm.get('longitude')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('longitude')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('longitude')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="row mb-3">
@@ -51,6 +63,16 @@
             data-cy="sequenceNumber"
             formControlName="sequenceNumber"
           />
+          <div
+            *ngIf="
+              editForm.get('sequenceNumber')!.invalid && (editForm.get('sequenceNumber')!.dirty || editForm.get('sequenceNumber')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('sequenceNumber')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('sequenceNumber')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="row mb-3">

@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,7 +56,7 @@ public class AppUserResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/app-users")
-    public ResponseEntity<AppUser> createAppUser(@RequestBody AppUser appUser) throws URISyntaxException {
+    public ResponseEntity<AppUser> createAppUser(@Valid @RequestBody AppUser appUser) throws URISyntaxException {
         log.debug("REST request to save AppUser : {}", appUser);
         if (appUser.getId() != null) {
             throw new BadRequestAlertException("A new appUser cannot already have an ID", ENTITY_NAME, "idexists");
@@ -77,8 +79,10 @@ public class AppUserResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/app-users/{id}")
-    public ResponseEntity<AppUser> updateAppUser(@PathVariable(value = "id", required = false) final Long id, @RequestBody AppUser appUser)
-        throws URISyntaxException {
+    public ResponseEntity<AppUser> updateAppUser(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody AppUser appUser
+    ) throws URISyntaxException {
         log.debug("REST request to update AppUser : {}, {}", id, appUser);
         if (appUser.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -112,7 +116,7 @@ public class AppUserResource {
     @PatchMapping(value = "/app-users/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<AppUser> partialUpdateAppUser(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody AppUser appUser
+        @NotNull @RequestBody AppUser appUser
     ) throws URISyntaxException {
         log.debug("REST request to partial update AppUser partially : {}, {}", id, appUser);
         if (appUser.getId() == null) {

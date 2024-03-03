@@ -15,10 +15,10 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="num_routes" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="num_reviews" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="user_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_app_user__user_id" />

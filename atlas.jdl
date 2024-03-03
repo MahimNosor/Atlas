@@ -1,34 +1,34 @@
 entity AppUser {
-    numRoutes Integer
-    numReviews Integer
+    numRoutes Integer required
+    numReviews Integer required
 }
 
 
 entity Route {
-    distance Double
-    stops Integer
+    distance Double required
+    stops Integer required
     cost Double
-    duration Integer
+    duration Integer required
     tagName String
 }
 
 entity Tag {
-    name String
+    name String required
 }
 
 
 entity City {
     name String required
-    rating Integer
-    numRoutes Integer
+    rating Integer required
+    numRoutes Integer required
 }
 
 entity Stop {
     name String required,
     description String,
-    latitude Double,
-    longitude Double,
-    sequenceNumber Integer
+    latitude Double required,
+    longitude Double required,
+    sequenceNumber Integer required
     rating Integer
 }
 
@@ -37,7 +37,7 @@ entity Review {
     title String required,
     content String required,
     rating Integer required, // Ensure in application logic: 1 <= rating <= 5
-    reviewDate LocalDate
+    reviewDate LocalDate required
 }
 
 

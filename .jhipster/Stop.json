@@ -16,15 +16,18 @@
     },
     {
       "fieldName": "latitude",
-      "fieldType": "Double"
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "longitude",
-      "fieldType": "Double"
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "sequenceNumber",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "rating",

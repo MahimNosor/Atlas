@@ -40,8 +40,12 @@ export class AppUserFormService {
           validators: [Validators.required],
         }
       ),
-      numRoutes: new FormControl(appUserRawValue.numRoutes),
-      numReviews: new FormControl(appUserRawValue.numReviews),
+      numRoutes: new FormControl(appUserRawValue.numRoutes, {
+        validators: [Validators.required],
+      }),
+      numReviews: new FormControl(appUserRawValue.numReviews, {
+        validators: [Validators.required],
+      }),
       user: new FormControl(appUserRawValue.user),
     });
   }

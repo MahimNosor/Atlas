@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -25,16 +26,19 @@ public class Route implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "distance")
+    @NotNull
+    @Column(name = "distance", nullable = false)
     private Double distance;
 
-    @Column(name = "stops")
+    @NotNull
+    @Column(name = "stops", nullable = false)
     private Integer stops;
 
     @Column(name = "cost")
     private Double cost;
 
-    @Column(name = "duration")
+    @NotNull
+    @Column(name = "duration", nullable = false)
     private Integer duration;
 
     @Column(name = "tag_name")

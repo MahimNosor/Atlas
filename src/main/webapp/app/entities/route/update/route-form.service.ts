@@ -44,10 +44,16 @@ export class RouteFormService {
           validators: [Validators.required],
         }
       ),
-      distance: new FormControl(routeRawValue.distance),
-      stops: new FormControl(routeRawValue.stops),
+      distance: new FormControl(routeRawValue.distance, {
+        validators: [Validators.required],
+      }),
+      stops: new FormControl(routeRawValue.stops, {
+        validators: [Validators.required],
+      }),
       cost: new FormControl(routeRawValue.cost),
-      duration: new FormControl(routeRawValue.duration),
+      duration: new FormControl(routeRawValue.duration, {
+        validators: [Validators.required],
+      }),
       tagName: new FormControl(routeRawValue.tagName),
       city: new FormControl(routeRawValue.city),
       tags: new FormControl(routeRawValue.tags ?? []),

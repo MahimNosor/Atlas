@@ -59,6 +59,9 @@
             />
             <button type="button" class="btn btn-secondary" (click)="reviewDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
           </div>
+          <div *ngIf="editForm.get('reviewDate')!.invalid && (editForm.get('reviewDate')!.dirty || editForm.get('reviewDate')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('reviewDate')?.errors?.required"> This field is required. </small>
+          </div>
         </div>
 
         <div class="row mb-3">

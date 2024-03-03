@@ -137,6 +137,40 @@ class CityResourceIT {
 
     @Test
     @Transactional
+    void checkRatingIsRequired() throws Exception {
+        int databaseSizeBeforeTest = cityRepository.findAll().size();
+        // set the field null
+        city.setRating(null);
+
+        // Create the City, which fails.
+
+        restCityMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(city)))
+            .andExpect(status().isBadRequest());
+
+        List<City> cityList = cityRepository.findAll();
+        assertThat(cityList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkNumRoutesIsRequired() throws Exception {
+        int databaseSizeBeforeTest = cityRepository.findAll().size();
+        // set the field null
+        city.setNumRoutes(null);
+
+        // Create the City, which fails.
+
+        restCityMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(city)))
+            .andExpect(status().isBadRequest());
+
+        List<City> cityList = cityRepository.findAll();
+        assertThat(cityList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllCities() throws Exception {
         // Initialize the database
         cityRepository.saveAndFlush(city);

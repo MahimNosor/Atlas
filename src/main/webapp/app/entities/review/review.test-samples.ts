@@ -8,6 +8,7 @@ export const sampleWithRequiredData: IReview = {
   title: 'transmitting',
   content: 'Legacy black Cheese',
   rating: 59362,
+  reviewDate: dayjs('2024-02-29'),
 };
 
 export const sampleWithPartialData: IReview = {
@@ -16,22 +17,24 @@ export const sampleWithPartialData: IReview = {
   title: 'generation',
   content: 'withdrawal',
   rating: 79341,
+  reviewDate: dayjs('2024-02-29'),
 };
 
 export const sampleWithFullData: IReview = {
-  id: 88140,
-  username: 'Versatile Plains support',
-  title: 'Moldova ivory generate',
-  content: 'Tactics',
-  rating: 874,
+  id: 82677,
+  username: 'Facilitator',
+  title: 'SQL services',
+  content: 'conglomeration application',
+  rating: 41945,
   reviewDate: dayjs('2024-02-29'),
 };
 
 export const sampleWithNewData: NewReview = {
-  username: 'Coordinator paradigms mint',
-  title: 'Keyboard Buckinghamshire mint',
-  content: 'synthesize',
-  rating: 843,
+  username: 'impactful Bacon incubate',
+  title: 'Savings',
+  content: 'Supervisor',
+  rating: 65428,
+  reviewDate: dayjs('2024-02-29'),
   id: null,
 };
 

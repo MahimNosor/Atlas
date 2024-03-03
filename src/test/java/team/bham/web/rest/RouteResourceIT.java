@@ -138,6 +138,57 @@ class RouteResourceIT {
 
     @Test
     @Transactional
+    void checkDistanceIsRequired() throws Exception {
+        int databaseSizeBeforeTest = routeRepository.findAll().size();
+        // set the field null
+        route.setDistance(null);
+
+        // Create the Route, which fails.
+
+        restRouteMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(route)))
+            .andExpect(status().isBadRequest());
+
+        List<Route> routeList = routeRepository.findAll();
+        assertThat(routeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkStopsIsRequired() throws Exception {
+        int databaseSizeBeforeTest = routeRepository.findAll().size();
+        // set the field null
+        route.setStops(null);
+
+        // Create the Route, which fails.
+
+        restRouteMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(route)))
+            .andExpect(status().isBadRequest());
+
+        List<Route> routeList = routeRepository.findAll();
+        assertThat(routeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkDurationIsRequired() throws Exception {
+        int databaseSizeBeforeTest = routeRepository.findAll().size();
+        // set the field null
+        route.setDuration(null);
+
+        // Create the Route, which fails.
+
+        restRouteMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(route)))
+            .andExpect(status().isBadRequest());
+
+        List<Route> routeList = routeRepository.findAll();
+        assertThat(routeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllRoutes() throws Exception {
         // Initialize the database
         routeRepository.saveAndFlush(route);

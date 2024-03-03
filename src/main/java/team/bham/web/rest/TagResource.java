@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,7 +56,7 @@ public class TagResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/tags")
-    public ResponseEntity<Tag> createTag(@RequestBody Tag tag) throws URISyntaxException {
+    public ResponseEntity<Tag> createTag(@Valid @RequestBody Tag tag) throws URISyntaxException {
         log.debug("REST request to save Tag : {}", tag);
         if (tag.getId() != null) {
             throw new BadRequestAlertException("A new tag cannot already have an ID", ENTITY_NAME, "idexists");
@@ -77,7 +79,7 @@ public class TagResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/tags/{id}")
-    public ResponseEntity<Tag> updateTag(@PathVariable(value = "id", required = false) final Long id, @RequestBody Tag tag)
+    public ResponseEntity<Tag> updateTag(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Tag tag)
         throws URISyntaxException {
         log.debug("REST request to update Tag : {}, {}", id, tag);
         if (tag.getId() == null) {
@@ -110,7 +112,7 @@ public class TagResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/tags/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Tag> partialUpdateTag(@PathVariable(value = "id", required = false) final Long id, @RequestBody Tag tag)
+    public ResponseEntity<Tag> partialUpdateTag(@PathVariable(value = "id", required = false) final Long id, @NotNull @RequestBody Tag tag)
         throws URISyntaxException {
         log.debug("REST request to partial update Tag partially : {}, {}", id, tag);
         if (tag.getId() == null) {

@@ -41,7 +41,8 @@ public class Review implements Serializable {
     @Column(name = "rating", nullable = false)
     private Integer rating;
 
-    @Column(name = "review_date")
+    @NotNull
+    @Column(name = "review_date", nullable = false)
     private LocalDate reviewDate;
 
     @ManyToOne

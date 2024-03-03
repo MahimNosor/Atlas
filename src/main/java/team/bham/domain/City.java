@@ -27,10 +27,12 @@ public class City implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "rating")
+    @NotNull
+    @Column(name = "rating", nullable = false)
     private Integer rating;
 
-    @Column(name = "num_routes")
+    @NotNull
+    @Column(name = "num_routes", nullable = false)
     private Integer numRoutes;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

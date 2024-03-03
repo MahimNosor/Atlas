@@ -18,10 +18,10 @@
                 <constraints nullable="false" />
             </column>
             <column name="rating" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="num_routes" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>

@@ -132,6 +132,40 @@ class AppUserResourceIT {
 
     @Test
     @Transactional
+    void checkNumRoutesIsRequired() throws Exception {
+        int databaseSizeBeforeTest = appUserRepository.findAll().size();
+        // set the field null
+        appUser.setNumRoutes(null);
+
+        // Create the AppUser, which fails.
+
+        restAppUserMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(appUser)))
+            .andExpect(status().isBadRequest());
+
+        List<AppUser> appUserList = appUserRepository.findAll();
+        assertThat(appUserList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkNumReviewsIsRequired() throws Exception {
+        int databaseSizeBeforeTest = appUserRepository.findAll().size();
+        // set the field null
+        appUser.setNumReviews(null);
+
+        // Create the AppUser, which fails.
+
+        restAppUserMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(appUser)))
+            .andExpect(status().isBadRequest());
+
+        List<AppUser> appUserList = appUserRepository.findAll();
+        assertThat(appUserList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllAppUsers() throws Exception {
         // Initialize the database
         appUserRepository.saveAndFlush(appUser);
