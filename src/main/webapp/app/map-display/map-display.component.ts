@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import '../../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js';
 @Component({
   selector: 'jhi-map-display',
   templateUrl: './map-display.component.html',
@@ -7,6 +8,11 @@ import * as L from 'leaflet';
 })
 export class MapDisplayComponent implements AfterViewInit {
   private map: any;
+  constructor() {}
+
+  ngAfterViewInit(): void {
+    this.initMap();
+  }
   private initMap(): void {
     this.map = L.map('map').setView([22.2816654, 114.1757015], 10);
 
@@ -16,11 +22,5 @@ export class MapDisplayComponent implements AfterViewInit {
     });
 
     tiles.addTo(this.map);
-  }
-
-  constructor() {}
-
-  ngAfterViewInit(): void {
-    this.initMap();
   }
 }

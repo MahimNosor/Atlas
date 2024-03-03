@@ -2,9 +2,15 @@
   <link rel="stylesheet" href="map-display.component.scss" />
 </head>
 <div class="divContainer">
-  <div class="mapMenu">
-    <p>map menu goes here</p>
+  <div class="mapMenuContainer">
+    <h2>Route</h2>
+    <form>
+      <input placeholder="Starting Location" type="text" id="startingLocation" />
+      <input placeholder="Destination" type="text" id="destination" />
+      <input type="submit" value="Submit" />
+    </form>
   </div>
+
   <div class="mapContainer">
     <div class="mapBorder">
       <div id="map"></div>

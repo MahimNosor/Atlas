@@ -3,16 +3,22 @@
   height: 900px;
 }
 
-.mapMenu {
+.mapMenuContainer {
   background-color: #2f2d2d;
   color: white;
   height: auto;
   width: 30%;
+  display: inline;
 }
 
 .mapContainer {
   height: auto;
   width: 70%;
+}
+
+input {
+  display: flex;
+  margin: 10px 0;
 }
 
 #map {
