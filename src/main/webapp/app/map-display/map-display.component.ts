@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import '../../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js';
+import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js';
 @Component({
   selector: 'jhi-map-display',
   templateUrl: './map-display.component.html',
@@ -22,5 +23,6 @@ export class MapDisplayComponent implements AfterViewInit {
     });
 
     tiles.addTo(this.map);
+    L.Control.geocoder().addTo(this.map);
   }
 }

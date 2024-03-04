@@ -9,6 +9,7 @@
   height: auto;
   width: 30%;
   display: inline;
+  padding-left: 15px;
 }
 
 .mapContainer {
@@ -16,7 +17,7 @@
   width: 70%;
 }
 
-input {
+.routeInput {
   display: flex;
   margin: 10px 0;
 }
