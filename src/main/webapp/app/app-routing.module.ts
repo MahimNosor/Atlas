@@ -40,6 +40,10 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           path: 'search',
           loadChildren: () => import('./search/search-module').then(m => m.SearchModule),
         },
+        {
+          path: 'trending',
+          loadChildren: () => import('./trending/trending-module').then(m => m.TrendingModule),
+        },
         navbarRoute,
         ...errorRoute,
       ],

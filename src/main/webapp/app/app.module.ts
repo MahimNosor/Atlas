@@ -25,6 +25,7 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ErrorComponent } from './layouts/error/error.component';
 import { MapDisplayComponent } from './map-display/map-display.component';
 import { SearchComponent } from './search/search.component';
+import { TrendingComponent } from './trending/trending.component';
 
 @NgModule({
   imports: [
