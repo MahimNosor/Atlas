@@ -1,1 +1,25 @@
-<p>rating works!</p>
+<div class="route-creation">
+  <h2 class="center-text">Create your Route</h2>
+  <form>
+    <div class="stop-group" *ngFor="let stop of stops; let i = index">
+      <div class="stop-number">{{ i + 1 }}.</div>
+      <div class="stop-info">
+        <input type="text" [(ngModel)]="stop.name" name="stop-{{ i }}" placeholder="Enter a stop (e.g., Eiffel Tower)" />
+        <img
+          src="data:image/png;base64,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"
+          alt="Stop Image"
+          class="stop-image"
+        />
+      </div>
+    </div>
+    <div class="center-text">
+      <button (click)="addStop()">Add Another Stop</button>
+    </div>
+    <input type="text" [(ngModel)]="routeTitle" name="routeTitle" placeholder="Title your route" class="route-input" />
+    <textarea [(ngModel)]="routeDescription" name="routeDescription" placeholder="Give a brief description" class="route-input"></textarea>
+
+    <div class="center-text">
+      <button type="submit" (click)="submitRoute()">Submit Route</button>
+    </div>
+  </form>
+</div>
