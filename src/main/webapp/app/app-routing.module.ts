@@ -44,6 +44,10 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           path: 'trending',
           loadChildren: () => import('./trending/trending-module').then(m => m.TrendingModule),
         },
+        {
+          path: 'rating',
+          loadChildren: () => import('./rating/rating.module').then(m => m.RatingModule),
+        },
         navbarRoute,
         ...errorRoute,
       ],

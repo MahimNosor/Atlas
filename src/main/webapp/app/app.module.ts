@@ -26,6 +26,7 @@ import { ErrorComponent } from './layouts/error/error.component';
 import { MapDisplayComponent } from './map-display/map-display.component';
 import { SearchComponent } from './search/search.component';
 import { TrendingComponent } from './trending/trending.component';
+import { RatingComponent } from './rating/rating.component';
 
 @NgModule({
   imports: [
