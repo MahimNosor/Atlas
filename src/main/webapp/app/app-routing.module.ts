@@ -40,6 +40,10 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           path: 'search',
           loadChildren: () => import('./search/search-module').then(m => m.SearchModule),
         },
+        {
+          path: 'rating',
+          loadChildren: () => import('./rating/rating.module').then(m => m.RatingModule),
+        },
         navbarRoute,
         ...errorRoute,
       ],
