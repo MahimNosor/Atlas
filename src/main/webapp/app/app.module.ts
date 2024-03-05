@@ -28,6 +28,7 @@ import { SearchComponent } from './search/search.component';
 import { TrendingComponent } from './trending/trending.component';
 import { RatingComponent } from './rating/rating.component';
 import { ForYouComponent } from './for-you/for-you.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { ForYouComponent } from './for-you/for-you.component';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
     HttpClientModule,
     NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-', caseSensitive: true }),
+    FormsModule,
   ],
   providers: [
     Title,
