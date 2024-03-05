@@ -48,6 +48,10 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           path: 'rating',
           loadChildren: () => import('./rating/rating.module').then(m => m.RatingModule),
         },
+        {
+          path: 'for-you',
+          loadChildren: () => import('./for-you/for-you.module').then(m => m.ForYouModule),
+        },
         navbarRoute,
         ...errorRoute,
       ],

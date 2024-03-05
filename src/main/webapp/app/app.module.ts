@@ -27,6 +27,7 @@ import { MapDisplayComponent } from './map-display/map-display.component';
 import { SearchComponent } from './search/search.component';
 import { TrendingComponent } from './trending/trending.component';
 import { RatingComponent } from './rating/rating.component';
+import { ForYouComponent } from './for-you/for-you.component';
 
 @NgModule({
   imports: [
