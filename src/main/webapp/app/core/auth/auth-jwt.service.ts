@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
@@ -30,6 +30,9 @@ export class AuthServerProvider {
     return this.http
       .post<JwtToken>(this.applicationConfigService.getEndpointFor('api/authenticate'), credentials)
       .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
+  }
+  doSearch(query: string): Observable<any[]> {
+    return this.http.get<any[]>(this.applicationConfigService.getEndpointFor('api/app-users?idStartsWith=' + query));
   }
 
   logout(): Observable<void> {

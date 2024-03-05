@@ -5,8 +5,14 @@
     <link rel="stylesheet" href="search.component.scss" />
   </head>
   <body>
-    <div class="search">
-      <input type="search" class="input-box" value="Qai" />
+    <div class="search-container">
+      <div class="search">
+        <form role="form" (ngSubmit)="$event.preventDefault(); onSearchSubmit()">
+          <input type="search" class="input-box" [(ngModel)]="searchQuery" name="searchQuery" />
+          <button type="submit" class="button">Search</button>
+        </form>
+
+        <!--
       <div class="col">
         <p>Username</p>
         <p>QaisM</p>
@@ -29,6 +35,19 @@
         <p>10</p>
         <p>4</p>
         <p>2</p>
+      </div>
+      --></div>
+    </div>
+    <div class="result">
+      <p class="field">ID</p>
+      <p class="field">Routes travelled</p>
+      <p class="field">Reviews posted</p>
+    </div>
+    <div class="result" *ngIf="arrayBufferData$ | async as arrayBufferData">
+      <div *ngFor="let item of arrayBufferData">
+        <p class="field">{{ item.id }}</p>
+        <p class="field">{{ item.numRoutes }}</p>
+        <p class="field">{{ item.numReviews }}</p>
       </div>
     </div>
   </body>
