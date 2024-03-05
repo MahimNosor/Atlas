@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import '../../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js';
 import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js';
@@ -7,23 +7,12 @@ import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocod
   templateUrl: './map-display.component.html',
   styleUrls: ['./map-display.component.scss'],
 })
-export class MapDisplayComponent implements AfterViewInit {
-  stopName = '';
-  stops: any[] = [];
+export class MapDisplayComponent implements OnInit {
   private map: any;
   constructor() {}
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.initMap();
-    this.addStop();
-  }
-
-  addStop(): void {
-    this.stops.push({ stopName: '' });
-  }
-
-  removeStop(): void {
-    this.stops.pop();
   }
 
   private initMap(): void {
@@ -36,5 +25,9 @@ export class MapDisplayComponent implements AfterViewInit {
 
     tiles.addTo(this.map);
     L.Control.geocoder().addTo(this.map);
+    L.Routing.control({
+      routeWhileDragging: true,
+      geocoder: L.Control.Geocoder.nominatim(),
+    }).addTo(this.map);
   }
 }

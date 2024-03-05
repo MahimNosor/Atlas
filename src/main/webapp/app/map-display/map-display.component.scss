@@ -3,7 +3,7 @@
   height: 900px;
 }
 
-.mapMenuContainer {
+.routeMenuContainer {
   background-color: #2f2d2d;
   color: white;
   height: auto;
@@ -15,11 +15,6 @@
 .mapContainer {
   height: auto;
   width: 70%;
-}
-
-.routeInput {
-  display: flex;
-  margin: 10px 0;
 }
 
 #map {
