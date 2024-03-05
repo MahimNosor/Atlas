@@ -40,7 +40,7 @@
               "src/main/webapp/content/scss/global.scss",
               "./node_modules/leaflet/dist/leaflet.css",
               "./node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css",
-              "./node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css"
+              "./node_modules/leaflet-geosearch/dist/geosearch.css"
             ],
             "scripts": []
           },

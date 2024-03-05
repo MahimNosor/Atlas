@@ -8,12 +8,24 @@ import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocod
   styleUrls: ['./map-display.component.scss'],
 })
 export class MapDisplayComponent implements AfterViewInit {
+  stopName = '';
+  stops: any[] = [];
   private map: any;
   constructor() {}
 
   ngAfterViewInit(): void {
     this.initMap();
+    this.addStop();
   }
+
+  addStop(): void {
+    this.stops.push({ stopName: '' });
+  }
+
+  removeStop(): void {
+    this.stops.pop();
+  }
+
   private initMap(): void {
     this.map = L.map('map').setView([22.2816654, 114.1757015], 10);
 

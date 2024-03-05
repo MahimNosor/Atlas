@@ -5,9 +5,14 @@
   <div class="mapMenuContainer">
     <h2>Route</h2>
     <form>
-      <input class="routeInput" placeholder="Starting Location" type="text" id="startingLocation" />
-      <input class="routeInput" placeholder="Destination" type="text" id="destination" />
+      <div *ngFor="let stop of stops; let i = index">
+        <div>
+          <input class="routeInput" [(ngModel)]="stop.name" placeholder="Enter a stop" type="text" />
+        </div>
+      </div>
       <input class="routeInput" type="submit" value="Submit" />
+      <button type="button" (click)="addStop()">Add a stop</button>
+      <button type="button" (click)="removeStop()">Remove last stop</button>
     </form>
   </div>
 
