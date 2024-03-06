@@ -19,6 +19,14 @@
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="/user-routes" (click)="collapseNavbar()">
+            <span>
+              <fa-icon icon="map"></fa-icon>
+              <span>User Routes</span>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="/trending" (click)="collapseNavbar()">
             <span>
               <fa-icon icon="sparkles"></fa-icon>
