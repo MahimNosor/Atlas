@@ -1,1 +1,19 @@
-<p>trending works!</p>
+<h1>Trending</h1>
+
+<h3>Spots</h3>
+
+<div class="horizontal-scroll">
+  <div *ngFor="let spot of spots" class="scroll-item">
+    <img [src]="spot.imageUrl" alt="{{ spot.name }}" />
+    <h3>{{ spot.name }}</h3>
+  </div>
+</div>
+
+<h3>Cities</h3>
+
+<div class="horizontal-scroll">
+  <div *ngFor="let city of cities" class="scroll-item">
+    <img [src]="city.imageUrl" alt="{{ city.name }}" />
+    <h3>{{ city.name }}</h3>
+  </div>
+</div>
