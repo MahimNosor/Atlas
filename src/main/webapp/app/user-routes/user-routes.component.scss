@@ -1,67 +1,67 @@
 .user-routes {
   position: relative;
-  width: 1920px;
-  height: 1080px;
+  width: 100%;
+  height: 100vh;
   background-color: #2f2d2d;
 }
 
 .user-routes .overlap-group {
-  position: absolute;
-  width: 810px;
-  height: 147px;
-  top: 127px;
-  left: 129px;
+  position: relative; /* Change position to relative */
+  width: 42%;
+  height: 13%;
+  top: 10%;
+  left: 6%;
   background-color: #5b5550;
   border-radius: 84px;
 }
 
-.user-routes .qaism-routes {
+.user-routes .overlay-text {
   position: absolute;
-  width: 616px;
-  height: 79px;
-  top: 41px;
-  left: 97px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-family: 'Inter-Regular', Helvetica;
+  font-weight: 400;
+  font-size: 41px;
 }
 
 .user-routes .text-wrapper {
   position: absolute;
-  width: 244px;
-  top: 328px;
-  left: 180px;
+  width: 12%;
+  top: 30%;
+  left: 9%;
   font-family: 'Inter-Regular', Helvetica;
   font-weight: 400;
   color: #ffffff;
-  font-size: 48px;
+  font-size: 3vw;
   text-align: center;
-  letter-spacing: 0;
-  line-height: normal;
-  white-space: nowrap;
 }
 
 .user-routes .image {
-  width: 376px;
-  height: 308px;
-  left: 176px;
+  width: 20%;
+  height: auto;
+  left: 10%;
   position: absolute;
-  top: 421px;
+  top: 40%;
   object-fit: cover;
 }
 
 .user-routes .img {
-  width: 369px;
-  height: 300px;
-  left: 796px;
+  width: 20%;
+  height: auto;
+  left: 40%;
   position: absolute;
-  top: 421px;
+  top: 40%;
   object-fit: cover;
 }
 
 .user-routes .image-2 {
-  width: 368px;
-  height: 300px;
-  left: 1413px;
+  width: 20%;
+  height: auto;
+  left: 70%;
   position: absolute;
-  top: 421px;
+  top: 40%;
   object-fit: cover;
 }
 
