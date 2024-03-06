@@ -52,6 +52,11 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           path: 'for-you',
           loadChildren: () => import('./for-you/for-you.module').then(m => m.ForYouModule),
         },
+        {
+          path: 'user-routes',
+          loadChildren: () => import('./user-routes/user-routes-module').then(m => m.UserRoutesModule),
+        },
+
         navbarRoute,
         ...errorRoute,
       ],
