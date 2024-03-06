@@ -33,6 +33,17 @@ Navbar
       color: $navbar-dark-hover-color;
     }
   }
+  .container-fluid {
+    background: teal;
+  }
+
+  .nav-link {
+    color: $white;
+  }
+
+  .navbar-title {
+    color: $white;
+  }
 }
 
 /* ==========================================================================

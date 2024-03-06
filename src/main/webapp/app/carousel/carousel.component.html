@@ -1,0 +1,8 @@
+<!--<p>carousel works!</p>-->
+<div class="carousel">
+  <div class="carousel-slide" *ngFor="let image of images; let i = index" [class.active]="currentIndex === i">
+    <img [src]="image.src" [alt]="image.alt" />
+  </div>
+  <button class="carousel-prev" (click)="prevSlide()">&#10094;</button>
+  <button class="carousel-next" (click)="nextSlide()">&#10095;</button>
+</div>
