@@ -5,6 +5,8 @@
 <div class="divContainer">
   <div class="routeMenuContainer">
     <h2>Route Summary</h2>
+    <p *ngIf="summaryLoaded">Total time: {{ travelTime }}h</p>
+    <p *ngIf="summaryLoaded">Total distance: {{ travelDistance }}km</p>
   </div>
   <div class="mapContainer">
     <div class="mapBorder">

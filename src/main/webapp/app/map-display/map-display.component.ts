@@ -8,7 +8,11 @@ import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocod
   styleUrls: ['./map-display.component.scss'],
 })
 export class MapDisplayComponent implements OnInit {
+  travelTime!: number;
+  travelDistance!: number;
+  summaryLoaded = false;
   private map: any;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -24,10 +28,18 @@ export class MapDisplayComponent implements OnInit {
     });
 
     tiles.addTo(this.map);
+
     L.Control.geocoder().addTo(this.map);
-    L.Routing.control({
-      routeWhileDragging: true,
+
+    const control = L.Routing.control({
       geocoder: L.Control.Geocoder.nominatim(),
+      routeWhileDragging: true,
     }).addTo(this.map);
+
+    control.on('routesfound', (e: any) => {
+      this.travelTime = e.routes[0].summary.totalTime / 3600;
+      this.travelDistance = e.routes[0].summary.totalDistance / 1000;
+      this.summaryLoaded = true;
+    });
   }
 }
