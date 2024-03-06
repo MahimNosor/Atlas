@@ -30,6 +30,7 @@ import { RatingComponent } from './rating/rating.component';
 import { ForYouComponent } from './for-you/for-you.component';
 import { FormsModule } from '@angular/forms';
 import { UserRoutesComponent } from './user-routes/user-routes.component';
+import { SearchFormComponent } from './search-form/search-form.component';
 
 @NgModule({
   imports: [

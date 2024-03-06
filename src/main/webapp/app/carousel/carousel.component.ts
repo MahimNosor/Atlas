@@ -9,7 +9,7 @@ export class CarouselComponent implements OnInit {
   images = [
     { src: '../content/images/ITALY.jpg', alt: 'Image 1' },
     { src: '../content/images/VIETNAM.jpg', alt: 'Image 2' },
-    { src: '../content/images/PARIS.jpg', alt: 'Image 3' },
+    { src: '../content/images/LOUVRE.jpg', alt: 'Image 3' },
     { src: '../content/images/SWITZERLAND.jpg', alt: 'Image 4' },
     { src: '../content/images/INDIA.jpg', alt: 'Image 5' },
 
