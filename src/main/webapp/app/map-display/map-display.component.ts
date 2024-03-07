@@ -8,8 +8,8 @@ import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocod
   styleUrls: ['./map-display.component.scss'],
 })
 export class MapDisplayComponent implements OnInit {
-  travelTime!: number;
-  travelDistance!: number;
+  travelTime!: string;
+  travelDistance!: string;
   summaryLoaded = false;
   private map: any;
 
@@ -37,8 +37,8 @@ export class MapDisplayComponent implements OnInit {
     }).addTo(this.map);
 
     control.on('routesfound', (e: any) => {
-      this.travelTime = e.routes[0].summary.totalTime / 3600;
-      this.travelDistance = e.routes[0].summary.totalDistance / 1000;
+      this.travelTime = (e.routes[0].summary.totalTime / 3600).toFixed(2);
+      this.travelDistance = (e.routes[0].summary.totalDistance / 1000).toFixed(2);
       this.summaryLoaded = true;
     });
   }
