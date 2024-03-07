@@ -40,13 +40,13 @@
     </div>
     <div class="result">
       <p style="color: red">NOTE: YOU MUST SIGN IN TO USE THIS FUNCTIONALITY (if only JHipster wasn't as tedious)</p>
-      <p class="field">ID</p>
+      <p class="field">Username</p>
       <p class="field">Routes travelled</p>
       <p class="field">Reviews posted</p>
     </div>
     <div class="result" *ngIf="arrayBufferData$ | async as arrayBufferData">
       <div *ngFor="let item of arrayBufferData">
-        <p class="field">{{ item.id }}</p>
+        <p class="field">{{ item.user.login }}</p>
         <p class="field">{{ item.numRoutes }}</p>
         <p class="field">{{ item.numReviews }}</p>
       </div>
