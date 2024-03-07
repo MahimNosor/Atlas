@@ -87,7 +87,7 @@ deploy-dev:
     #delete previous ~/team-project/ folder if it is there and run (install-docker.sh) on the deployment server if it is needed
     - ssh teamproject2023-team15 "(rm -rf ~/team-project || true ) && (which docker || sh team-project/install-docker.sh)"
     #transfer src/main/docker/ to the deployment server
-    - scp -r src/main/docker/ teamproject2023-team:~/team-project
+    - scp -r src/main/docker/ teamproject2023-team15:~/team-project
     #run (install-app.sh) on the deployment server
     - ssh teamproject2023-team15 "sh team-project/install-app.sh"
   script:
