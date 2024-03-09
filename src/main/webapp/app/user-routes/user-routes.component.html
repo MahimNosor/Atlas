@@ -1,22 +1,10 @@
-<html>
-  <head>
-    <link rel="stylesheet" href="user-routes.component.scss" />
-  </head>
-  <body>
-    <div class="user-routes">
-      <div class="overlap-group">
-        <div class="overlay-text">Qais M's Routes</div>
-      </div>
-      <div class="text-wrapper">Recent</div>
-      <img class="image" src="img/image-1.png" />
-      <img class="img" src="img/image-2.png" />
-      <img class="image-2" src="img/image-3.png" />
-      <div class="element-london">30/01/2024:<br />London</div>
-      <div class="div">239 Likes</div>
-      <div class="text-wrapper-2">4 Likes</div>
-      <div class="text-wrapper-3">252 Likes</div>
-      <div class="element-paris">29/01/2024:<br />Paris</div>
-      <div class="element-dhaka">28/01/2024:<br />Dhaka</div>
-    </div>
-  </body>
-</html>
+<div class="user-routes">
+  <div class="overlap-group">
+    <div class="overlay-text">User's Routes</div>
+  </div>
+
+  <div class="image-container" *ngFor="let image of images">
+    <img [src]="image.src" />
+    <div class="image-caption" [innerHTML]="image.caption"></div>
+  </div>
+</div>
