@@ -91,7 +91,6 @@
     "dayjs": "1.11.5",
     "leaflet": "^1.9.4",
     "leaflet-control-geocoder": "^2.4.0",
-    "leaflet-geosearch": "^3.11.1",
     "leaflet-routing-machine": "^3.2.12",
     "ngx-infinite-scroll": "14.0.0",
     "ngx-webstorage": "10.0.1",
