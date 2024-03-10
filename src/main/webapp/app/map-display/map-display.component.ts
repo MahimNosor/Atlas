@@ -12,7 +12,8 @@ import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocod
 export class MapDisplayComponent implements OnInit {
   travelTime!: string;
   travelDistance!: string;
-  summaryLoaded = false;
+  routingControl!: any;
+  routeFound!: boolean;
 
   private map: any;
 
@@ -20,6 +21,14 @@ export class MapDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     this.initMap();
+  }
+
+  clearAllWaypoints(): void {
+    const waypoints = this.routingControl.getWaypoints();
+    if (waypoints.length !== 0) {
+      this.routingControl.getPlan().setWaypoints([]);
+      this.routeFound = false;
+    }
   }
 
   private initMarker(): void {
@@ -38,15 +47,17 @@ export class MapDisplayComponent implements OnInit {
   }
 
   private initRouting(): void {
-    const control = L.Routing.control({
+    this.routingControl = L.Routing.control({
       geocoder: L.Control.Geocoder.nominatim(),
       routeWhileDragging: true,
     }).addTo(this.map);
 
-    control.on('routesfound', (e: any) => {
+    this.routeFound = false;
+
+    this.routingControl.on('routesfound', (e: any) => {
       this.travelTime = (e.routes[0].summary.totalTime / 3600).toFixed(2);
       this.travelDistance = (e.routes[0].summary.totalDistance / 1000).toFixed(2);
-      this.summaryLoaded = true;
+      this.routeFound = true;
     });
   }
 
