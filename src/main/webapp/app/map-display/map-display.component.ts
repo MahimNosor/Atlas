@@ -24,11 +24,8 @@ export class MapDisplayComponent implements OnInit {
   }
 
   clearAllWaypoints(): void {
-    const waypoints = this.routingControl.getWaypoints();
-    if (waypoints.length !== 0) {
-      this.routingControl.getPlan().setWaypoints([]);
-      this.routeFound = false;
-    }
+    this.routingControl.getPlan().setWaypoints([]);
+    this.routeFound = false;
   }
 
   private initMarker(): void {

@@ -7,7 +7,7 @@
     <h2>Route Summary</h2>
     <p *ngIf="routeFound">Total time: {{ travelTime }}h</p>
     <p *ngIf="routeFound">Total distance: {{ travelDistance }}km</p>
-    <button [disabled]="!routeFound" type="button" (click)="clearAllWaypoints()">Clear all</button>
+    <button type="button" (click)="clearAllWaypoints()">Clear all</button>
   </div>
   <div class="mapContainer">
     <div class="mapBorder">
