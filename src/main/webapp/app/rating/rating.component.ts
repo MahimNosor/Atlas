@@ -37,20 +37,22 @@ export class RatingComponent implements OnInit {
     // };
 
     const routeData = {
+      id: null,
       distance: 1,
       stops: 1,
-      cost: 1,
+      cost: 1000000,
       duration: 1,
-      tagname: 'string',
-      city: 'string',
+      tagName: null,
+      city: null,
+      tags: null,
     };
 
     console.log(this.stops, this.routeTitle, this.routeDescription, this.routeRating);
     console.log('test');
 
     this.routeService.createRoute(routeData).subscribe({
-      next: response => {
-        console.log('Route created successfully:', response);
+      next(response) {
+        alert('Route created');
         // Handle successful creation here (e.g., redirecting the user or showing a success message)
       },
       error: error => {
