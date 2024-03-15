@@ -1,77 +1,22 @@
-.route-creation {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  text-align: center; /* Center everything in .route-creation */
-}
-
-form {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center; /* Align form items to center */
-  width: 100%; /* Use full width of .route-creation */
-}
-
-.stop-group {
+.divContainer {
   display: flex;
-  justify-content: center; /* Center the stop number and input box */
-  align-items: center; /* Align items vertically */
-  position: relative;
-  width: 100%; /* Use full width for stop group */
-  margin-bottom: 15px;
+  height: 900px;
 }
 
-.stop-group:not(:last-child)::after {
-  content: none; /* Removes the content, effectively removing the line */
-}
-
-.stop-number {
-  margin-right: 10px;
-  font-weight: bold;
-}
-
-.stop-info {
-  display: flex;
-  justify-content: center; /* Center the input and image */
-  align-items: center;
-  width: 100%; /* Use full width for better alignment */
-}
-
-.stop-info input {
-  width: 60%; /* Make the input box bigger */
-  padding: 12px 20px; /* Increase padding for larger input */
-  font-size: 1rem; /* Adjust font size if needed */
-  margin: 0 20px; /* Add some margin around input */
-}
-
-.stop-image {
-  width: 125px;
-  height: 125px;
-  object-fit: cover;
-  margin-left: 20px; /* Ensure some space between input and image */
-}
-
-.route-input {
-  width: 60%; /* Adjust width to match the stop input */
-  padding: 12px 20px; /* Larger padding for better visibility */
-  margin: 10px 0;
-  box-sizing: border-box;
-}
-
-button {
-  cursor: pointer;
-  padding: 10px 20px;
-  background-color: #007bff;
+.routeMenuContainer {
+  background-color: #2f2d2d;
   color: white;
-  border: none;
-  border-radius: 5px;
-  margin-top: 15px;
+  height: auto;
+  width: 30%;
+  display: inline;
+  padding-left: 15px;
 }
 
-button {
-  border-radius: 20px; /* This gives the button rounded corners */
-  padding: 10px 20px; /* Adjust based on your design preferences */
-  font-size: 1rem; /* Adjust size as needed */
-  color: white;
-  background-color: black;
+.mapContainer {
+  height: auto;
+  width: 70%;
+}
+
+#map {
+  height: 900px;
 }

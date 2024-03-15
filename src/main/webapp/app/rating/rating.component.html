@@ -1,4 +1,4 @@
-<div class="route-creation">
+<!-- <div class="route-creation">
   <h2 class="center-text">Create your Route</h2>
   <form>
     <div class="stop-group" *ngFor="let stop of stops; let i = index">
@@ -22,4 +22,59 @@
       <button type="submit" (click)="submitRoute()">Submit Route</button>
     </div>
   </form>
+</div> -->
+
+<head>
+  <link rel="stylesheet" href="rating.component.scss" />
+</head>
+
+<div class="divContainer">
+  <div class="routeMenuContainer">
+    <h2>Create your own route!</h2>
+    <p *ngIf="routeFound">Total time: {{ travelTime }}h</p>
+    <p *ngIf="routeFound">Total distance: {{ travelDistance }}km</p>
+    <button type="button" (click)="clearAllWaypoints()">Clear all</button>
+    <form>
+      <div class="form-group">
+        <label for="routeTitle">Title your route:</label>
+        <input type="text" [(ngModel)]="routeTitle" name="routeTitle" id="routeTitle" placeholder="Enter a title" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="routeDescription">Give a brief description:</label>
+        <textarea
+          [(ngModel)]="routeDescription"
+          name="routeDescription"
+          id="routeDescription"
+          placeholder="Enter a description"
+          class="form-control"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="city">Choose a city:</label>
+        <select [(ngModel)]="selectedCity" name="city" id="city" class="form-control">
+          <option value="city1">City 1</option>
+          <option value="city2">City 2</option>
+          <option value="city3">City 3</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="tags">Pick tags:</label>
+        <div class="checkbox-group">
+          <label> <input type="checkbox" [(ngModel)]="tag1" name="tag1" id="tag1" /> Tag 1 </label>
+          <label> <input type="checkbox" [(ngModel)]="tag2" name="tag2" id="tag2" /> Tag 2 </label>
+          <label> <input type="checkbox" [(ngModel)]="tag3" name="tag3" id="tag3" /> Tag 3 </label>
+        </div>
+      </div>
+      <div class="center-text">
+        <button type="submit" (click)="submitRoute()">Submit Route</button>
+      </div>
+    </form>
+  </div>
+  <div class="mapContainer">
+    <div class="mapBorder">
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <!-- create a route creation container. In here there will be multiple text boxes such as title your route, give your route a brief description, choose a city, pick tags and then a submit button-->
 </div>
