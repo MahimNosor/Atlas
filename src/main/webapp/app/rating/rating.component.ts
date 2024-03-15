@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { RouteService } from '../services/route.service';
 @Component({
   selector: 'jhi-rating', // Ensure this selector matches the one in your HTML
   templateUrl: './rating.component.html',
@@ -11,7 +11,7 @@ export class RatingComponent implements OnInit {
   routeDescription = ''; // Stores the description of the route
   routeRating = 0; // Stores the rating of the route
 
-  constructor() {}
+  constructor(private routeService: RouteService) {}
 
   ngOnInit(): void {
     // This method is called when the component is initialized
@@ -28,7 +28,39 @@ export class RatingComponent implements OnInit {
   submitRoute(): void {
     // Implement the logic to handle the submission of the route
     // For now, we'll just log the route details to the console
+
+    // const routeData = {
+    //   title: this.routeTitle,
+    //   description: this.routeDescription,
+    //   rating: this.routeRating,
+    //   stops: this.stops,
+    // };
+
+    const routeData = {
+      id: null,
+      distance: 1,
+      stops: 1,
+      cost: 1000000,
+      duration: 1,
+      tagName: null,
+      city: null,
+      tags: null,
+    };
+
     console.log(this.stops, this.routeTitle, this.routeDescription, this.routeRating);
+    console.log('test');
+
+    this.routeService.createRoute(routeData).subscribe({
+      next(response) {
+        alert('Route created');
+        // Handle successful creation here (e.g., redirecting the user or showing a success message)
+      },
+      error: error => {
+        console.error('There was an error creating the route:', error);
+        // Handle errors here (e.g., showing an error message to the user)
+      },
+    });
+
     // Here you would typically send this data to a backend server for processing
   }
 }
