@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MapDisplayService } from './service/map-display.service';
 import { icon, Marker } from 'leaflet';
 import * as L from 'leaflet';
 import '../../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js';
@@ -17,7 +18,7 @@ export class MapDisplayComponent implements OnInit {
 
   private map: any;
 
-  constructor() {}
+  constructor(private mapDisplayService: MapDisplayService) {}
 
   ngOnInit(): void {
     this.initMap();
