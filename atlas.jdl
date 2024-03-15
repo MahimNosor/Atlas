@@ -50,6 +50,7 @@ relationship OneToMany {
     City to Route{city(id)}
     Route to Stop{city(id)}
     AppUser to Route{appUser(id)}
+    AppUser to Review{appUser(id)}
 }
 
 relationship ManyToMany {

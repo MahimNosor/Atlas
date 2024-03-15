@@ -36,6 +36,12 @@
       "relationshipType": "one-to-many"
     },
     {
+      "otherEntityName": "review",
+      "otherEntityRelationshipName": "appUser",
+      "relationshipName": "review",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityField": "name",
       "otherEntityName": "tag",
       "otherEntityRelationshipName": "appUser",

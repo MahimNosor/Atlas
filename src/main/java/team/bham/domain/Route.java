@@ -59,7 +59,7 @@ public class Route implements Serializable {
     private City city;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "user", "routes", "tags" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "routes", "reviews", "tags" }, allowSetters = true)
     private AppUser appUser;
 
     @ManyToMany(mappedBy = "routes")

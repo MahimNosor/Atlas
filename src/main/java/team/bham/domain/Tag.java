@@ -43,7 +43,7 @@ public class Tag implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "app_user_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "user", "routes", "tags" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "routes", "reviews", "tags" }, allowSetters = true)
     private Set<AppUser> appUsers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

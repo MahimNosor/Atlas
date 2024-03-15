@@ -11,6 +11,7 @@ import { finalize } from 'rxjs/operators';
 import { Login } from '../../login/login.model';
 import { LoginService } from '../../login/login.service';
 import { AuthServerProvider } from '../../core/auth/auth-jwt.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-register',
@@ -56,7 +57,8 @@ export class RegisterComponent implements AfterViewInit {
     protected http: HttpClient,
     protected applicationConfigService: ApplicationConfigService,
     protected loginService: LoginService,
-    protected authServerProvider: AuthServerProvider
+    protected authServerProvider: AuthServerProvider,
+    protected router: Router
   ) {}
 
   ngAfterViewInit(): void {
@@ -94,9 +96,20 @@ export class RegisterComponent implements AfterViewInit {
 
   registerSuccess(): void {
     this.success = true;
-    const appUser: NewAppUser = { id: null, numRoutes: 0, numReviews: 0 };
     const { login, password } = this.registerForm.getRawValue();
+
     const credentials: Login = new Login(login, password, true);
+    this.loginService.login(credentials).subscribe({
+      next: () => {
+        if (!this.router.getCurrentNavigation()) {
+          // There were no routing during login (eg from navigationToStoredUrl)
+          this.router.navigate(['']);
+        }
+      },
+      error: () => console.log(':('),
+    });
+
+    const appUser: NewAppUser = { id: null, numRoutes: 0, numReviews: 0 };
     this.loginService.login(credentials);
     this.authServerProvider
       .linkAppUser(appUser)

@@ -63,6 +63,21 @@
             <small class="form-text text-danger" *ngIf="editForm.get('reviewDate')?.errors?.required"> This field is required. </small>
           </div>
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_appUser">App User</label>
+          <select
+            class="form-control"
+            id="field_appUser"
+            data-cy="appUser"
+            name="appUser"
+            formControlName="appUser"
+            [compareWith]="compareAppUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="appUserOption" *ngFor="let appUserOption of appUsersSharedCollection">{{ appUserOption.id }}</option>
+          </select>
+        </div>
       </div>
 
       <div>

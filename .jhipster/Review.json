@@ -36,6 +36,14 @@
   "name": "Review",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "appUser",
+      "otherEntityRelationshipName": "review",
+      "relationshipName": "appUser",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "service": "serviceClass"
 }

@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { ReviewFormService } from './review-form.service';
 import { ReviewService } from '../service/review.service';
 import { IReview } from '../review.model';
+import { IAppUser } from 'app/entities/app-user/app-user.model';
+import { AppUserService } from 'app/entities/app-user/service/app-user.service';
 
 import { ReviewUpdateComponent } from './review-update.component';
 
@@ -18,6 +20,7 @@ describe('Review Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let reviewFormService: ReviewFormService;
   let reviewService: ReviewService;
+  let appUserService: AppUserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,17 +43,43 @@ describe('Review Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     reviewFormService = TestBed.inject(ReviewFormService);
     reviewService = TestBed.inject(ReviewService);
+    appUserService = TestBed.inject(AppUserService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call AppUser query and add missing value', () => {
       const review: IReview = { id: 456 };
+      const appUser: IAppUser = { id: 84805 };
+      review.appUser = appUser;
+
+      const appUserCollection: IAppUser[] = [{ id: 45401 }];
+      jest.spyOn(appUserService, 'query').mockReturnValue(of(new HttpResponse({ body: appUserCollection })));
+      const additionalAppUsers = [appUser];
+      const expectedCollection: IAppUser[] = [...additionalAppUsers, ...appUserCollection];
+      jest.spyOn(appUserService, 'addAppUserToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ review });
       comp.ngOnInit();
 
+      expect(appUserService.query).toHaveBeenCalled();
+      expect(appUserService.addAppUserToCollectionIfMissing).toHaveBeenCalledWith(
+        appUserCollection,
+        ...additionalAppUsers.map(expect.objectContaining)
+      );
+      expect(comp.appUsersSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const review: IReview = { id: 456 };
+      const appUser: IAppUser = { id: 16790 };
+      review.appUser = appUser;
+
+      activatedRoute.data = of({ review });
+      comp.ngOnInit();
+
+      expect(comp.appUsersSharedCollection).toContain(appUser);
       expect(comp.review).toEqual(review);
     });
   });
@@ -120,6 +149,18 @@ describe('Review Management Update Component', () => {
       expect(reviewService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareAppUser', () => {
+      it('Should forward to appUserService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(appUserService, 'compareAppUser');
+        comp.compareAppUser(entity, entity2);
+        expect(appUserService.compareAppUser).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });

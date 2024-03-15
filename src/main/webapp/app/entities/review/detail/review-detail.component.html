@@ -34,6 +34,12 @@
         <dd>
           <span>{{ review.reviewDate | formatMediumDate }}</span>
         </dd>
+        <dt><span>App User</span></dt>
+        <dd>
+          <div *ngIf="review.appUser">
+            <a [routerLink]="['/app-user', review.appUser.id, 'view']">{{ review.appUser.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

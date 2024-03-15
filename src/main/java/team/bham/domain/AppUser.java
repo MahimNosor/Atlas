@@ -43,6 +43,11 @@ public class AppUser implements Serializable {
     @JsonIgnoreProperties(value = { "stops", "city", "appUser", "tags" }, allowSetters = true)
     private Set<Route> routes = new HashSet<>();
 
+    @OneToMany(mappedBy = "appUser")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "appUser" }, allowSetters = true)
+    private Set<Review> reviews = new HashSet<>();
+
     @ManyToMany(mappedBy = "appUsers")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "routes", "appUsers" }, allowSetters = true)
@@ -130,6 +135,37 @@ public class AppUser implements Serializable {
     public AppUser removeRoute(Route route) {
         this.routes.remove(route);
         route.setAppUser(null);
+        return this;
+    }
+
+    public Set<Review> getReviews() {
+        return this.reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        if (this.reviews != null) {
+            this.reviews.forEach(i -> i.setAppUser(null));
+        }
+        if (reviews != null) {
+            reviews.forEach(i -> i.setAppUser(this));
+        }
+        this.reviews = reviews;
+    }
+
+    public AppUser reviews(Set<Review> reviews) {
+        this.setReviews(reviews);
+        return this;
+    }
+
+    public AppUser addReview(Review review) {
+        this.reviews.add(review);
+        review.setAppUser(this);
+        return this;
+    }
+
+    public AppUser removeReview(Review review) {
+        this.reviews.remove(review);
+        review.setAppUser(null);
         return this;
     }
 
