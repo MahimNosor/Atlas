@@ -4,8 +4,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/config/error.constants';
 import { RegisterService } from './register.service';
-import { AppUserService } from '../../entities/app-user/service/app-user.service';
-import { NewAppUser } from '../../entities/app-user/app-user.model';
 
 @Component({
   selector: 'jhi-register',
@@ -45,7 +43,7 @@ export class RegisterComponent implements AfterViewInit {
     }),
   });
 
-  constructor(private registerService: RegisterService, private appUserService: AppUserService) {}
+  constructor(private registerService: RegisterService) {}
 
   ngAfterViewInit(): void {
     if (this.login) {
@@ -66,7 +64,7 @@ export class RegisterComponent implements AfterViewInit {
       const { login, email } = this.registerForm.getRawValue();
       this.registerService
         .save({ login, email, password, langKey: 'en' })
-        .subscribe({ next: () => this.registerSuccess(), error: response => this.processError(response) });
+        .subscribe({ next: () => (this.success = true), error: response => this.processError(response) });
     }
   }
 
@@ -78,11 +76,5 @@ export class RegisterComponent implements AfterViewInit {
     } else {
       this.error = true;
     }
-  }
-
-  registerSuccess(): void {
-    this.success = true;
-    const appUser: NewAppUser = { id: null, numReviews: 0, numRoutes: 0 };
-    this.appUserService.create(appUser);
   }
 }
