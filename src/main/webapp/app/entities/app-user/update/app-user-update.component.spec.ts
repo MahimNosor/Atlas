@@ -12,8 +12,6 @@ import { IAppUser } from '../app-user.model';
 
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
-import { IRoute } from 'app/entities/route/route.model';
-import { RouteService } from 'app/entities/route/service/route.service';
 
 import { AppUserUpdateComponent } from './app-user-update.component';
 
@@ -24,7 +22,6 @@ describe('AppUser Management Update Component', () => {
   let appUserFormService: AppUserFormService;
   let appUserService: AppUserService;
   let userService: UserService;
-  let routeService: RouteService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -48,7 +45,6 @@ describe('AppUser Management Update Component', () => {
     appUserFormService = TestBed.inject(AppUserFormService);
     appUserService = TestBed.inject(AppUserService);
     userService = TestBed.inject(UserService);
-    routeService = TestBed.inject(RouteService);
 
     comp = fixture.componentInstance;
   });
@@ -76,40 +72,15 @@ describe('AppUser Management Update Component', () => {
       expect(comp.usersSharedCollection).toEqual(expectedCollection);
     });
 
-    it('Should call Route query and add missing value', () => {
-      const appUser: IAppUser = { id: 456 };
-      const routes: IRoute[] = [{ id: 68954 }];
-      appUser.routes = routes;
-
-      const routeCollection: IRoute[] = [{ id: 35924 }];
-      jest.spyOn(routeService, 'query').mockReturnValue(of(new HttpResponse({ body: routeCollection })));
-      const additionalRoutes = [...routes];
-      const expectedCollection: IRoute[] = [...additionalRoutes, ...routeCollection];
-      jest.spyOn(routeService, 'addRouteToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ appUser });
-      comp.ngOnInit();
-
-      expect(routeService.query).toHaveBeenCalled();
-      expect(routeService.addRouteToCollectionIfMissing).toHaveBeenCalledWith(
-        routeCollection,
-        ...additionalRoutes.map(expect.objectContaining)
-      );
-      expect(comp.routesSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const appUser: IAppUser = { id: 456 };
       const user: IUser = { id: 29309 };
       appUser.user = user;
-      const route: IRoute = { id: 21393 };
-      appUser.routes = [route];
 
       activatedRoute.data = of({ appUser });
       comp.ngOnInit();
 
       expect(comp.usersSharedCollection).toContain(user);
-      expect(comp.routesSharedCollection).toContain(route);
       expect(comp.appUser).toEqual(appUser);
     });
   });
@@ -190,16 +161,6 @@ describe('AppUser Management Update Component', () => {
         jest.spyOn(userService, 'compareUser');
         comp.compareUser(entity, entity2);
         expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('compareRoute', () => {
-      it('Should forward to routeService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(routeService, 'compareRoute');
-        comp.compareRoute(entity, entity2);
-        expect(routeService.compareRoute).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

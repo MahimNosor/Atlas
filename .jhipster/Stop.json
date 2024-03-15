@@ -28,10 +28,6 @@
       "fieldName": "sequenceNumber",
       "fieldType": "Integer",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "rating",
-      "fieldType": "Integer"
     }
   ],
   "fluentMethods": true,
@@ -43,7 +39,8 @@
     {
       "otherEntityField": "id",
       "otherEntityName": "route",
-      "relationshipName": "route",
+      "otherEntityRelationshipName": "stop",
+      "relationshipName": "city",
       "relationshipType": "many-to-one"
     }
   ],

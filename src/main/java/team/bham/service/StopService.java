@@ -74,9 +74,6 @@ public class StopService {
                 if (stop.getSequenceNumber() != null) {
                     existingStop.setSequenceNumber(stop.getSequenceNumber());
                 }
-                if (stop.getRating() != null) {
-                    existingStop.setRating(stop.getRating());
-                }
 
                 return existingStop;
             })

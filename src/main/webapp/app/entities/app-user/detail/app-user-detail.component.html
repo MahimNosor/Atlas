@@ -26,13 +26,6 @@
         <dd>
           <span>{{ appUser.user?.login }}</span>
         </dd>
-        <dt><span>Route</span></dt>
-        <dd>
-          <span *ngFor="let route of appUser.routes; let last = last">
-            <a [routerLink]="['/route', route.id, 'view']">{{ route.id }}</a
-            >{{ last ? '' : ', ' }}
-          </span>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

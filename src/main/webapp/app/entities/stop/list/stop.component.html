@@ -68,15 +68,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="rating">
+          <th scope="col" jhiSortBy="city.id">
             <div class="d-flex">
-              <span>Rating</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="route.id">
-            <div class="d-flex">
-              <span>Route</span>
+              <span>City</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -93,10 +87,9 @@
           <td>{{ stop.latitude }}</td>
           <td>{{ stop.longitude }}</td>
           <td>{{ stop.sequenceNumber }}</td>
-          <td>{{ stop.rating }}</td>
           <td>
-            <div *ngIf="stop.route">
-              <a [routerLink]="['/route', stop.route.id, 'view']">{{ stop.route.id }}</a>
+            <div *ngIf="stop.city">
+              <a [routerLink]="['/route', stop.city.id, 'view']">{{ stop.city.id }}</a>
             </div>
           </td>
           <td class="text-end">

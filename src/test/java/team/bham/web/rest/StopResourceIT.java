@@ -44,9 +44,6 @@ class StopResourceIT {
     private static final Integer DEFAULT_SEQUENCE_NUMBER = 1;
     private static final Integer UPDATED_SEQUENCE_NUMBER = 2;
 
-    private static final Integer DEFAULT_RATING = 1;
-    private static final Integer UPDATED_RATING = 2;
-
     private static final String ENTITY_API_URL = "/api/stops";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -76,8 +73,7 @@ class StopResourceIT {
             .description(DEFAULT_DESCRIPTION)
             .latitude(DEFAULT_LATITUDE)
             .longitude(DEFAULT_LONGITUDE)
-            .sequenceNumber(DEFAULT_SEQUENCE_NUMBER)
-            .rating(DEFAULT_RATING);
+            .sequenceNumber(DEFAULT_SEQUENCE_NUMBER);
         return stop;
     }
 
@@ -93,8 +89,7 @@ class StopResourceIT {
             .description(UPDATED_DESCRIPTION)
             .latitude(UPDATED_LATITUDE)
             .longitude(UPDATED_LONGITUDE)
-            .sequenceNumber(UPDATED_SEQUENCE_NUMBER)
-            .rating(UPDATED_RATING);
+            .sequenceNumber(UPDATED_SEQUENCE_NUMBER);
         return stop;
     }
 
@@ -121,7 +116,6 @@ class StopResourceIT {
         assertThat(testStop.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
         assertThat(testStop.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
         assertThat(testStop.getSequenceNumber()).isEqualTo(DEFAULT_SEQUENCE_NUMBER);
-        assertThat(testStop.getRating()).isEqualTo(DEFAULT_RATING);
     }
 
     @Test
@@ -226,8 +220,7 @@ class StopResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
             .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
-            .andExpect(jsonPath("$.[*].sequenceNumber").value(hasItem(DEFAULT_SEQUENCE_NUMBER)))
-            .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING)));
+            .andExpect(jsonPath("$.[*].sequenceNumber").value(hasItem(DEFAULT_SEQUENCE_NUMBER)));
     }
 
     @Test
@@ -246,8 +239,7 @@ class StopResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.doubleValue()))
             .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.doubleValue()))
-            .andExpect(jsonPath("$.sequenceNumber").value(DEFAULT_SEQUENCE_NUMBER))
-            .andExpect(jsonPath("$.rating").value(DEFAULT_RATING));
+            .andExpect(jsonPath("$.sequenceNumber").value(DEFAULT_SEQUENCE_NUMBER));
     }
 
     @Test
@@ -274,8 +266,7 @@ class StopResourceIT {
             .description(UPDATED_DESCRIPTION)
             .latitude(UPDATED_LATITUDE)
             .longitude(UPDATED_LONGITUDE)
-            .sequenceNumber(UPDATED_SEQUENCE_NUMBER)
-            .rating(UPDATED_RATING);
+            .sequenceNumber(UPDATED_SEQUENCE_NUMBER);
 
         restStopMockMvc
             .perform(
@@ -294,7 +285,6 @@ class StopResourceIT {
         assertThat(testStop.getLatitude()).isEqualTo(UPDATED_LATITUDE);
         assertThat(testStop.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
         assertThat(testStop.getSequenceNumber()).isEqualTo(UPDATED_SEQUENCE_NUMBER);
-        assertThat(testStop.getRating()).isEqualTo(UPDATED_RATING);
     }
 
     @Test
@@ -365,7 +355,7 @@ class StopResourceIT {
         Stop partialUpdatedStop = new Stop();
         partialUpdatedStop.setId(stop.getId());
 
-        partialUpdatedStop.description(UPDATED_DESCRIPTION).sequenceNumber(UPDATED_SEQUENCE_NUMBER).rating(UPDATED_RATING);
+        partialUpdatedStop.description(UPDATED_DESCRIPTION).sequenceNumber(UPDATED_SEQUENCE_NUMBER);
 
         restStopMockMvc
             .perform(
@@ -384,7 +374,6 @@ class StopResourceIT {
         assertThat(testStop.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
         assertThat(testStop.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
         assertThat(testStop.getSequenceNumber()).isEqualTo(UPDATED_SEQUENCE_NUMBER);
-        assertThat(testStop.getRating()).isEqualTo(UPDATED_RATING);
     }
 
     @Test
@@ -404,8 +393,7 @@ class StopResourceIT {
             .description(UPDATED_DESCRIPTION)
             .latitude(UPDATED_LATITUDE)
             .longitude(UPDATED_LONGITUDE)
-            .sequenceNumber(UPDATED_SEQUENCE_NUMBER)
-            .rating(UPDATED_RATING);
+            .sequenceNumber(UPDATED_SEQUENCE_NUMBER);
 
         restStopMockMvc
             .perform(
@@ -424,7 +412,6 @@ class StopResourceIT {
         assertThat(testStop.getLatitude()).isEqualTo(UPDATED_LATITUDE);
         assertThat(testStop.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
         assertThat(testStop.getSequenceNumber()).isEqualTo(UPDATED_SEQUENCE_NUMBER);
-        assertThat(testStop.getRating()).isEqualTo(UPDATED_RATING);
     }
 
     @Test
