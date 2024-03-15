@@ -74,12 +74,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="route.id">
-            <div class="d-flex">
-              <span>Route</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -96,11 +90,6 @@
           <td>
             <div *ngIf="review.appUser">
               <a [routerLink]="['/app-user', review.appUser.id, 'view']">{{ review.appUser.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="review.route">
-              <a [routerLink]="['/route', review.route.id, 'view']">{{ review.route.id }}</a>
             </div>
           </td>
           <td class="text-end">

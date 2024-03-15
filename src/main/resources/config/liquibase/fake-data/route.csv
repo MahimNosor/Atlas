@@ -1,1 +1,15 @@
+<<<<<<< HEAD
 id;distance;stops;cost;duration;tag_name
+=======
+id;title;description;rating;distance;cost;num_reviews
+1;Burg;Technician systems Chips;83894;99042;98513;42131
+2;hacking;alarm Mobility;72557;19769;98537;79674
+3;South Marketing JSON;Garden Factors;1987;80542;24562;60362
+4;Mouse architectures;US Table;4825;25097;27283;91664
+5;Awesome Outdoors;Avon Executive;32839;93899;96451;47745
+6;invoice;port Markets;3051;99119;93124;70079
+7;Applications white toolset;yellow Keys;19580;43955;83571;86013
+8;Pizza Computers;lime;7253;94941;15814;94038
+9;transmitter;incentivize Director;88352;82760;54432;35554
+10;bypassing Extended Research;Granite;80841;47741;71852;23795
+>>>>>>> refs/remotes/origin/main

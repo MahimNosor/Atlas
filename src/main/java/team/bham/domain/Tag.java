@@ -33,8 +33,18 @@ public class Tag implements Serializable {
     @ManyToMany
     @JoinTable(name = "rel_tag__route", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "route_id"))
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "city", "tags", "appUsers" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "stops", "city", "appUser", "tags" }, allowSetters = true)
     private Set<Route> routes = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_tag__app_user",
+        joinColumns = @JoinColumn(name = "tag_id"),
+        inverseJoinColumns = @JoinColumn(name = "app_user_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "user", "routes", "reviews", "tags" }, allowSetters = true)
+    private Set<AppUser> appUsers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -86,6 +96,31 @@ public class Tag implements Serializable {
     public Tag removeRoute(Route route) {
         this.routes.remove(route);
         route.getTags().remove(this);
+        return this;
+    }
+
+    public Set<AppUser> getAppUsers() {
+        return this.appUsers;
+    }
+
+    public void setAppUsers(Set<AppUser> appUsers) {
+        this.appUsers = appUsers;
+    }
+
+    public Tag appUsers(Set<AppUser> appUsers) {
+        this.setAppUsers(appUsers);
+        return this;
+    }
+
+    public Tag addAppUser(AppUser appUser) {
+        this.appUsers.add(appUser);
+        appUser.getTags().add(this);
+        return this;
+    }
+
+    public Tag removeAppUser(AppUser appUser) {
+        this.appUsers.remove(appUser);
+        appUser.getTags().remove(this);
         return this;
     }
 

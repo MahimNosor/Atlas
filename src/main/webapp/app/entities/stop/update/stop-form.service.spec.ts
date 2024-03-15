@@ -25,8 +25,7 @@ describe('Stop Form Service', () => {
             latitude: expect.any(Object),
             longitude: expect.any(Object),
             sequenceNumber: expect.any(Object),
-            rating: expect.any(Object),
-            route: expect.any(Object),
+            city: expect.any(Object),
           })
         );
       });
@@ -42,8 +41,7 @@ describe('Stop Form Service', () => {
             latitude: expect.any(Object),
             longitude: expect.any(Object),
             sequenceNumber: expect.any(Object),
-            rating: expect.any(Object),
-            route: expect.any(Object),
+            city: expect.any(Object),
           })
         );
       });

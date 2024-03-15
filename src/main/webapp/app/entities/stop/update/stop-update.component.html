@@ -76,13 +76,8 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_rating">Rating</label>
-          <input type="number" class="form-control" name="rating" id="field_rating" data-cy="rating" formControlName="rating" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_route">Route</label>
-          <select class="form-control" id="field_route" data-cy="route" name="route" formControlName="route" [compareWith]="compareRoute">
+          <label class="form-label" for="field_city">City</label>
+          <select class="form-control" id="field_city" data-cy="city" name="city" formControlName="city" [compareWith]="compareRoute">
             <option [ngValue]="null"></option>
             <option [ngValue]="routeOption" *ngFor="let routeOption of routesSharedCollection">{{ routeOption.id }}</option>
           </select>

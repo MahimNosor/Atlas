@@ -30,11 +30,23 @@
       "relationshipType": "one-to-one"
     },
     {
-      "otherEntityField": "id",
       "otherEntityName": "route",
       "otherEntityRelationshipName": "appUser",
-      "ownerSide": true,
       "relationshipName": "route",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "review",
+      "otherEntityRelationshipName": "appUser",
+      "relationshipName": "review",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "tag",
+      "otherEntityRelationshipName": "appUser",
+      "ownerSide": false,
+      "relationshipName": "tag",
       "relationshipType": "many-to-many"
     }
   ],

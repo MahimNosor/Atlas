@@ -8,9 +8,9 @@
     -->
     <changeSet id="20240229213459-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="route_id"
+        <addForeignKeyConstraint baseColumnNames="city_id"
                                  baseTableName="stop"
-                                 constraintName="fk_stop__route_id"
+                                 constraintName="fk_stop__city_id"
                                  referencedColumnNames="id"
                                  referencedTableName="route"/>
     </changeSet>

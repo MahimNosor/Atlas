@@ -59,20 +59,23 @@ public class RouteService {
         return routeRepository
             .findById(route.getId())
             .map(existingRoute -> {
+                if (route.getTitle() != null) {
+                    existingRoute.setTitle(route.getTitle());
+                }
+                if (route.getDescription() != null) {
+                    existingRoute.setDescription(route.getDescription());
+                }
+                if (route.getRating() != null) {
+                    existingRoute.setRating(route.getRating());
+                }
                 if (route.getDistance() != null) {
                     existingRoute.setDistance(route.getDistance());
-                }
-                if (route.getStops() != null) {
-                    existingRoute.setStops(route.getStops());
                 }
                 if (route.getCost() != null) {
                     existingRoute.setCost(route.getCost());
                 }
-                if (route.getDuration() != null) {
-                    existingRoute.setDuration(route.getDuration());
-                }
-                if (route.getTagName() != null) {
-                    existingRoute.setTagName(route.getTagName());
+                if (route.getNumReviews() != null) {
+                    existingRoute.setNumReviews(route.getNumReviews());
                 }
 
                 return existingRoute;

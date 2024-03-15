@@ -14,30 +14,40 @@
         <dd>
           <span>{{ route.id }}</span>
         </dd>
+        <dt><span>Title</span></dt>
+        <dd>
+          <span>{{ route.title }}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+          <span>{{ route.description }}</span>
+        </dd>
+        <dt><span>Rating</span></dt>
+        <dd>
+          <span>{{ route.rating }}</span>
+        </dd>
         <dt><span>Distance</span></dt>
         <dd>
           <span>{{ route.distance }}</span>
-        </dd>
-        <dt><span>Stops</span></dt>
-        <dd>
-          <span>{{ route.stops }}</span>
         </dd>
         <dt><span>Cost</span></dt>
         <dd>
           <span>{{ route.cost }}</span>
         </dd>
-        <dt><span>Duration</span></dt>
+        <dt><span>Num Reviews</span></dt>
         <dd>
-          <span>{{ route.duration }}</span>
-        </dd>
-        <dt><span>Tag Name</span></dt>
-        <dd>
-          <span>{{ route.tagName }}</span>
+          <span>{{ route.numReviews }}</span>
         </dd>
         <dt><span>City</span></dt>
         <dd>
           <div *ngIf="route.city">
             <a [routerLink]="['/city', route.city.id, 'view']">{{ route.city.id }}</a>
+          </div>
+        </dd>
+        <dt><span>App User</span></dt>
+        <dd>
+          <div *ngIf="route.appUser">
+            <a [routerLink]="['/app-user', route.appUser.id, 'view']">{{ route.appUser.id }}</a>
           </div>
         </dd>
       </dl>

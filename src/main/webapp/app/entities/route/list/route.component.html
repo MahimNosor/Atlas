@@ -38,15 +38,27 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="distance">
+          <th scope="col" jhiSortBy="title">
             <div class="d-flex">
-              <span>Distance</span>
+              <span>Title</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="stops">
+          <th scope="col" jhiSortBy="description">
             <div class="d-flex">
-              <span>Stops</span>
+              <span>Description</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="rating">
+            <div class="d-flex">
+              <span>Rating</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="distance">
+            <div class="d-flex">
+              <span>Distance</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -56,21 +68,21 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="duration">
+          <th scope="col" jhiSortBy="numReviews">
             <div class="d-flex">
-              <span>Duration</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="tagName">
-            <div class="d-flex">
-              <span>Tag Name</span>
+              <span>Num Reviews</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="city.id">
             <div class="d-flex">
               <span>City</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="appUser.id">
+            <div class="d-flex">
+              <span>App User</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -82,14 +94,20 @@
           <td>
             <a [routerLink]="['/route', route.id, 'view']">{{ route.id }}</a>
           </td>
+          <td>{{ route.title }}</td>
+          <td>{{ route.description }}</td>
+          <td>{{ route.rating }}</td>
           <td>{{ route.distance }}</td>
-          <td>{{ route.stops }}</td>
           <td>{{ route.cost }}</td>
-          <td>{{ route.duration }}</td>
-          <td>{{ route.tagName }}</td>
+          <td>{{ route.numReviews }}</td>
           <td>
             <div *ngIf="route.city">
               <a [routerLink]="['/city', route.city.id, 'view']">{{ route.city.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="route.appUser">
+              <a [routerLink]="['/app-user', route.appUser.id, 'view']">{{ route.appUser.id }}</a>
             </div>
           </td>
           <td class="text-end">
