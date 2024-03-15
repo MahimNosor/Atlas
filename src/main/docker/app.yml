@@ -21,8 +21,8 @@ services:
     image: postgres:14.5
     restart: always
     # to make the database content remain between deployments, uncomment the following two lines
-    # volumes:
-    #   - ~/dev/volumes/jhipster/teamproject/postgresql/:/var/lib/postgresql/data/
+    volumes:
+      - ~/dev/volumes/jhipster/teamproject/postgresql/:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=teamproject
       - POSTGRES_PASSWORD=
