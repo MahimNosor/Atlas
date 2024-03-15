@@ -79,14 +79,14 @@ export class StopUpdateComponent implements OnInit {
     this.stop = stop;
     this.stopFormService.resetForm(this.editForm, stop);
 
-    this.routesSharedCollection = this.routeService.addRouteToCollectionIfMissing<IRoute>(this.routesSharedCollection, stop.city);
+    this.routesSharedCollection = this.routeService.addRouteToCollectionIfMissing<IRoute>(this.routesSharedCollection, stop.route);
   }
 
   protected loadRelationshipsOptions(): void {
     this.routeService
       .query()
       .pipe(map((res: HttpResponse<IRoute[]>) => res.body ?? []))
-      .pipe(map((routes: IRoute[]) => this.routeService.addRouteToCollectionIfMissing<IRoute>(routes, this.stop?.city)))
+      .pipe(map((routes: IRoute[]) => this.routeService.addRouteToCollectionIfMissing<IRoute>(routes, this.stop?.route)))
       .subscribe((routes: IRoute[]) => (this.routesSharedCollection = routes));
   }
 }

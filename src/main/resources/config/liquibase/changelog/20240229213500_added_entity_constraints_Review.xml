@@ -13,5 +13,11 @@
                                  constraintName="fk_review__app_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="route_id"
+                                 baseTableName="review"
+                                 constraintName="fk_review__route_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="route"/>
     </changeSet>
 </databaseChangeLog>

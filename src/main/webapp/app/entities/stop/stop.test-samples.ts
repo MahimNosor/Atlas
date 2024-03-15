@@ -9,28 +9,29 @@ export const sampleWithRequiredData: IStop = {
 };
 
 export const sampleWithPartialData: IStop = {
-  id: 4948,
-  name: 'Markets deposit',
-  description: 'Human',
-  latitude: 2622,
-  longitude: 98077,
-  sequenceNumber: 93660,
+  id: 62436,
+  name: 'deploy Handmade Human',
+  description: 'Representative',
+  latitude: 4201,
+  longitude: 1952,
+  sequenceNumber: 26826,
 };
 
 export const sampleWithFullData: IStop = {
-  id: 16341,
-  name: 'Computers',
-  description: 'e-business PCI',
-  latitude: 96095,
-  longitude: 5594,
-  sequenceNumber: 58237,
+  id: 85803,
+  name: 'e-business PCI',
+  description: 'Granite mindshare Account',
+  latitude: 91112,
+  longitude: 16151,
+  sequenceNumber: 89337,
+  rating: 36228,
 };
 
 export const sampleWithNewData: NewStop = {
-  name: 'Infrastructure drive',
-  latitude: 51526,
-  longitude: 92937,
-  sequenceNumber: 91112,
+  name: 'invoice Health',
+  latitude: 540,
+  longitude: 14969,
+  sequenceNumber: 93808,
   id: null,
 };
 

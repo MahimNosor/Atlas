@@ -1,9 +1,6 @@
 package team.bham.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -37,11 +34,6 @@ public class City implements Serializable {
     @NotNull
     @Column(name = "num_routes", nullable = false)
     private Integer numRoutes;
-
-    @OneToMany(mappedBy = "city")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "stops", "city", "appUser", "tags" }, allowSetters = true)
-    private Set<Route> routes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -95,37 +87,6 @@ public class City implements Serializable {
 
     public void setNumRoutes(Integer numRoutes) {
         this.numRoutes = numRoutes;
-    }
-
-    public Set<Route> getRoutes() {
-        return this.routes;
-    }
-
-    public void setRoutes(Set<Route> routes) {
-        if (this.routes != null) {
-            this.routes.forEach(i -> i.setCity(null));
-        }
-        if (routes != null) {
-            routes.forEach(i -> i.setCity(this));
-        }
-        this.routes = routes;
-    }
-
-    public City routes(Set<Route> routes) {
-        this.setRoutes(routes);
-        return this;
-    }
-
-    public City addRoute(Route route) {
-        this.routes.add(route);
-        route.setCity(this);
-        return this;
-    }
-
-    public City removeRoute(Route route) {
-        this.routes.remove(route);
-        route.setCity(null);
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

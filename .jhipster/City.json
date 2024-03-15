@@ -26,13 +26,6 @@
   "name": "City",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [
-    {
-      "otherEntityName": "route",
-      "otherEntityRelationshipName": "city",
-      "relationshipName": "route",
-      "relationshipType": "one-to-many"
-    }
-  ],
+  "relationships": [],
   "service": "serviceClass"
 }

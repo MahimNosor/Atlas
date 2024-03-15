@@ -22,7 +22,6 @@ describe('Tag Form Service', () => {
             id: expect.any(Object),
             name: expect.any(Object),
             routes: expect.any(Object),
-            appUsers: expect.any(Object),
           })
         );
       });
@@ -35,7 +34,6 @@ describe('Tag Form Service', () => {
             id: expect.any(Object),
             name: expect.any(Object),
             routes: expect.any(Object),
-            appUsers: expect.any(Object),
           })
         );
       });

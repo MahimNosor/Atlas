@@ -6,23 +6,13 @@
   "entityTableName": "route",
   "fields": [
     {
-      "fieldName": "title",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "description",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "rating",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "distance",
       "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "stops",
+      "fieldType": "Integer",
       "fieldValidateRules": ["required"]
     },
     {
@@ -30,9 +20,13 @@
       "fieldType": "Double"
     },
     {
-      "fieldName": "numReviews",
+      "fieldName": "duration",
       "fieldType": "Integer",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tagName",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,
@@ -42,31 +36,25 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "stop",
-      "otherEntityRelationshipName": "city",
-      "relationshipName": "stop",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityField": "id",
       "otherEntityName": "city",
-      "otherEntityRelationshipName": "route",
       "relationshipName": "city",
       "relationshipType": "many-to-one"
     },
     {
       "otherEntityField": "id",
-      "otherEntityName": "appUser",
-      "otherEntityRelationshipName": "route",
-      "relationshipName": "appUser",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityField": "name",
       "otherEntityName": "tag",
       "otherEntityRelationshipName": "route",
       "ownerSide": false,
       "relationshipName": "tag",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "appUser",
+      "otherEntityRelationshipName": "route",
+      "ownerSide": false,
+      "relationshipName": "appUser",
       "relationshipType": "many-to-many"
     }
   ],

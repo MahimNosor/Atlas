@@ -1,18 +1,17 @@
 import { ICity } from 'app/entities/city/city.model';
-import { IAppUser } from 'app/entities/app-user/app-user.model';
 import { ITag } from 'app/entities/tag/tag.model';
+import { IAppUser } from 'app/entities/app-user/app-user.model';
 
 export interface IRoute {
   id: number;
-  title?: string | null;
-  description?: string | null;
-  rating?: number | null;
   distance?: number | null;
+  stops?: number | null;
   cost?: number | null;
-  numReviews?: number | null;
+  duration?: number | null;
+  tagName?: string | null;
   city?: Pick<ICity, 'id'> | null;
-  appUser?: Pick<IAppUser, 'id'> | null;
-  tags?: Pick<ITag, 'id' | 'name'>[] | null;
+  tags?: Pick<ITag, 'id'>[] | null;
+  appUsers?: Pick<IAppUser, 'id'>[] | null;
 }
 
 export type NewRoute = Omit<IRoute, 'id'> & { id: null };

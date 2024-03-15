@@ -27,45 +27,35 @@ public class Route implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "title", nullable = false)
-    private String title;
-
-    @NotNull
-    @Column(name = "description", nullable = false)
-    private String description;
-
-    @NotNull
-    @Column(name = "rating", nullable = false)
-    private Integer rating;
-
-    @NotNull
     @Column(name = "distance", nullable = false)
     private Double distance;
+
+    @NotNull
+    @Column(name = "stops", nullable = false)
+    private Integer stops;
 
     @Column(name = "cost")
     private Double cost;
 
     @NotNull
-    @Column(name = "num_reviews", nullable = false)
-    private Integer numReviews;
+    @Column(name = "duration", nullable = false)
+    private Integer duration;
 
-    @OneToMany(mappedBy = "city")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "city" }, allowSetters = true)
-    private Set<Stop> stops = new HashSet<>();
+    @Column(name = "tag_name")
+    private String tagName;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "routes" }, allowSetters = true)
     private City city;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "user", "routes", "reviews", "tags" }, allowSetters = true)
-    private AppUser appUser;
 
     @ManyToMany(mappedBy = "routes")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "routes", "appUsers" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "routes" }, allowSetters = true)
     private Set<Tag> tags = new HashSet<>();
+
+    @ManyToMany(mappedBy = "routes")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "user", "routes" }, allowSetters = true)
+    private Set<AppUser> appUsers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -82,45 +72,6 @@ public class Route implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return this.title;
-    }
-
-    public Route title(String title) {
-        this.setTitle(title);
-        return this;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public Route description(String description) {
-        this.setDescription(description);
-        return this;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getRating() {
-        return this.rating;
-    }
-
-    public Route rating(Integer rating) {
-        this.setRating(rating);
-        return this;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
-
     public Double getDistance() {
         return this.distance;
     }
@@ -132,6 +83,19 @@ public class Route implements Serializable {
 
     public void setDistance(Double distance) {
         this.distance = distance;
+    }
+
+    public Integer getStops() {
+        return this.stops;
+    }
+
+    public Route stops(Integer stops) {
+        this.setStops(stops);
+        return this;
+    }
+
+    public void setStops(Integer stops) {
+        this.stops = stops;
     }
 
     public Double getCost() {
@@ -147,48 +111,30 @@ public class Route implements Serializable {
         this.cost = cost;
     }
 
-    public Integer getNumReviews() {
-        return this.numReviews;
+    public Integer getDuration() {
+        return this.duration;
     }
 
-    public Route numReviews(Integer numReviews) {
-        this.setNumReviews(numReviews);
+    public Route duration(Integer duration) {
+        this.setDuration(duration);
         return this;
     }
 
-    public void setNumReviews(Integer numReviews) {
-        this.numReviews = numReviews;
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
-    public Set<Stop> getStops() {
-        return this.stops;
+    public String getTagName() {
+        return this.tagName;
     }
 
-    public void setStops(Set<Stop> stops) {
-        if (this.stops != null) {
-            this.stops.forEach(i -> i.setCity(null));
-        }
-        if (stops != null) {
-            stops.forEach(i -> i.setCity(this));
-        }
-        this.stops = stops;
-    }
-
-    public Route stops(Set<Stop> stops) {
-        this.setStops(stops);
+    public Route tagName(String tagName) {
+        this.setTagName(tagName);
         return this;
     }
 
-    public Route addStop(Stop stop) {
-        this.stops.add(stop);
-        stop.setCity(this);
-        return this;
-    }
-
-    public Route removeStop(Stop stop) {
-        this.stops.remove(stop);
-        stop.setCity(null);
-        return this;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public City getCity() {
@@ -201,19 +147,6 @@ public class Route implements Serializable {
 
     public Route city(City city) {
         this.setCity(city);
-        return this;
-    }
-
-    public AppUser getAppUser() {
-        return this.appUser;
-    }
-
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
-    }
-
-    public Route appUser(AppUser appUser) {
-        this.setAppUser(appUser);
         return this;
     }
 
@@ -248,6 +181,37 @@ public class Route implements Serializable {
         return this;
     }
 
+    public Set<AppUser> getAppUsers() {
+        return this.appUsers;
+    }
+
+    public void setAppUsers(Set<AppUser> appUsers) {
+        if (this.appUsers != null) {
+            this.appUsers.forEach(i -> i.removeRoute(this));
+        }
+        if (appUsers != null) {
+            appUsers.forEach(i -> i.addRoute(this));
+        }
+        this.appUsers = appUsers;
+    }
+
+    public Route appUsers(Set<AppUser> appUsers) {
+        this.setAppUsers(appUsers);
+        return this;
+    }
+
+    public Route addAppUser(AppUser appUser) {
+        this.appUsers.add(appUser);
+        appUser.getRoutes().add(this);
+        return this;
+    }
+
+    public Route removeAppUser(AppUser appUser) {
+        this.appUsers.remove(appUser);
+        appUser.getRoutes().remove(this);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -272,12 +236,11 @@ public class Route implements Serializable {
     public String toString() {
         return "Route{" +
             "id=" + getId() +
-            ", title='" + getTitle() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", rating=" + getRating() +
             ", distance=" + getDistance() +
+            ", stops=" + getStops() +
             ", cost=" + getCost() +
-            ", numReviews=" + getNumReviews() +
+            ", duration=" + getDuration() +
+            ", tagName='" + getTagName() + "'" +
             "}";
     }
 }

@@ -13,11 +13,5 @@
                                  constraintName="fk_route__city_id"
                                  referencedColumnNames="id"
                                  referencedTableName="city"/>
-
-        <addForeignKeyConstraint baseColumnNames="app_user_id"
-                                 baseTableName="route"
-                                 constraintName="fk_route__app_user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="app_user"/>
     </changeSet>
 </databaseChangeLog>

@@ -33,17 +33,6 @@
         </createTable>
 
         <addPrimaryKey columnNames="tag_id, route_id" tableName="rel_tag__route"/>
-
-        <createTable tableName="rel_tag__app_user">
-            <column name="app_user_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="tag_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="tag_id, app_user_id" tableName="rel_tag__app_user"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

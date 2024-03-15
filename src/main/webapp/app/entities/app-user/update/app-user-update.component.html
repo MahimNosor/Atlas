@@ -47,6 +47,21 @@
             <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
           </select>
         </div>
+
+        <div class="row mb-3">
+          <label for="field_routes">Route</label>
+          <select
+            class="form-control"
+            id="field_routes"
+            data-cy="route"
+            multiple
+            name="routes"
+            formControlName="routes"
+            [compareWith]="compareRoute"
+          >
+            <option [ngValue]="routeOption" *ngFor="let routeOption of routesSharedCollection">{{ routeOption.id }}</option>
+          </select>
+        </div>
       </div>
 
       <div>

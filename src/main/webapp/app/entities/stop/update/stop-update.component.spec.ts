@@ -51,12 +51,12 @@ describe('Stop Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Route query and add missing value', () => {
       const stop: IStop = { id: 456 };
-      const city: IRoute = { id: 2005 };
-      stop.city = city;
+      const route: IRoute = { id: 2005 };
+      stop.route = route;
 
       const routeCollection: IRoute[] = [{ id: 25422 }];
       jest.spyOn(routeService, 'query').mockReturnValue(of(new HttpResponse({ body: routeCollection })));
-      const additionalRoutes = [city];
+      const additionalRoutes = [route];
       const expectedCollection: IRoute[] = [...additionalRoutes, ...routeCollection];
       jest.spyOn(routeService, 'addRouteToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -73,13 +73,13 @@ describe('Stop Management Update Component', () => {
 
     it('Should update editForm', () => {
       const stop: IStop = { id: 456 };
-      const city: IRoute = { id: 78130 };
-      stop.city = city;
+      const route: IRoute = { id: 78130 };
+      stop.route = route;
 
       activatedRoute.data = of({ stop });
       comp.ngOnInit();
 
-      expect(comp.routesSharedCollection).toContain(city);
+      expect(comp.routesSharedCollection).toContain(route);
       expect(comp.stop).toEqual(stop);
     });
   });

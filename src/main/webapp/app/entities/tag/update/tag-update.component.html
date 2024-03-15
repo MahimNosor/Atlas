@@ -33,21 +33,6 @@
             <option [ngValue]="routeOption" *ngFor="let routeOption of routesSharedCollection">{{ routeOption.id }}</option>
           </select>
         </div>
-
-        <div class="row mb-3">
-          <label for="field_appUsers">App User</label>
-          <select
-            class="form-control"
-            id="field_appUsers"
-            data-cy="appUser"
-            multiple
-            name="appUsers"
-            formControlName="appUsers"
-            [compareWith]="compareAppUser"
-          >
-            <option [ngValue]="appUserOption" *ngFor="let appUserOption of appUsersSharedCollection">{{ appUserOption.id }}</option>
-          </select>
-        </div>
       </div>
 
       <div>

@@ -46,8 +46,12 @@ public class Review implements Serializable {
     private LocalDate reviewDate;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "user", "routes", "reviews", "tags" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "routes" }, allowSetters = true)
     private AppUser appUser;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "city", "tags", "appUsers" }, allowSetters = true)
+    private Route route;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -139,6 +143,19 @@ public class Review implements Serializable {
 
     public Review appUser(AppUser appUser) {
         this.setAppUser(appUser);
+        return this;
+    }
+
+    public Route getRoute() {
+        return this.route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
+    public Review route(Route route) {
+        this.setRoute(route);
         return this;
     }
 

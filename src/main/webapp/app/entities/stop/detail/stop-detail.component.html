@@ -34,10 +34,14 @@
         <dd>
           <span>{{ stop.sequenceNumber }}</span>
         </dd>
-        <dt><span>City</span></dt>
+        <dt><span>Rating</span></dt>
         <dd>
-          <div *ngIf="stop.city">
-            <a [routerLink]="['/route', stop.city.id, 'view']">{{ stop.city.id }}</a>
+          <span>{{ stop.rating }}</span>
+        </dd>
+        <dt><span>Route</span></dt>
+        <dd>
+          <div *ngIf="stop.route">
+            <a [routerLink]="['/route', stop.route.id, 'view']">{{ stop.route.id }}</a>
           </div>
         </dd>
       </dl>

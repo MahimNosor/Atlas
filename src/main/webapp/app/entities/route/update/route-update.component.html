@@ -12,38 +12,6 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_title">Title</label>
-          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
-          <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('title')?.errors?.required"> This field is required. </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_description">Description</label>
-          <input
-            type="text"
-            class="form-control"
-            name="description"
-            id="field_description"
-            data-cy="description"
-            formControlName="description"
-          />
-          <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('description')?.errors?.required"> This field is required. </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_rating">Rating</label>
-          <input type="number" class="form-control" name="rating" id="field_rating" data-cy="rating" formControlName="rating" />
-          <div *ngIf="editForm.get('rating')!.invalid && (editForm.get('rating')!.dirty || editForm.get('rating')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('rating')?.errors?.required"> This field is required. </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('rating')?.errors?.number"> This field should be a number. </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
           <label class="form-label" for="field_distance">Distance</label>
           <input type="number" class="form-control" name="distance" id="field_distance" data-cy="distance" formControlName="distance" />
           <div *ngIf="editForm.get('distance')!.invalid && (editForm.get('distance')!.dirty || editForm.get('distance')!.touched)">
@@ -55,26 +23,33 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" for="field_stops">Stops</label>
+          <input type="number" class="form-control" name="stops" id="field_stops" data-cy="stops" formControlName="stops" />
+          <div *ngIf="editForm.get('stops')!.invalid && (editForm.get('stops')!.dirty || editForm.get('stops')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('stops')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('stops')?.errors?.number"> This field should be a number. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" for="field_cost">Cost</label>
           <input type="number" class="form-control" name="cost" id="field_cost" data-cy="cost" formControlName="cost" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_numReviews">Num Reviews</label>
-          <input
-            type="number"
-            class="form-control"
-            name="numReviews"
-            id="field_numReviews"
-            data-cy="numReviews"
-            formControlName="numReviews"
-          />
-          <div *ngIf="editForm.get('numReviews')!.invalid && (editForm.get('numReviews')!.dirty || editForm.get('numReviews')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('numReviews')?.errors?.required"> This field is required. </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('numReviews')?.errors?.number">
+          <label class="form-label" for="field_duration">Duration</label>
+          <input type="number" class="form-control" name="duration" id="field_duration" data-cy="duration" formControlName="duration" />
+          <div *ngIf="editForm.get('duration')!.invalid && (editForm.get('duration')!.dirty || editForm.get('duration')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('duration')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('duration')?.errors?.number">
               This field should be a number.
             </small>
           </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_tagName">Tag Name</label>
+          <input type="text" class="form-control" name="tagName" id="field_tagName" data-cy="tagName" formControlName="tagName" />
         </div>
 
         <div class="row mb-3">
@@ -82,21 +57,6 @@
           <select class="form-control" id="field_city" data-cy="city" name="city" formControlName="city" [compareWith]="compareCity">
             <option [ngValue]="null"></option>
             <option [ngValue]="cityOption" *ngFor="let cityOption of citiesSharedCollection">{{ cityOption.id }}</option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_appUser">App User</label>
-          <select
-            class="form-control"
-            id="field_appUser"
-            data-cy="appUser"
-            name="appUser"
-            formControlName="appUser"
-            [compareWith]="compareAppUser"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="appUserOption" *ngFor="let appUserOption of appUsersSharedCollection">{{ appUserOption.id }}</option>
           </select>
         </div>
       </div>

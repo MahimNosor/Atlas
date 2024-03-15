@@ -20,15 +20,14 @@ describe('Route Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            title: expect.any(Object),
-            description: expect.any(Object),
-            rating: expect.any(Object),
             distance: expect.any(Object),
+            stops: expect.any(Object),
             cost: expect.any(Object),
-            numReviews: expect.any(Object),
+            duration: expect.any(Object),
+            tagName: expect.any(Object),
             city: expect.any(Object),
-            appUser: expect.any(Object),
             tags: expect.any(Object),
+            appUsers: expect.any(Object),
           })
         );
       });
@@ -39,15 +38,14 @@ describe('Route Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            title: expect.any(Object),
-            description: expect.any(Object),
-            rating: expect.any(Object),
             distance: expect.any(Object),
+            stops: expect.any(Object),
             cost: expect.any(Object),
-            numReviews: expect.any(Object),
+            duration: expect.any(Object),
+            tagName: expect.any(Object),
             city: expect.any(Object),
-            appUser: expect.any(Object),
             tags: expect.any(Object),
+            appUsers: expect.any(Object),
           })
         );
       });

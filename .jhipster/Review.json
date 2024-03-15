@@ -40,8 +40,13 @@
     {
       "otherEntityField": "id",
       "otherEntityName": "appUser",
-      "otherEntityRelationshipName": "review",
       "relationshipName": "appUser",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "route",
+      "relationshipName": "route",
       "relationshipType": "many-to-one"
     }
   ],

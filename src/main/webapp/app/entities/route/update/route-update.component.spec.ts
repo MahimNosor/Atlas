@@ -11,8 +11,6 @@ import { RouteService } from '../service/route.service';
 import { IRoute } from '../route.model';
 import { ICity } from 'app/entities/city/city.model';
 import { CityService } from 'app/entities/city/service/city.service';
-import { IAppUser } from 'app/entities/app-user/app-user.model';
-import { AppUserService } from 'app/entities/app-user/service/app-user.service';
 
 import { RouteUpdateComponent } from './route-update.component';
 
@@ -23,7 +21,6 @@ describe('Route Management Update Component', () => {
   let routeFormService: RouteFormService;
   let routeService: RouteService;
   let cityService: CityService;
-  let appUserService: AppUserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -47,7 +44,6 @@ describe('Route Management Update Component', () => {
     routeFormService = TestBed.inject(RouteFormService);
     routeService = TestBed.inject(RouteService);
     cityService = TestBed.inject(CityService);
-    appUserService = TestBed.inject(AppUserService);
 
     comp = fixture.componentInstance;
   });
@@ -75,40 +71,15 @@ describe('Route Management Update Component', () => {
       expect(comp.citiesSharedCollection).toEqual(expectedCollection);
     });
 
-    it('Should call AppUser query and add missing value', () => {
-      const route: IRoute = { id: 456 };
-      const appUser: IAppUser = { id: 25039 };
-      route.appUser = appUser;
-
-      const appUserCollection: IAppUser[] = [{ id: 86965 }];
-      jest.spyOn(appUserService, 'query').mockReturnValue(of(new HttpResponse({ body: appUserCollection })));
-      const additionalAppUsers = [appUser];
-      const expectedCollection: IAppUser[] = [...additionalAppUsers, ...appUserCollection];
-      jest.spyOn(appUserService, 'addAppUserToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ route });
-      comp.ngOnInit();
-
-      expect(appUserService.query).toHaveBeenCalled();
-      expect(appUserService.addAppUserToCollectionIfMissing).toHaveBeenCalledWith(
-        appUserCollection,
-        ...additionalAppUsers.map(expect.objectContaining)
-      );
-      expect(comp.appUsersSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const route: IRoute = { id: 456 };
       const city: ICity = { id: 99140 };
       route.city = city;
-      const appUser: IAppUser = { id: 43122 };
-      route.appUser = appUser;
 
       activatedRoute.data = of({ route });
       comp.ngOnInit();
 
       expect(comp.citiesSharedCollection).toContain(city);
-      expect(comp.appUsersSharedCollection).toContain(appUser);
       expect(comp.route).toEqual(route);
     });
   });
@@ -189,16 +160,6 @@ describe('Route Management Update Component', () => {
         jest.spyOn(cityService, 'compareCity');
         comp.compareCity(entity, entity2);
         expect(cityService.compareCity).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('compareAppUser', () => {
-      it('Should forward to appUserService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(appUserService, 'compareAppUser');
-        comp.compareAppUser(entity, entity2);
-        expect(appUserService.compareAppUser).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });
