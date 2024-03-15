@@ -23,8 +23,7 @@ type StopFormGroupContent = {
   latitude: FormControl<IStop['latitude']>;
   longitude: FormControl<IStop['longitude']>;
   sequenceNumber: FormControl<IStop['sequenceNumber']>;
-  rating: FormControl<IStop['rating']>;
-  route: FormControl<IStop['route']>;
+  city: FormControl<IStop['city']>;
 };
 
 export type StopFormGroup = FormGroup<StopFormGroupContent>;
@@ -57,8 +56,7 @@ export class StopFormService {
       sequenceNumber: new FormControl(stopRawValue.sequenceNumber, {
         validators: [Validators.required],
       }),
-      rating: new FormControl(stopRawValue.rating),
-      route: new FormControl(stopRawValue.route),
+      city: new FormControl(stopRawValue.city),
     });
   }
 

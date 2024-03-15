@@ -22,7 +22,7 @@ public class TagRepositoryWithBagRelationshipsImpl implements TagRepositoryWithB
 
     @Override
     public Optional<Tag> fetchBagRelationships(Optional<Tag> tag) {
-        return tag.map(this::fetchRoutes);
+        return tag.map(this::fetchRoutes).map(this::fetchAppUsers);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class TagRepositoryWithBagRelationshipsImpl implements TagRepositoryWithB
 
     @Override
     public List<Tag> fetchBagRelationships(List<Tag> tags) {
-        return Optional.of(tags).map(this::fetchRoutes).orElse(Collections.emptyList());
+        return Optional.of(tags).map(this::fetchRoutes).map(this::fetchAppUsers).orElse(Collections.emptyList());
     }
 
     Tag fetchRoutes(Tag result) {
@@ -48,6 +48,26 @@ public class TagRepositoryWithBagRelationshipsImpl implements TagRepositoryWithB
         IntStream.range(0, tags.size()).forEach(index -> order.put(tags.get(index).getId(), index));
         List<Tag> result = entityManager
             .createQuery("select distinct tag from Tag tag left join fetch tag.routes where tag in :tags", Tag.class)
+            .setParameter("tags", tags)
+            .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
+            .getResultList();
+        Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), order.get(o2.getId())));
+        return result;
+    }
+
+    Tag fetchAppUsers(Tag result) {
+        return entityManager
+            .createQuery("select tag from Tag tag left join fetch tag.appUsers where tag is :tag", Tag.class)
+            .setParameter("tag", result)
+            .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
+            .getSingleResult();
+    }
+
+    List<Tag> fetchAppUsers(List<Tag> tags) {
+        HashMap<Object, Integer> order = new HashMap<>();
+        IntStream.range(0, tags.size()).forEach(index -> order.put(tags.get(index).getId(), index));
+        List<Tag> result = entityManager
+            .createQuery("select distinct tag from Tag tag left join fetch tag.appUsers where tag in :tags", Tag.class)
             .setParameter("tags", tags)
             .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
             .getResultList();

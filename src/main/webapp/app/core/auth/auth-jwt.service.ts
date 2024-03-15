@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 import { ApplicationConfigService } from '../config/application-config.service';
 import { Login } from 'app/login/login.model';
+import { IAppUser, NewAppUser } from '../../entities/app-user/app-user.model';
 
 type JwtToken = {
   id_token: string;
@@ -52,5 +53,9 @@ export class AuthServerProvider {
       this.sessionStorageService.store('authenticationToken', jwt);
       this.localStorageService.clear('authenticationToken');
     }
+  }
+
+  linkAppUser(appUser: NewAppUser): Observable<{}> {
+    return this.http.post<IAppUser>(this.applicationConfigService.getEndpointFor('api/app-users'), appUser, { observe: 'response' });
   }
 }

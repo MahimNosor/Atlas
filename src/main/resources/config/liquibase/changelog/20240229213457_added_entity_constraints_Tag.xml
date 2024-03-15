@@ -19,5 +19,17 @@
                                  constraintName="fk_rel_tag__route__route_id"
                                  referencedColumnNames="id"
                                  referencedTableName="route"/>
+
+        <addForeignKeyConstraint baseColumnNames="tag_id"
+                                 baseTableName="rel_tag__app_user"
+                                 constraintName="fk_rel_tag__app_user__tag_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tag"/>
+
+        <addForeignKeyConstraint baseColumnNames="app_user_id"
+                                 baseTableName="rel_tag__app_user"
+                                 constraintName="fk_rel_tag__app_user__app_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
     </changeSet>
 </databaseChangeLog>

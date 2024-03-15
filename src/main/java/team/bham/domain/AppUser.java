@@ -38,15 +38,15 @@ public class AppUser implements Serializable {
     @JoinColumn(unique = true)
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_app_user__route",
-        joinColumns = @JoinColumn(name = "app_user_id"),
-        inverseJoinColumns = @JoinColumn(name = "route_id")
-    )
+    @OneToMany(mappedBy = "appUser")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "city", "tags", "appUsers" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "stops", "city", "appUser", "tags" }, allowSetters = true)
     private Set<Route> routes = new HashSet<>();
+
+    @ManyToMany(mappedBy = "appUsers")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "routes", "appUsers" }, allowSetters = true)
+    private Set<Tag> tags = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -107,6 +107,12 @@ public class AppUser implements Serializable {
     }
 
     public void setRoutes(Set<Route> routes) {
+        if (this.routes != null) {
+            this.routes.forEach(i -> i.setAppUser(null));
+        }
+        if (routes != null) {
+            routes.forEach(i -> i.setAppUser(this));
+        }
         this.routes = routes;
     }
 
@@ -117,13 +123,44 @@ public class AppUser implements Serializable {
 
     public AppUser addRoute(Route route) {
         this.routes.add(route);
-        route.getAppUsers().add(this);
+        route.setAppUser(this);
         return this;
     }
 
     public AppUser removeRoute(Route route) {
         this.routes.remove(route);
-        route.getAppUsers().remove(this);
+        route.setAppUser(null);
+        return this;
+    }
+
+    public Set<Tag> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        if (this.tags != null) {
+            this.tags.forEach(i -> i.removeAppUser(this));
+        }
+        if (tags != null) {
+            tags.forEach(i -> i.addAppUser(this));
+        }
+        this.tags = tags;
+    }
+
+    public AppUser tags(Set<Tag> tags) {
+        this.setTags(tags);
+        return this;
+    }
+
+    public AppUser addTag(Tag tag) {
+        this.tags.add(tag);
+        tag.getAppUsers().add(this);
+        return this;
+    }
+
+    public AppUser removeTag(Tag tag) {
+        this.tags.remove(tag);
+        tag.getAppUsers().remove(this);
         return this;
     }
 

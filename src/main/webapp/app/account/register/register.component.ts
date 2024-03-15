@@ -1,11 +1,16 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/config/error.constants';
 import { RegisterService } from './register.service';
 import { AppUserService } from '../../entities/app-user/service/app-user.service';
-import { NewAppUser } from '../../entities/app-user/app-user.model';
+import { IAppUser, NewAppUser } from '../../entities/app-user/app-user.model';
+import { ApplicationConfigService } from '../../core/config/application-config.service';
+import { finalize } from 'rxjs/operators';
+import { Login } from '../../login/login.model';
+import { LoginService } from '../../login/login.service';
+import { AuthServerProvider } from '../../core/auth/auth-jwt.service';
 
 @Component({
   selector: 'jhi-register',
@@ -45,7 +50,14 @@ export class RegisterComponent implements AfterViewInit {
     }),
   });
 
-  constructor(private registerService: RegisterService, private appUserService: AppUserService) {}
+  constructor(
+    private registerService: RegisterService,
+    private appUserService: AppUserService,
+    protected http: HttpClient,
+    protected applicationConfigService: ApplicationConfigService,
+    protected loginService: LoginService,
+    protected authServerProvider: AuthServerProvider
+  ) {}
 
   ngAfterViewInit(): void {
     if (this.login) {
@@ -82,7 +94,15 @@ export class RegisterComponent implements AfterViewInit {
 
   registerSuccess(): void {
     this.success = true;
-    const appUser: NewAppUser = { id: null, numReviews: 0, numRoutes: 0 };
-    this.appUserService.create(appUser);
+    const appUser: NewAppUser = { id: null, numRoutes: 0, numReviews: 0 };
+    const { login, password } = this.registerForm.getRawValue();
+    const credentials: Login = new Login(login, password, true);
+    this.loginService.login(credentials);
+    this.authServerProvider
+      .linkAppUser(appUser)
+      .pipe()
+      .subscribe({
+        next: () => console.log('Success!'),
+      });
   }
 }

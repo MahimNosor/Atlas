@@ -9,6 +9,8 @@ import { IRoute } from '../route.model';
 import { RouteService } from '../service/route.service';
 import { ICity } from 'app/entities/city/city.model';
 import { CityService } from 'app/entities/city/service/city.service';
+import { IAppUser } from 'app/entities/app-user/app-user.model';
+import { AppUserService } from 'app/entities/app-user/service/app-user.service';
 
 @Component({
   selector: 'jhi-route-update',
@@ -19,6 +21,7 @@ export class RouteUpdateComponent implements OnInit {
   route: IRoute | null = null;
 
   citiesSharedCollection: ICity[] = [];
+  appUsersSharedCollection: IAppUser[] = [];
 
   editForm: RouteFormGroup = this.routeFormService.createRouteFormGroup();
 
@@ -26,10 +29,13 @@ export class RouteUpdateComponent implements OnInit {
     protected routeService: RouteService,
     protected routeFormService: RouteFormService,
     protected cityService: CityService,
+    protected appUserService: AppUserService,
     protected activatedRoute: ActivatedRoute
   ) {}
 
   compareCity = (o1: ICity | null, o2: ICity | null): boolean => this.cityService.compareCity(o1, o2);
+
+  compareAppUser = (o1: IAppUser | null, o2: IAppUser | null): boolean => this.appUserService.compareAppUser(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ route }) => {
@@ -80,6 +86,10 @@ export class RouteUpdateComponent implements OnInit {
     this.routeFormService.resetForm(this.editForm, route);
 
     this.citiesSharedCollection = this.cityService.addCityToCollectionIfMissing<ICity>(this.citiesSharedCollection, route.city);
+    this.appUsersSharedCollection = this.appUserService.addAppUserToCollectionIfMissing<IAppUser>(
+      this.appUsersSharedCollection,
+      route.appUser
+    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -88,5 +98,11 @@ export class RouteUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<ICity[]>) => res.body ?? []))
       .pipe(map((cities: ICity[]) => this.cityService.addCityToCollectionIfMissing<ICity>(cities, this.route?.city)))
       .subscribe((cities: ICity[]) => (this.citiesSharedCollection = cities));
+
+    this.appUserService
+      .query()
+      .pipe(map((res: HttpResponse<IAppUser[]>) => res.body ?? []))
+      .pipe(map((appUsers: IAppUser[]) => this.appUserService.addAppUserToCollectionIfMissing<IAppUser>(appUsers, this.route?.appUser)))
+      .subscribe((appUsers: IAppUser[]) => (this.appUsersSharedCollection = appUsers));
   }
 }

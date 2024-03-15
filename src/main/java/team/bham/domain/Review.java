@@ -1,6 +1,5 @@
 package team.bham.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
@@ -44,14 +43,6 @@ public class Review implements Serializable {
     @NotNull
     @Column(name = "review_date", nullable = false)
     private LocalDate reviewDate;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "user", "routes" }, allowSetters = true)
-    private AppUser appUser;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "city", "tags", "appUsers" }, allowSetters = true)
-    private Route route;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -131,32 +122,6 @@ public class Review implements Serializable {
 
     public void setReviewDate(LocalDate reviewDate) {
         this.reviewDate = reviewDate;
-    }
-
-    public AppUser getAppUser() {
-        return this.appUser;
-    }
-
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
-    }
-
-    public Review appUser(AppUser appUser) {
-        this.setAppUser(appUser);
-        return this;
-    }
-
-    public Route getRoute() {
-        return this.route;
-    }
-
-    public void setRoute(Route route) {
-        this.route = route;
-    }
-
-    public Review route(Route route) {
-        this.setRoute(route);
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

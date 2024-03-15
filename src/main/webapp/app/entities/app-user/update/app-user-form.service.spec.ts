@@ -23,7 +23,7 @@ describe('AppUser Form Service', () => {
             numRoutes: expect.any(Object),
             numReviews: expect.any(Object),
             user: expect.any(Object),
-            routes: expect.any(Object),
+            tags: expect.any(Object),
           })
         );
       });
@@ -37,7 +37,7 @@ describe('AppUser Form Service', () => {
             numRoutes: expect.any(Object),
             numReviews: expect.any(Object),
             user: expect.any(Object),
-            routes: expect.any(Object),
+            tags: expect.any(Object),
           })
         );
       });

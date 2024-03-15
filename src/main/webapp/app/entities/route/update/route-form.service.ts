@@ -14,18 +14,19 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type RouteFormGroupInput = IRoute | PartialWithRequiredKeyOf<NewRoute>;
 
-type RouteFormDefaults = Pick<NewRoute, 'id' | 'tags' | 'appUsers'>;
+type RouteFormDefaults = Pick<NewRoute, 'id' | 'tags'>;
 
 type RouteFormGroupContent = {
   id: FormControl<IRoute['id'] | NewRoute['id']>;
+  title: FormControl<IRoute['title']>;
+  description: FormControl<IRoute['description']>;
+  rating: FormControl<IRoute['rating']>;
   distance: FormControl<IRoute['distance']>;
-  stops: FormControl<IRoute['stops']>;
   cost: FormControl<IRoute['cost']>;
-  duration: FormControl<IRoute['duration']>;
-  tagName: FormControl<IRoute['tagName']>;
+  numReviews: FormControl<IRoute['numReviews']>;
   city: FormControl<IRoute['city']>;
+  appUser: FormControl<IRoute['appUser']>;
   tags: FormControl<IRoute['tags']>;
-  appUsers: FormControl<IRoute['appUsers']>;
 };
 
 export type RouteFormGroup = FormGroup<RouteFormGroupContent>;
@@ -45,20 +46,25 @@ export class RouteFormService {
           validators: [Validators.required],
         }
       ),
+      title: new FormControl(routeRawValue.title, {
+        validators: [Validators.required],
+      }),
+      description: new FormControl(routeRawValue.description, {
+        validators: [Validators.required],
+      }),
+      rating: new FormControl(routeRawValue.rating, {
+        validators: [Validators.required],
+      }),
       distance: new FormControl(routeRawValue.distance, {
         validators: [Validators.required],
       }),
-      stops: new FormControl(routeRawValue.stops, {
-        validators: [Validators.required],
-      }),
       cost: new FormControl(routeRawValue.cost),
-      duration: new FormControl(routeRawValue.duration, {
+      numReviews: new FormControl(routeRawValue.numReviews, {
         validators: [Validators.required],
       }),
-      tagName: new FormControl(routeRawValue.tagName),
       city: new FormControl(routeRawValue.city),
+      appUser: new FormControl(routeRawValue.appUser),
       tags: new FormControl(routeRawValue.tags ?? []),
-      appUsers: new FormControl(routeRawValue.appUsers ?? []),
     });
   }
 
@@ -80,7 +86,6 @@ export class RouteFormService {
     return {
       id: null,
       tags: [],
-      appUsers: [],
     };
   }
 }

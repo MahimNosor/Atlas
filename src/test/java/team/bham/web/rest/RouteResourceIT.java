@@ -29,20 +29,23 @@ import team.bham.repository.RouteRepository;
 @WithMockUser
 class RouteResourceIT {
 
+    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_TITLE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_RATING = 1;
+    private static final Integer UPDATED_RATING = 2;
+
     private static final Double DEFAULT_DISTANCE = 1D;
     private static final Double UPDATED_DISTANCE = 2D;
-
-    private static final Integer DEFAULT_STOPS = 1;
-    private static final Integer UPDATED_STOPS = 2;
 
     private static final Double DEFAULT_COST = 1D;
     private static final Double UPDATED_COST = 2D;
 
-    private static final Integer DEFAULT_DURATION = 1;
-    private static final Integer UPDATED_DURATION = 2;
-
-    private static final String DEFAULT_TAG_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_TAG_NAME = "BBBBBBBBBB";
+    private static final Integer DEFAULT_NUM_REVIEWS = 1;
+    private static final Integer UPDATED_NUM_REVIEWS = 2;
 
     private static final String ENTITY_API_URL = "/api/routes";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -69,11 +72,12 @@ class RouteResourceIT {
      */
     public static Route createEntity(EntityManager em) {
         Route route = new Route()
+            .title(DEFAULT_TITLE)
+            .description(DEFAULT_DESCRIPTION)
+            .rating(DEFAULT_RATING)
             .distance(DEFAULT_DISTANCE)
-            .stops(DEFAULT_STOPS)
             .cost(DEFAULT_COST)
-            .duration(DEFAULT_DURATION)
-            .tagName(DEFAULT_TAG_NAME);
+            .numReviews(DEFAULT_NUM_REVIEWS);
         return route;
     }
 
@@ -85,11 +89,12 @@ class RouteResourceIT {
      */
     public static Route createUpdatedEntity(EntityManager em) {
         Route route = new Route()
+            .title(UPDATED_TITLE)
+            .description(UPDATED_DESCRIPTION)
+            .rating(UPDATED_RATING)
             .distance(UPDATED_DISTANCE)
-            .stops(UPDATED_STOPS)
             .cost(UPDATED_COST)
-            .duration(UPDATED_DURATION)
-            .tagName(UPDATED_TAG_NAME);
+            .numReviews(UPDATED_NUM_REVIEWS);
         return route;
     }
 
@@ -111,11 +116,12 @@ class RouteResourceIT {
         List<Route> routeList = routeRepository.findAll();
         assertThat(routeList).hasSize(databaseSizeBeforeCreate + 1);
         Route testRoute = routeList.get(routeList.size() - 1);
+        assertThat(testRoute.getTitle()).isEqualTo(DEFAULT_TITLE);
+        assertThat(testRoute.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testRoute.getRating()).isEqualTo(DEFAULT_RATING);
         assertThat(testRoute.getDistance()).isEqualTo(DEFAULT_DISTANCE);
-        assertThat(testRoute.getStops()).isEqualTo(DEFAULT_STOPS);
         assertThat(testRoute.getCost()).isEqualTo(DEFAULT_COST);
-        assertThat(testRoute.getDuration()).isEqualTo(DEFAULT_DURATION);
-        assertThat(testRoute.getTagName()).isEqualTo(DEFAULT_TAG_NAME);
+        assertThat(testRoute.getNumReviews()).isEqualTo(DEFAULT_NUM_REVIEWS);
     }
 
     @Test
@@ -138,6 +144,57 @@ class RouteResourceIT {
 
     @Test
     @Transactional
+    void checkTitleIsRequired() throws Exception {
+        int databaseSizeBeforeTest = routeRepository.findAll().size();
+        // set the field null
+        route.setTitle(null);
+
+        // Create the Route, which fails.
+
+        restRouteMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(route)))
+            .andExpect(status().isBadRequest());
+
+        List<Route> routeList = routeRepository.findAll();
+        assertThat(routeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkDescriptionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = routeRepository.findAll().size();
+        // set the field null
+        route.setDescription(null);
+
+        // Create the Route, which fails.
+
+        restRouteMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(route)))
+            .andExpect(status().isBadRequest());
+
+        List<Route> routeList = routeRepository.findAll();
+        assertThat(routeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkRatingIsRequired() throws Exception {
+        int databaseSizeBeforeTest = routeRepository.findAll().size();
+        // set the field null
+        route.setRating(null);
+
+        // Create the Route, which fails.
+
+        restRouteMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(route)))
+            .andExpect(status().isBadRequest());
+
+        List<Route> routeList = routeRepository.findAll();
+        assertThat(routeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkDistanceIsRequired() throws Exception {
         int databaseSizeBeforeTest = routeRepository.findAll().size();
         // set the field null
@@ -155,27 +212,10 @@ class RouteResourceIT {
 
     @Test
     @Transactional
-    void checkStopsIsRequired() throws Exception {
+    void checkNumReviewsIsRequired() throws Exception {
         int databaseSizeBeforeTest = routeRepository.findAll().size();
         // set the field null
-        route.setStops(null);
-
-        // Create the Route, which fails.
-
-        restRouteMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(route)))
-            .andExpect(status().isBadRequest());
-
-        List<Route> routeList = routeRepository.findAll();
-        assertThat(routeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkDurationIsRequired() throws Exception {
-        int databaseSizeBeforeTest = routeRepository.findAll().size();
-        // set the field null
-        route.setDuration(null);
+        route.setNumReviews(null);
 
         // Create the Route, which fails.
 
@@ -199,11 +239,12 @@ class RouteResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(route.getId().intValue())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING)))
             .andExpect(jsonPath("$.[*].distance").value(hasItem(DEFAULT_DISTANCE.doubleValue())))
-            .andExpect(jsonPath("$.[*].stops").value(hasItem(DEFAULT_STOPS)))
             .andExpect(jsonPath("$.[*].cost").value(hasItem(DEFAULT_COST.doubleValue())))
-            .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION)))
-            .andExpect(jsonPath("$.[*].tagName").value(hasItem(DEFAULT_TAG_NAME)));
+            .andExpect(jsonPath("$.[*].numReviews").value(hasItem(DEFAULT_NUM_REVIEWS)));
     }
 
     @Test
@@ -218,11 +259,12 @@ class RouteResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(route.getId().intValue()))
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+            .andExpect(jsonPath("$.rating").value(DEFAULT_RATING))
             .andExpect(jsonPath("$.distance").value(DEFAULT_DISTANCE.doubleValue()))
-            .andExpect(jsonPath("$.stops").value(DEFAULT_STOPS))
             .andExpect(jsonPath("$.cost").value(DEFAULT_COST.doubleValue()))
-            .andExpect(jsonPath("$.duration").value(DEFAULT_DURATION))
-            .andExpect(jsonPath("$.tagName").value(DEFAULT_TAG_NAME));
+            .andExpect(jsonPath("$.numReviews").value(DEFAULT_NUM_REVIEWS));
     }
 
     @Test
@@ -245,11 +287,12 @@ class RouteResourceIT {
         // Disconnect from session so that the updates on updatedRoute are not directly saved in db
         em.detach(updatedRoute);
         updatedRoute
+            .title(UPDATED_TITLE)
+            .description(UPDATED_DESCRIPTION)
+            .rating(UPDATED_RATING)
             .distance(UPDATED_DISTANCE)
-            .stops(UPDATED_STOPS)
             .cost(UPDATED_COST)
-            .duration(UPDATED_DURATION)
-            .tagName(UPDATED_TAG_NAME);
+            .numReviews(UPDATED_NUM_REVIEWS);
 
         restRouteMockMvc
             .perform(
@@ -263,11 +306,12 @@ class RouteResourceIT {
         List<Route> routeList = routeRepository.findAll();
         assertThat(routeList).hasSize(databaseSizeBeforeUpdate);
         Route testRoute = routeList.get(routeList.size() - 1);
+        assertThat(testRoute.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testRoute.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testRoute.getRating()).isEqualTo(UPDATED_RATING);
         assertThat(testRoute.getDistance()).isEqualTo(UPDATED_DISTANCE);
-        assertThat(testRoute.getStops()).isEqualTo(UPDATED_STOPS);
         assertThat(testRoute.getCost()).isEqualTo(UPDATED_COST);
-        assertThat(testRoute.getDuration()).isEqualTo(UPDATED_DURATION);
-        assertThat(testRoute.getTagName()).isEqualTo(UPDATED_TAG_NAME);
+        assertThat(testRoute.getNumReviews()).isEqualTo(UPDATED_NUM_REVIEWS);
     }
 
     @Test
@@ -338,7 +382,7 @@ class RouteResourceIT {
         Route partialUpdatedRoute = new Route();
         partialUpdatedRoute.setId(route.getId());
 
-        partialUpdatedRoute.stops(UPDATED_STOPS).duration(UPDATED_DURATION);
+        partialUpdatedRoute.description(UPDATED_DESCRIPTION).distance(UPDATED_DISTANCE).numReviews(UPDATED_NUM_REVIEWS);
 
         restRouteMockMvc
             .perform(
@@ -352,11 +396,12 @@ class RouteResourceIT {
         List<Route> routeList = routeRepository.findAll();
         assertThat(routeList).hasSize(databaseSizeBeforeUpdate);
         Route testRoute = routeList.get(routeList.size() - 1);
-        assertThat(testRoute.getDistance()).isEqualTo(DEFAULT_DISTANCE);
-        assertThat(testRoute.getStops()).isEqualTo(UPDATED_STOPS);
+        assertThat(testRoute.getTitle()).isEqualTo(DEFAULT_TITLE);
+        assertThat(testRoute.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testRoute.getRating()).isEqualTo(DEFAULT_RATING);
+        assertThat(testRoute.getDistance()).isEqualTo(UPDATED_DISTANCE);
         assertThat(testRoute.getCost()).isEqualTo(DEFAULT_COST);
-        assertThat(testRoute.getDuration()).isEqualTo(UPDATED_DURATION);
-        assertThat(testRoute.getTagName()).isEqualTo(DEFAULT_TAG_NAME);
+        assertThat(testRoute.getNumReviews()).isEqualTo(UPDATED_NUM_REVIEWS);
     }
 
     @Test
@@ -372,11 +417,12 @@ class RouteResourceIT {
         partialUpdatedRoute.setId(route.getId());
 
         partialUpdatedRoute
+            .title(UPDATED_TITLE)
+            .description(UPDATED_DESCRIPTION)
+            .rating(UPDATED_RATING)
             .distance(UPDATED_DISTANCE)
-            .stops(UPDATED_STOPS)
             .cost(UPDATED_COST)
-            .duration(UPDATED_DURATION)
-            .tagName(UPDATED_TAG_NAME);
+            .numReviews(UPDATED_NUM_REVIEWS);
 
         restRouteMockMvc
             .perform(
@@ -390,11 +436,12 @@ class RouteResourceIT {
         List<Route> routeList = routeRepository.findAll();
         assertThat(routeList).hasSize(databaseSizeBeforeUpdate);
         Route testRoute = routeList.get(routeList.size() - 1);
+        assertThat(testRoute.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testRoute.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testRoute.getRating()).isEqualTo(UPDATED_RATING);
         assertThat(testRoute.getDistance()).isEqualTo(UPDATED_DISTANCE);
-        assertThat(testRoute.getStops()).isEqualTo(UPDATED_STOPS);
         assertThat(testRoute.getCost()).isEqualTo(UPDATED_COST);
-        assertThat(testRoute.getDuration()).isEqualTo(UPDATED_DURATION);
-        assertThat(testRoute.getTagName()).isEqualTo(UPDATED_TAG_NAME);
+        assertThat(testRoute.getNumReviews()).isEqualTo(UPDATED_NUM_REVIEWS);
     }
 
     @Test

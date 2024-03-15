@@ -68,18 +68,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="appUser.id">
-            <div class="d-flex">
-              <span>App User</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="route.id">
-            <div class="d-flex">
-              <span>Route</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -93,16 +81,6 @@
           <td>{{ review.content }}</td>
           <td>{{ review.rating }}</td>
           <td>{{ review.reviewDate | formatMediumDate }}</td>
-          <td>
-            <div *ngIf="review.appUser">
-              <a [routerLink]="['/app-user', review.appUser.id, 'view']">{{ review.appUser.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="review.route">
-              <a [routerLink]="['/route', review.route.id, 'view']">{{ review.route.id }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/review', review.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
