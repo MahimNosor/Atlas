@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouteService } from '../services/route.service';
+import { RouteService } from './service/route.service';
 @Component({
   selector: 'jhi-rating', // Ensure this selector matches the one in your HTML
   templateUrl: './rating.component.html',
