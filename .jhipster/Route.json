@@ -48,6 +48,14 @@
       "ownerSide": false,
       "relationshipName": "tag",
       "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "appUser",
+      "otherEntityRelationshipName": "route",
+      "ownerSide": false,
+      "relationshipName": "appUser",
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceClass"

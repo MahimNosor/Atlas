@@ -28,6 +28,14 @@
       "ownerSide": true,
       "relationshipName": "user",
       "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "route",
+      "otherEntityRelationshipName": "appUser",
+      "ownerSide": true,
+      "relationshipName": "route",
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceClass"

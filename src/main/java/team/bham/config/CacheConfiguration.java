@@ -56,6 +56,8 @@ public class CacheConfiguration {
             createCache(cm, team.bham.domain.City.class.getName());
             createCache(cm, team.bham.domain.Stop.class.getName());
             createCache(cm, team.bham.domain.Review.class.getName());
+            createCache(cm, team.bham.domain.AppUser.class.getName() + ".routes");
+            createCache(cm, team.bham.domain.Route.class.getName() + ".appUsers");
             // jhipster-needle-ehcache-add-entry
         };
     }

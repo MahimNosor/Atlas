@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type RouteFormGroupInput = IRoute | PartialWithRequiredKeyOf<NewRoute>;
 
-type RouteFormDefaults = Pick<NewRoute, 'id' | 'tags'>;
+type RouteFormDefaults = Pick<NewRoute, 'id' | 'tags' | 'appUsers'>;
 
 type RouteFormGroupContent = {
   id: FormControl<IRoute['id'] | NewRoute['id']>;
@@ -25,6 +25,7 @@ type RouteFormGroupContent = {
   tagName: FormControl<IRoute['tagName']>;
   city: FormControl<IRoute['city']>;
   tags: FormControl<IRoute['tags']>;
+  appUsers: FormControl<IRoute['appUsers']>;
 };
 
 export type RouteFormGroup = FormGroup<RouteFormGroupContent>;
@@ -57,6 +58,7 @@ export class RouteFormService {
       tagName: new FormControl(routeRawValue.tagName),
       city: new FormControl(routeRawValue.city),
       tags: new FormControl(routeRawValue.tags ?? []),
+      appUsers: new FormControl(routeRawValue.appUsers ?? []),
     });
   }
 
@@ -78,6 +80,7 @@ export class RouteFormService {
     return {
       id: null,
       tags: [],
+      appUsers: [],
     };
   }
 }

@@ -1,6 +1,9 @@
 package team.bham.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -34,6 +37,16 @@ public class AppUser implements Serializable {
     @OneToOne
     @JoinColumn(unique = true)
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_app_user__route",
+        joinColumns = @JoinColumn(name = "app_user_id"),
+        inverseJoinColumns = @JoinColumn(name = "route_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "city", "tags", "appUsers" }, allowSetters = true)
+    private Set<Route> routes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -86,6 +99,31 @@ public class AppUser implements Serializable {
 
     public AppUser user(User user) {
         this.setUser(user);
+        return this;
+    }
+
+    public Set<Route> getRoutes() {
+        return this.routes;
+    }
+
+    public void setRoutes(Set<Route> routes) {
+        this.routes = routes;
+    }
+
+    public AppUser routes(Set<Route> routes) {
+        this.setRoutes(routes);
+        return this;
+    }
+
+    public AppUser addRoute(Route route) {
+        this.routes.add(route);
+        route.getAppUsers().add(this);
+        return this;
+    }
+
+    public AppUser removeRoute(Route route) {
+        this.routes.remove(route);
+        route.getAppUsers().remove(this);
         return this;
     }
 

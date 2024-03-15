@@ -14,13 +14,14 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type AppUserFormGroupInput = IAppUser | PartialWithRequiredKeyOf<NewAppUser>;
 
-type AppUserFormDefaults = Pick<NewAppUser, 'id'>;
+type AppUserFormDefaults = Pick<NewAppUser, 'id' | 'routes'>;
 
 type AppUserFormGroupContent = {
   id: FormControl<IAppUser['id'] | NewAppUser['id']>;
   numRoutes: FormControl<IAppUser['numRoutes']>;
   numReviews: FormControl<IAppUser['numReviews']>;
   user: FormControl<IAppUser['user']>;
+  routes: FormControl<IAppUser['routes']>;
 };
 
 export type AppUserFormGroup = FormGroup<AppUserFormGroupContent>;
@@ -47,6 +48,7 @@ export class AppUserFormService {
         validators: [Validators.required],
       }),
       user: new FormControl(appUserRawValue.user),
+      routes: new FormControl(appUserRawValue.routes ?? []),
     });
   }
 
@@ -67,6 +69,7 @@ export class AppUserFormService {
   private getFormDefaults(): AppUserFormDefaults {
     return {
       id: null,
+      routes: [],
     };
   }
 }

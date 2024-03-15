@@ -52,6 +52,11 @@ public class Route implements Serializable {
     @JsonIgnoreProperties(value = { "routes" }, allowSetters = true)
     private Set<Tag> tags = new HashSet<>();
 
+    @ManyToMany(mappedBy = "routes")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "user", "routes" }, allowSetters = true)
+    private Set<AppUser> appUsers = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -173,6 +178,37 @@ public class Route implements Serializable {
     public Route removeTag(Tag tag) {
         this.tags.remove(tag);
         tag.getRoutes().remove(this);
+        return this;
+    }
+
+    public Set<AppUser> getAppUsers() {
+        return this.appUsers;
+    }
+
+    public void setAppUsers(Set<AppUser> appUsers) {
+        if (this.appUsers != null) {
+            this.appUsers.forEach(i -> i.removeRoute(this));
+        }
+        if (appUsers != null) {
+            appUsers.forEach(i -> i.addRoute(this));
+        }
+        this.appUsers = appUsers;
+    }
+
+    public Route appUsers(Set<AppUser> appUsers) {
+        this.setAppUsers(appUsers);
+        return this;
+    }
+
+    public Route addAppUser(AppUser appUser) {
+        this.appUsers.add(appUser);
+        appUser.getRoutes().add(this);
+        return this;
+    }
+
+    public Route removeAppUser(AppUser appUser) {
+        this.appUsers.remove(appUser);
+        appUser.getRoutes().remove(this);
         return this;
     }
 

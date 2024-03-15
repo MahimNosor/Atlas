@@ -47,7 +47,7 @@ public class Stop implements Serializable {
     private Integer rating;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "city", "tags" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "city", "tags", "appUsers" }, allowSetters = true)
     private Route route;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -27,6 +27,7 @@ describe('Route Form Service', () => {
             tagName: expect.any(Object),
             city: expect.any(Object),
             tags: expect.any(Object),
+            appUsers: expect.any(Object),
           })
         );
       });
@@ -44,6 +45,7 @@ describe('Route Form Service', () => {
             tagName: expect.any(Object),
             city: expect.any(Object),
             tags: expect.any(Object),
+            appUsers: expect.any(Object),
           })
         );
       });

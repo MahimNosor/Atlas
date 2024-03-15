@@ -13,5 +13,17 @@
                                  constraintName="fk_app_user__user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="app_user_id"
+                                 baseTableName="rel_app_user__route"
+                                 constraintName="fk_rel_app_user__route__app_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="route_id"
+                                 baseTableName="rel_app_user__route"
+                                 constraintName="fk_rel_app_user__route__route_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="route"/>
     </changeSet>
 </databaseChangeLog>
