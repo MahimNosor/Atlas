@@ -29,13 +29,6 @@ export class RatingComponent implements OnInit {
     // Implement the logic to handle the submission of the route
     // For now, we'll just log the route details to the console
 
-    // const routeData = {
-    //   title: this.routeTitle,
-    //   description: this.routeDescription,
-    //   rating: this.routeRating,
-    //   stops: this.stops,
-    // };
-
     const routeData = {
       id: null,
       distance: 1,
@@ -46,9 +39,6 @@ export class RatingComponent implements OnInit {
       city: null,
       tags: null,
     };
-
-    console.log(this.stops, this.routeTitle, this.routeDescription, this.routeRating);
-    console.log('test');
 
     this.routeService.createRoute(routeData).subscribe({
       next(response) {
