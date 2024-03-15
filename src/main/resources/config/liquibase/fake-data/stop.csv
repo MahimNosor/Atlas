@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-id;name;description;latitude;longitude;sequence_number;rating
-=======
 id;name;description;latitude;longitude;sequence_number
 1;neural-net;Producer Naira;33691;50772;92704
 2;Hawaii;Garden Hills;6816;84781;59107
@@ -12,4 +9,3 @@ id;name;description;latitude;longitude;sequence_number
 8;hacking Ukraine paradigms;Gorgeous help-desk;73889;29593;97402
 9;connecting orange Islands;circuit embrace;50088;9141;99842
 10;matrix cyan Vista;Fully-configurable;22679;18069;69302
->>>>>>> refs/remotes/origin/main
