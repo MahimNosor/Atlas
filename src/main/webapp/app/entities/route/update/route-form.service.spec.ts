@@ -26,9 +26,9 @@ describe('Route Form Service', () => {
             distance: expect.any(Object),
             cost: expect.any(Object),
             numReviews: expect.any(Object),
+            tags: expect.any(Object),
             city: expect.any(Object),
             appUser: expect.any(Object),
-            tags: expect.any(Object),
           })
         );
       });
@@ -45,9 +45,9 @@ describe('Route Form Service', () => {
             distance: expect.any(Object),
             cost: expect.any(Object),
             numReviews: expect.any(Object),
+            tags: expect.any(Object),
             city: expect.any(Object),
             appUser: expect.any(Object),
-            tags: expect.any(Object),
           })
         );
       });

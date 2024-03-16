@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { RouteFormService } from './route-form.service';
 import { RouteService } from '../service/route.service';
 import { IRoute } from '../route.model';
+import { ITag } from 'app/entities/tag/tag.model';
+import { TagService } from 'app/entities/tag/service/tag.service';
 import { ICity } from 'app/entities/city/city.model';
 import { CityService } from 'app/entities/city/service/city.service';
 import { IAppUser } from 'app/entities/app-user/app-user.model';
@@ -22,6 +24,7 @@ describe('Route Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let routeFormService: RouteFormService;
   let routeService: RouteService;
+  let tagService: TagService;
   let cityService: CityService;
   let appUserService: AppUserService;
 
@@ -46,6 +49,7 @@ describe('Route Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     routeFormService = TestBed.inject(RouteFormService);
     routeService = TestBed.inject(RouteService);
+    tagService = TestBed.inject(TagService);
     cityService = TestBed.inject(CityService);
     appUserService = TestBed.inject(AppUserService);
 
@@ -53,6 +57,25 @@ describe('Route Management Update Component', () => {
   });
 
   describe('ngOnInit', () => {
+    it('Should call Tag query and add missing value', () => {
+      const route: IRoute = { id: 456 };
+      const tags: ITag[] = [{ id: 42562 }];
+      route.tags = tags;
+
+      const tagCollection: ITag[] = [{ id: 23144 }];
+      jest.spyOn(tagService, 'query').mockReturnValue(of(new HttpResponse({ body: tagCollection })));
+      const additionalTags = [...tags];
+      const expectedCollection: ITag[] = [...additionalTags, ...tagCollection];
+      jest.spyOn(tagService, 'addTagToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ route });
+      comp.ngOnInit();
+
+      expect(tagService.query).toHaveBeenCalled();
+      expect(tagService.addTagToCollectionIfMissing).toHaveBeenCalledWith(tagCollection, ...additionalTags.map(expect.objectContaining));
+      expect(comp.tagsSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should call City query and add missing value', () => {
       const route: IRoute = { id: 456 };
       const city: ICity = { id: 52946 };
@@ -99,6 +122,8 @@ describe('Route Management Update Component', () => {
 
     it('Should update editForm', () => {
       const route: IRoute = { id: 456 };
+      const tag: ITag = { id: 75165 };
+      route.tags = [tag];
       const city: ICity = { id: 99140 };
       route.city = city;
       const appUser: IAppUser = { id: 43122 };
@@ -107,6 +132,7 @@ describe('Route Management Update Component', () => {
       activatedRoute.data = of({ route });
       comp.ngOnInit();
 
+      expect(comp.tagsSharedCollection).toContain(tag);
       expect(comp.citiesSharedCollection).toContain(city);
       expect(comp.appUsersSharedCollection).toContain(appUser);
       expect(comp.route).toEqual(route);
@@ -182,6 +208,16 @@ describe('Route Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
+    describe('compareTag', () => {
+      it('Should forward to tagService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(tagService, 'compareTag');
+        comp.compareTag(entity, entity2);
+        expect(tagService.compareTag).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
     describe('compareCity', () => {
       it('Should forward to cityService', () => {
         const entity = { id: 123 };

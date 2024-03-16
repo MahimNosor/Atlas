@@ -12,6 +12,8 @@ import { IAppUser } from '../app-user.model';
 
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
+import { ITag } from 'app/entities/tag/tag.model';
+import { TagService } from 'app/entities/tag/service/tag.service';
 
 import { AppUserUpdateComponent } from './app-user-update.component';
 
@@ -22,6 +24,7 @@ describe('AppUser Management Update Component', () => {
   let appUserFormService: AppUserFormService;
   let appUserService: AppUserService;
   let userService: UserService;
+  let tagService: TagService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -45,6 +48,7 @@ describe('AppUser Management Update Component', () => {
     appUserFormService = TestBed.inject(AppUserFormService);
     appUserService = TestBed.inject(AppUserService);
     userService = TestBed.inject(UserService);
+    tagService = TestBed.inject(TagService);
 
     comp = fixture.componentInstance;
   });
@@ -72,15 +76,37 @@ describe('AppUser Management Update Component', () => {
       expect(comp.usersSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Tag query and add missing value', () => {
+      const appUser: IAppUser = { id: 456 };
+      const tags: ITag[] = [{ id: 90697 }];
+      appUser.tags = tags;
+
+      const tagCollection: ITag[] = [{ id: 32586 }];
+      jest.spyOn(tagService, 'query').mockReturnValue(of(new HttpResponse({ body: tagCollection })));
+      const additionalTags = [...tags];
+      const expectedCollection: ITag[] = [...additionalTags, ...tagCollection];
+      jest.spyOn(tagService, 'addTagToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ appUser });
+      comp.ngOnInit();
+
+      expect(tagService.query).toHaveBeenCalled();
+      expect(tagService.addTagToCollectionIfMissing).toHaveBeenCalledWith(tagCollection, ...additionalTags.map(expect.objectContaining));
+      expect(comp.tagsSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const appUser: IAppUser = { id: 456 };
       const user: IUser = { id: 29309 };
       appUser.user = user;
+      const tag: ITag = { id: 32536 };
+      appUser.tags = [tag];
 
       activatedRoute.data = of({ appUser });
       comp.ngOnInit();
 
       expect(comp.usersSharedCollection).toContain(user);
+      expect(comp.tagsSharedCollection).toContain(tag);
       expect(comp.appUser).toEqual(appUser);
     });
   });
@@ -161,6 +187,16 @@ describe('AppUser Management Update Component', () => {
         jest.spyOn(userService, 'compareUser');
         comp.compareUser(entity, entity2);
         expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareTag', () => {
+      it('Should forward to tagService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(tagService, 'compareTag');
+        comp.compareTag(entity, entity2);
+        expect(tagService.compareTag).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

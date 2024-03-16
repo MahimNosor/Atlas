@@ -38,6 +38,13 @@
         <dd>
           <span>{{ route.numReviews }}</span>
         </dd>
+        <dt><span>Tag</span></dt>
+        <dd>
+          <span *ngFor="let tag of route.tags; let last = last">
+            <a [routerLink]="['/tag', tag.id, 'view']">{{ tag.name }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
         <dt><span>City</span></dt>
         <dd>
           <div *ngIf="route.city">

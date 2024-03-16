@@ -2,17 +2,25 @@ package team.bham.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,11 +28,13 @@ import org.springframework.transaction.annotation.Transactional;
 import team.bham.IntegrationTest;
 import team.bham.domain.Route;
 import team.bham.repository.RouteRepository;
+import team.bham.service.RouteService;
 
 /**
  * Integration tests for the {@link RouteResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class RouteResourceIT {
@@ -55,6 +65,12 @@ class RouteResourceIT {
 
     @Autowired
     private RouteRepository routeRepository;
+
+    @Mock
+    private RouteRepository routeRepositoryMock;
+
+    @Mock
+    private RouteService routeServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -245,6 +261,23 @@ class RouteResourceIT {
             .andExpect(jsonPath("$.[*].distance").value(hasItem(DEFAULT_DISTANCE.doubleValue())))
             .andExpect(jsonPath("$.[*].cost").value(hasItem(DEFAULT_COST.doubleValue())))
             .andExpect(jsonPath("$.[*].numReviews").value(hasItem(DEFAULT_NUM_REVIEWS)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllRoutesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(routeServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restRouteMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(routeServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllRoutesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(routeServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restRouteMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(routeRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

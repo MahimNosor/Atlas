@@ -96,6 +96,15 @@ public class RouteService {
     }
 
     /**
+     * Get all the routes with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<Route> findAllWithEagerRelationships(Pageable pageable) {
+        return routeRepository.findAllWithEagerRelationships(pageable);
+    }
+
+    /**
      * Get one route by id.
      *
      * @param id the id of the entity.
@@ -104,7 +113,7 @@ public class RouteService {
     @Transactional(readOnly = true)
     public Optional<Route> findOne(Long id) {
         log.debug("Request to get Route : {}", id);
-        return routeRepository.findById(id);
+        return routeRepository.findOneWithEagerRelationships(id);
     }
 
     /**

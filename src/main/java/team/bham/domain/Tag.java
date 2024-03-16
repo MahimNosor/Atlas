@@ -30,18 +30,12 @@ public class Tag implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "rel_tag__route", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "route_id"))
+    @ManyToMany(mappedBy = "tags")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "stops", "city", "appUser", "tags" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "stops", "tags", "city", "appUser" }, allowSetters = true)
     private Set<Route> routes = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_tag__app_user",
-        joinColumns = @JoinColumn(name = "tag_id"),
-        inverseJoinColumns = @JoinColumn(name = "app_user_id")
-    )
+    @ManyToMany(mappedBy = "tags")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "user", "routes", "reviews", "tags" }, allowSetters = true)
     private Set<AppUser> appUsers = new HashSet<>();
@@ -79,6 +73,12 @@ public class Tag implements Serializable {
     }
 
     public void setRoutes(Set<Route> routes) {
+        if (this.routes != null) {
+            this.routes.forEach(i -> i.removeTag(this));
+        }
+        if (routes != null) {
+            routes.forEach(i -> i.addTag(this));
+        }
         this.routes = routes;
     }
 
@@ -104,6 +104,12 @@ public class Tag implements Serializable {
     }
 
     public void setAppUsers(Set<AppUser> appUsers) {
+        if (this.appUsers != null) {
+            this.appUsers.forEach(i -> i.removeTag(this));
+        }
+        if (appUsers != null) {
+            appUsers.forEach(i -> i.addTag(this));
+        }
         this.appUsers = appUsers;
     }
 

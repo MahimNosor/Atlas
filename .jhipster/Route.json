@@ -48,6 +48,14 @@
       "relationshipType": "one-to-many"
     },
     {
+      "otherEntityField": "name",
+      "otherEntityName": "tag",
+      "otherEntityRelationshipName": "route",
+      "ownerSide": true,
+      "relationshipName": "tag",
+      "relationshipType": "many-to-many"
+    },
+    {
       "otherEntityField": "id",
       "otherEntityName": "city",
       "otherEntityRelationshipName": "route",
@@ -60,14 +68,6 @@
       "otherEntityRelationshipName": "route",
       "relationshipName": "appUser",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityField": "name",
-      "otherEntityName": "tag",
-      "otherEntityRelationshipName": "route",
-      "ownerSide": false,
-      "relationshipName": "tag",
-      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceClass"

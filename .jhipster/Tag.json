@@ -21,7 +21,7 @@
       "otherEntityField": "id",
       "otherEntityName": "route",
       "otherEntityRelationshipName": "tag",
-      "ownerSide": true,
+      "ownerSide": false,
       "relationshipName": "route",
       "relationshipType": "many-to-many"
     },
@@ -29,7 +29,7 @@
       "otherEntityField": "id",
       "otherEntityName": "appUser",
       "otherEntityRelationshipName": "tag",
-      "ownerSide": true,
+      "ownerSide": false,
       "relationshipName": "appUser",
       "relationshipType": "many-to-many"
     }

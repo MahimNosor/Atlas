@@ -47,6 +47,13 @@
             <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
           </select>
         </div>
+
+        <div class="row mb-3">
+          <label for="field_tags">Tag</label>
+          <select class="form-control" id="field_tags" data-cy="tag" multiple name="tags" formControlName="tags" [compareWith]="compareTag">
+            <option [ngValue]="tagOption" *ngFor="let tagOption of tagsSharedCollection">{{ tagOption.name }}</option>
+          </select>
+        </div>
       </div>
 
       <div>

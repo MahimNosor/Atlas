@@ -45,7 +45,7 @@
       "otherEntityField": "name",
       "otherEntityName": "tag",
       "otherEntityRelationshipName": "appUser",
-      "ownerSide": false,
+      "ownerSide": true,
       "relationshipName": "tag",
       "relationshipType": "many-to-many"
     }

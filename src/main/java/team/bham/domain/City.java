@@ -32,7 +32,7 @@ public class City implements Serializable {
 
     @OneToMany(mappedBy = "city")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "stops", "city", "appUser", "tags" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "stops", "tags", "city", "appUser" }, allowSetters = true)
     private Set<Route> routes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

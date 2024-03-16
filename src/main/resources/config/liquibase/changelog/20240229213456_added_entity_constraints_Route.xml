@@ -8,6 +8,18 @@
     -->
     <changeSet id="20240229213456-2" author="jhipster">
 
+        <addForeignKeyConstraint baseColumnNames="route_id"
+                                 baseTableName="rel_route__tag"
+                                 constraintName="fk_rel_route__tag__route_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="route"/>
+
+        <addForeignKeyConstraint baseColumnNames="tag_id"
+                                 baseTableName="rel_route__tag"
+                                 constraintName="fk_rel_route__tag__tag_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tag"/>
+
         <addForeignKeyConstraint baseColumnNames="city_id"
                                  baseTableName="route"
                                  constraintName="fk_route__city_id"

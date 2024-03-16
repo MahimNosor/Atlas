@@ -13,5 +13,17 @@
                                  constraintName="fk_app_user__user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="app_user_id"
+                                 baseTableName="rel_app_user__tag"
+                                 constraintName="fk_rel_app_user__tag__app_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="tag_id"
+                                 baseTableName="rel_app_user__tag"
+                                 constraintName="fk_rel_app_user__tag__tag_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tag"/>
     </changeSet>
 </databaseChangeLog>

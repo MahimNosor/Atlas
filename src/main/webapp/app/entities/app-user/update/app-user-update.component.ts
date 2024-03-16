@@ -9,6 +9,8 @@ import { IAppUser } from '../app-user.model';
 import { AppUserService } from '../service/app-user.service';
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
+import { ITag } from 'app/entities/tag/tag.model';
+import { TagService } from 'app/entities/tag/service/tag.service';
 
 @Component({
   selector: 'jhi-app-user-update',
@@ -19,6 +21,7 @@ export class AppUserUpdateComponent implements OnInit {
   appUser: IAppUser | null = null;
 
   usersSharedCollection: IUser[] = [];
+  tagsSharedCollection: ITag[] = [];
 
   editForm: AppUserFormGroup = this.appUserFormService.createAppUserFormGroup();
 
@@ -26,10 +29,13 @@ export class AppUserUpdateComponent implements OnInit {
     protected appUserService: AppUserService,
     protected appUserFormService: AppUserFormService,
     protected userService: UserService,
+    protected tagService: TagService,
     protected activatedRoute: ActivatedRoute
   ) {}
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
+
+  compareTag = (o1: ITag | null, o2: ITag | null): boolean => this.tagService.compareTag(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ appUser }) => {
@@ -80,6 +86,7 @@ export class AppUserUpdateComponent implements OnInit {
     this.appUserFormService.resetForm(this.editForm, appUser);
 
     this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, appUser.user);
+    this.tagsSharedCollection = this.tagService.addTagToCollectionIfMissing<ITag>(this.tagsSharedCollection, ...(appUser.tags ?? []));
   }
 
   protected loadRelationshipsOptions(): void {
@@ -88,5 +95,11 @@ export class AppUserUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
       .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.appUser?.user)))
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
+
+    this.tagService
+      .query()
+      .pipe(map((res: HttpResponse<ITag[]>) => res.body ?? []))
+      .pipe(map((tags: ITag[]) => this.tagService.addTagToCollectionIfMissing<ITag>(tags, ...(this.appUser?.tags ?? []))))
+      .subscribe((tags: ITag[]) => (this.tagsSharedCollection = tags));
   }
 }

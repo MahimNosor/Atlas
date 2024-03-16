@@ -1,6 +1,6 @@
+import { ITag } from 'app/entities/tag/tag.model';
 import { ICity } from 'app/entities/city/city.model';
 import { IAppUser } from 'app/entities/app-user/app-user.model';
-import { ITag } from 'app/entities/tag/tag.model';
 
 export interface IRoute {
   id: number;
@@ -10,9 +10,9 @@ export interface IRoute {
   distance?: number | null;
   cost?: number | null;
   numReviews?: number | null;
+  tags?: Pick<ITag, 'id' | 'name'>[] | null;
   city?: Pick<ICity, 'id'> | null;
   appUser?: Pick<IAppUser, 'id'> | null;
-  tags?: Pick<ITag, 'id' | 'name'>[] | null;
 }
 
 export type NewRoute = Omit<IRoute, 'id'> & { id: null };

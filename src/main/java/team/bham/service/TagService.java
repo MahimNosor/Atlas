@@ -81,15 +81,6 @@ public class TagService {
     }
 
     /**
-     * Get all the tags with eager load of many-to-many relationships.
-     *
-     * @return the list of entities.
-     */
-    public Page<Tag> findAllWithEagerRelationships(Pageable pageable) {
-        return tagRepository.findAllWithEagerRelationships(pageable);
-    }
-
-    /**
      * Get one tag by id.
      *
      * @param id the id of the entity.
@@ -98,7 +89,7 @@ public class TagService {
     @Transactional(readOnly = true)
     public Optional<Tag> findOne(Long id) {
         log.debug("Request to get Tag : {}", id);
-        return tagRepository.findOneWithEagerRelationships(id);
+        return tagRepository.findById(id);
     }
 
     /**

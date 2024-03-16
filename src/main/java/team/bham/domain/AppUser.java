@@ -40,7 +40,7 @@ public class AppUser implements Serializable {
 
     @OneToMany(mappedBy = "appUser")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "stops", "city", "appUser", "tags" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "stops", "tags", "city", "appUser" }, allowSetters = true)
     private Set<Route> routes = new HashSet<>();
 
     @OneToMany(mappedBy = "appUser")
@@ -48,7 +48,12 @@ public class AppUser implements Serializable {
     @JsonIgnoreProperties(value = { "appUser" }, allowSetters = true)
     private Set<Review> reviews = new HashSet<>();
 
-    @ManyToMany(mappedBy = "appUsers")
+    @ManyToMany
+    @JoinTable(
+        name = "rel_app_user__tag",
+        joinColumns = @JoinColumn(name = "app_user_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "routes", "appUsers" }, allowSetters = true)
     private Set<Tag> tags = new HashSet<>();
@@ -174,12 +179,6 @@ public class AppUser implements Serializable {
     }
 
     public void setTags(Set<Tag> tags) {
-        if (this.tags != null) {
-            this.tags.forEach(i -> i.removeAppUser(this));
-        }
-        if (tags != null) {
-            tags.forEach(i -> i.addAppUser(this));
-        }
         this.tags = tags;
     }
 

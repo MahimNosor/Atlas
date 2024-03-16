@@ -44,7 +44,7 @@ public class Stop implements Serializable {
     private Integer sequenceNumber;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "stops", "city", "appUser", "tags" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "stops", "tags", "city", "appUser" }, allowSetters = true)
     private Route route;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

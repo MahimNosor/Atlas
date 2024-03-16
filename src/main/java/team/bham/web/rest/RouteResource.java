@@ -140,12 +140,21 @@ public class RouteResource {
      * {@code GET  /routes} : get all the routes.
      *
      * @param pageable the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of routes in body.
      */
     @GetMapping("/routes")
-    public ResponseEntity<List<Route>> getAllRoutes(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<Route>> getAllRoutes(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+    ) {
         log.debug("REST request to get a page of Routes");
-        Page<Route> page = routeService.findAll(pageable);
+        Page<Route> page;
+        if (eagerload) {
+            page = routeService.findAllWithEagerRelationships(pageable);
+        } else {
+            page = routeService.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

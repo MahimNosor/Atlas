@@ -52,8 +52,8 @@ relationship OneToMany {
 }
 
 relationship ManyToMany {
-    Tag{route(id)} to Route{tag(name)}
-    Tag{appUser(id)} to AppUser{tag(name)}
+    Route{tag(name)} to Tag{route(id)}
+    AppUser{tag(name)} to Tag{appUser(id)}
 }
 
 paginate all with pagination

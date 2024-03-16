@@ -24,9 +24,9 @@ type RouteFormGroupContent = {
   distance: FormControl<IRoute['distance']>;
   cost: FormControl<IRoute['cost']>;
   numReviews: FormControl<IRoute['numReviews']>;
+  tags: FormControl<IRoute['tags']>;
   city: FormControl<IRoute['city']>;
   appUser: FormControl<IRoute['appUser']>;
-  tags: FormControl<IRoute['tags']>;
 };
 
 export type RouteFormGroup = FormGroup<RouteFormGroupContent>;
@@ -62,9 +62,9 @@ export class RouteFormService {
       numReviews: new FormControl(routeRawValue.numReviews, {
         validators: [Validators.required],
       }),
+      tags: new FormControl(routeRawValue.tags ?? []),
       city: new FormControl(routeRawValue.city),
       appUser: new FormControl(routeRawValue.appUser),
-      tags: new FormControl(routeRawValue.tags ?? []),
     });
   }
 

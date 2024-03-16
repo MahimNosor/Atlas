@@ -18,20 +18,6 @@
         <dd>
           <span>{{ tag.name }}</span>
         </dd>
-        <dt><span>Route</span></dt>
-        <dd>
-          <span *ngFor="let route of tag.routes; let last = last">
-            <a [routerLink]="['/route', route.id, 'view']">{{ route.id }}</a
-            >{{ last ? '' : ', ' }}
-          </span>
-        </dd>
-        <dt><span>App User</span></dt>
-        <dd>
-          <span *ngFor="let appUser of tag.appUsers; let last = last">
-            <a [routerLink]="['/app-user', appUser.id, 'view']">{{ appUser.id }}</a
-            >{{ last ? '' : ', ' }}
-          </span>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

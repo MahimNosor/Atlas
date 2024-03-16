@@ -54,6 +54,12 @@ public class Route implements Serializable {
     @JsonIgnoreProperties(value = { "route" }, allowSetters = true)
     private Set<Stop> stops = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "rel_route__tag", joinColumns = @JoinColumn(name = "route_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "routes", "appUsers" }, allowSetters = true)
+    private Set<Tag> tags = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "routes" }, allowSetters = true)
     private City city;
@@ -61,11 +67,6 @@ public class Route implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = { "user", "routes", "reviews", "tags" }, allowSetters = true)
     private AppUser appUser;
-
-    @ManyToMany(mappedBy = "routes")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "routes", "appUsers" }, allowSetters = true)
-    private Set<Tag> tags = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -191,6 +192,31 @@ public class Route implements Serializable {
         return this;
     }
 
+    public Set<Tag> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public Route tags(Set<Tag> tags) {
+        this.setTags(tags);
+        return this;
+    }
+
+    public Route addTag(Tag tag) {
+        this.tags.add(tag);
+        tag.getRoutes().add(this);
+        return this;
+    }
+
+    public Route removeTag(Tag tag) {
+        this.tags.remove(tag);
+        tag.getRoutes().remove(this);
+        return this;
+    }
+
     public City getCity() {
         return this.city;
     }
@@ -214,37 +240,6 @@ public class Route implements Serializable {
 
     public Route appUser(AppUser appUser) {
         this.setAppUser(appUser);
-        return this;
-    }
-
-    public Set<Tag> getTags() {
-        return this.tags;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        if (this.tags != null) {
-            this.tags.forEach(i -> i.removeRoute(this));
-        }
-        if (tags != null) {
-            tags.forEach(i -> i.addRoute(this));
-        }
-        this.tags = tags;
-    }
-
-    public Route tags(Set<Tag> tags) {
-        this.setTags(tags);
-        return this;
-    }
-
-    public Route addTag(Tag tag) {
-        this.tags.add(tag);
-        tag.getRoutes().add(this);
-        return this;
-    }
-
-    public Route removeTag(Tag tag) {
-        this.tags.remove(tag);
-        tag.getRoutes().remove(this);
         return this;
     }
 
