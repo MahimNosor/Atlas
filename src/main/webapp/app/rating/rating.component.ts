@@ -206,6 +206,7 @@ export class RatingComponent implements OnInit {
 
     if (!this.appUserId) {
       alert('User must be logged in to create a route.');
+      console.log(this.appUserId);
       return;
     }
 
