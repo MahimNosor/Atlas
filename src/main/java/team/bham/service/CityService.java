@@ -62,6 +62,9 @@ public class CityService {
                 if (city.getName() != null) {
                     existingCity.setName(city.getName());
                 }
+                if (city.getCountry() != null) {
+                    existingCity.setCountry(city.getCountry());
+                }
 
                 return existingCity;
             })

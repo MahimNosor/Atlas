@@ -19,6 +19,7 @@ type CityFormDefaults = Pick<NewCity, 'id'>;
 type CityFormGroupContent = {
   id: FormControl<ICity['id'] | NewCity['id']>;
   name: FormControl<ICity['name']>;
+  country: FormControl<ICity['country']>;
 };
 
 export type CityFormGroup = FormGroup<CityFormGroupContent>;
@@ -41,6 +42,7 @@ export class CityFormService {
       name: new FormControl(cityRawValue.name, {
         validators: [Validators.required],
       }),
+      country: new FormControl(cityRawValue.country),
     });
   }
 

@@ -18,6 +18,11 @@
             <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required"> This field is required. </small>
           </div>
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_country">Country</label>
+          <input type="text" class="form-control" name="country" id="field_country" data-cy="country" formControlName="country" />
+        </div>
       </div>
 
       <div>

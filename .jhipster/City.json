@@ -9,6 +9,10 @@
       "fieldName": "name",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "country",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,

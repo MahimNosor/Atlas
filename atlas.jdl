@@ -20,6 +20,7 @@ entity Tag {
 
 entity City {
     name String required
+    country String
 }
 
 entity Stop {

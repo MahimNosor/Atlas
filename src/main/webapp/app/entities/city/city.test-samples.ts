@@ -6,17 +6,18 @@ export const sampleWithRequiredData: ICity = {
 };
 
 export const sampleWithPartialData: ICity = {
-  id: 27237,
-  name: 'Granite',
+  id: 1965,
+  name: 'firewall',
 };
 
 export const sampleWithFullData: ICity = {
-  id: 32749,
-  name: 'Myanmar Account Director',
+  id: 62664,
+  name: 'EXE',
+  country: 'Chad',
 };
 
 export const sampleWithNewData: NewCity = {
-  name: 'challenge Vista District',
+  name: 'Tasty dot-com',
   id: null,
 };
 

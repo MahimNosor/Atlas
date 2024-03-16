@@ -44,6 +44,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="country">
+            <div class="d-flex">
+              <span>Country</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -53,6 +59,7 @@
             <a [routerLink]="['/city', city.id, 'view']">{{ city.id }}</a>
           </td>
           <td>{{ city.name }}</td>
+          <td>{{ city.country }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/city', city.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

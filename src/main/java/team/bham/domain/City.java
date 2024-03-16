@@ -30,6 +30,9 @@ public class City implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "country")
+    private String country;
+
     @OneToMany(mappedBy = "city")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "stops", "tags", "city", "appUser" }, allowSetters = true)
@@ -61,6 +64,19 @@ public class City implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCountry() {
+        return this.country;
+    }
+
+    public City country(String country) {
+        this.setCountry(country);
+        return this;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public Set<Route> getRoutes() {
@@ -119,6 +135,7 @@ public class City implements Serializable {
         return "City{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", country='" + getCountry() + "'" +
             "}";
     }
 }
