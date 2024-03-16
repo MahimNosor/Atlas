@@ -104,17 +104,17 @@ public class AppUserService {
         return appUserRepository.findOneWithEagerRelationships(id);
     }
 
-    // /**
-    //  * Get one appUser by username (login).
-    //  *
-    //  * @param login the username of the User entity linked to the AppUser.
-    //  * @return the entity if found.
-    //  */
-    // @Transactional(readOnly = true)
-    // public Optional<AppUser> findOneByUserLogin(String login) {
-    //     log.debug("Request to get AppUser by username : {}", login);
-    //     return appUserRepository.findOneByUser_Login(login);
-    // }
+    /**
+     * Get one appUser by username (login).
+     *
+     * @param login the username of the User entity linked to the AppUser.
+     * @return the entity if found.
+     */
+    @Transactional(readOnly = true)
+    public Optional<AppUser> findOneByUserLogin(String login) {
+        log.debug("Request to get AppUser by username : {}", login);
+        return appUserRepository.findOneByUser_Login(login);
+    }
 
     /**
      * Delete the appUser by id.

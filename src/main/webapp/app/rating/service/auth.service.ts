@@ -30,13 +30,13 @@ export class AuthService {
     }
   }
 
-  // getAppUserIdByUsername(username: string): Observable<number | null> {
-  //   return this.http.get<IAppUser>(`/api/app-users/by-username/${username}`).pipe(
-  //     map(appUser => appUser.id ? appUser.id : null), // Adjusted to handle possible null
-  //     catchError(error => {
-  //       console.error('Error fetching AppUser by username', error);
-  //       return of(null); // Correctly return Observable of null on error
-  //     })
-  //   );
-  // }
+  getAppUserIdByUsername(username: string): Observable<number | null> {
+    return this.http.get<IAppUser>(`/api/app-users/by-username/${username}`).pipe(
+      map(appUser => (appUser.id ? appUser.id : null)), // Adjusted to handle possible null
+      catchError(error => {
+        console.error('Error fetching AppUser by username', error);
+        return of(null); // Correctly return Observable of null on error
+      })
+    );
+  }
 }

@@ -108,6 +108,7 @@ export class RatingComponent implements OnInit {
   routeFound!: boolean;
 
   private map: any;
+  private appUserId: number | null = null;
   routeTitle: string = '';
   routeDescription: string = '';
   selectedCity: string = '';
@@ -120,7 +121,7 @@ export class RatingComponent implements OnInit {
 
   ngOnInit(): void {
     this.initMap();
-    // this.testGetAppUserId(); // Add this line to test the method
+    this.testGetAppUserId(); // Add this line to test the method
   }
 
   clearAllWaypoints(): void {
@@ -182,26 +183,28 @@ export class RatingComponent implements OnInit {
     this.initRouting();
   }
 
-  // testGetAppUserId(): void {
-  //   const username = this.authService.getCurrentUserId(); // This gets the username
-  //   console.log(username);
-  //   if (username) {
-  //     this.authService.getAppUserIdByUsername(username).subscribe(appUserId => {
-  //       console.log(`AppUser ID for username '${username}':`, appUserId);
-  //     }, error => {
-  //       console.error('Failed to fetch AppUser ID:', error);
-  //     });
-  //   } else {
-  //     console.log('No user is currently logged in.');
-  //   }
-  // }
+  testGetAppUserId(): void {
+    const username = this.authService.getCurrentUserId(); // This gets the username
+    console.log(username);
+    if (username) {
+      this.authService.getAppUserIdByUsername(username).subscribe(
+        appUserId => {
+          console.log(`AppUser ID for username '${username}':`, appUserId);
+          this.appUserId = appUserId;
+        },
+        error => {
+          console.error('Failed to fetch AppUser ID:', error);
+        }
+      );
+    } else {
+      console.log('No user is currently logged in.');
+    }
+  }
 
   submitRoute(): void {
     // Assuming this part stays the same - creating the route
 
-    const userId = this.authService.getCurrentUserId();
-    console.log(userId);
-    if (!userId) {
+    if (!this.appUserId) {
       alert('User must be logged in to create a route.');
       return;
     }
@@ -242,6 +245,7 @@ export class RatingComponent implements OnInit {
       distance: numberDistance,
       cost: numberCost,
       numReviews: 0,
+      appUser: { id: this.appUserId },
     };
 
     // You can handle the route creation logic as before

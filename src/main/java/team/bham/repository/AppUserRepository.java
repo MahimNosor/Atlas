@@ -40,6 +40,7 @@ public interface AppUserRepository extends AppUserRepositoryWithBagRelationships
 
     @Query("select appUser from AppUser appUser left join fetch appUser.user where appUser.id =:id")
     Optional<AppUser> findOneWithToOneRelationships(@Param("id") Long id);
-    // @Query("select appUser from AppUser appUser where appUser.user.login = :login")
-    // Optional<AppUser> findOneByUser_Login(@Param("login") String login);
+
+    @Query("select appUser from AppUser appUser where appUser.user.login = :login")
+    Optional<AppUser> findOneByUser_Login(@Param("login") String login);
 }
