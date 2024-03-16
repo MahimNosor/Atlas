@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MapDisplayService } from './service/map-display.service';
+import { IRoute } from '../entities/route/route.model';
+
 import { icon, Marker } from 'leaflet';
 import * as L from 'leaflet';
 import '../../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js';
@@ -13,8 +15,9 @@ import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocod
 export class MapDisplayComponent implements OnInit {
   travelTime!: string;
   travelDistance!: string;
-  routingControl!: any;
+  route!: IRoute | null;
   routeFound!: boolean;
+  routingControl!: any;
 
   private map: any;
 
@@ -27,6 +30,19 @@ export class MapDisplayComponent implements OnInit {
   clearAllWaypoints(): void {
     this.routingControl.getPlan().setWaypoints([]);
     this.routeFound = false;
+  }
+
+  getRouteFromId(id: number): IRoute | null {
+    this.mapDisplayService.findRoute(id).subscribe({
+      next(routeResult) {
+        console.log(routeResult);
+      },
+      error() {
+        alert('Route does not exist');
+        return null;
+      },
+    });
+    return this.route;
   }
 
   private initMarker(): void {

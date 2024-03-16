@@ -1,6 +1,4 @@
-<head>
-  <link rel="stylesheet" href="map-display.component.scss" />
-</head>
+<head> </head>
 
 <div class="divContainer">
   <div class="routeMenuContainer">
@@ -8,6 +6,7 @@
     <p *ngIf="routeFound">Total time: {{ travelTime }}h</p>
     <p *ngIf="routeFound">Total distance: {{ travelDistance }}km</p>
     <button type="button" (click)="clearAllWaypoints()">Clear all</button>
+    <button type="button" (click)="getRouteFromId(1101)">Display Route</button>
   </div>
   <div class="mapContainer">
     <div class="mapBorder">
