@@ -6,6 +6,7 @@ import { icon, Marker } from 'leaflet';
 import * as L from 'leaflet';
 import '../../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js';
 import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js';
+import { IStop } from '../entities/stop/stop.model';
 
 @Component({
   selector: 'jhi-map-display',
@@ -15,8 +16,12 @@ import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocod
 export class MapDisplayComponent implements OnInit {
   travelTime!: string;
   travelDistance!: string;
-  route!: IRoute | null;
+  routeId!: number;
   routeFound!: boolean;
+
+  route!: IRoute | null;
+  stops!: IStop[] | null;
+
   routingControl!: any;
 
   private map: any;
@@ -34,8 +39,9 @@ export class MapDisplayComponent implements OnInit {
 
   getRouteFromId(id: number): IRoute | null {
     this.mapDisplayService.findRoute(id).subscribe({
-      next(routeResult) {
-        console.log(routeResult);
+      next: routeResult => {
+        this.route = routeResult;
+        this.routeId = id;
       },
       error() {
         alert('Route does not exist');
@@ -43,6 +49,18 @@ export class MapDisplayComponent implements OnInit {
       },
     });
     return this.route;
+  }
+
+  getStopsFromRouteId(routeId: number): IStop[] | null {
+    this.mapDisplayService.findStops(routeId).subscribe({
+      next: stopsResult => {
+        this.stops = stopsResult;
+      },
+      error() {
+        alert('Cannot find stops for this route');
+      },
+    });
+    return this.stops;
   }
 
   private initMarker(): void {

@@ -12,14 +12,15 @@ export type EntityResponseType = HttpResponse<IRoute>;
   providedIn: 'root',
 })
 export class MapDisplayService {
-  protected resourceURL = this.applicationConfigService.getEndpointFor('api/routes');
+  protected routeResourceURL = this.applicationConfigService.getEndpointFor('api/routes');
+  protected stopResourceURL = this.applicationConfigService.getEndpointFor('api/stops/by-routeId');
   constructor(private http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   findRoute(id: number): Observable<IRoute | null> {
-    return this.http.get<IRoute>(`${this.resourceURL}/${id}`);
+    return this.http.get<IRoute>(`${this.routeResourceURL}/${id}`);
   }
 
-  findStop(routeId: number): Observable<IStop | null> {
-    return this.http.get<IStop>(`${this.resourceURL}/${routeId}`);
+  findStops(routeId: number): Observable<IStop[] | null> {
+    return this.http.get<IStop[]>(`${this.stopResourceURL}/${routeId}`);
   }
 }
