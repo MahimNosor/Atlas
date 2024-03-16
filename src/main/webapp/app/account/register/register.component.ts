@@ -7,11 +7,11 @@ import { RegisterService } from './register.service';
 import { AppUserService } from '../../entities/app-user/service/app-user.service';
 import { IAppUser, NewAppUser } from '../../entities/app-user/app-user.model';
 import { ApplicationConfigService } from '../../core/config/application-config.service';
-import { finalize } from 'rxjs/operators';
 import { Login } from '../../login/login.model';
 import { LoginService } from '../../login/login.service';
 import { AuthServerProvider } from '../../core/auth/auth-jwt.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../entities/user/user.service';
 
 @Component({
   selector: 'jhi-register',
@@ -58,7 +58,8 @@ export class RegisterComponent implements AfterViewInit {
     protected applicationConfigService: ApplicationConfigService,
     protected loginService: LoginService,
     protected authServerProvider: AuthServerProvider,
-    protected router: Router
+    protected router: Router,
+    protected userService: UserService
   ) {}
 
   ngAfterViewInit(): void {
@@ -105,17 +106,22 @@ export class RegisterComponent implements AfterViewInit {
           // There were no routing during login (eg from navigationToStoredUrl)
           this.router.navigate(['']);
         }
+        this.userService.getUserByLogin(login).subscribe(user => {
+          if (user) {
+            const userId: number = user.id;
+            console.log('User ID: ', userId);
+            const appUser: NewAppUser = { id: null, numRoutes: 0, numReviews: 0, user: { id: userId, login: login } };
+            this.registerService
+              .linkAppUser(appUser)
+              .pipe()
+              .subscribe({
+                next: () => console.log('Success!'),
+              });
+          }
+          console.log('This works');
+        });
       },
       error: () => console.log(':('),
     });
-
-    const appUser: NewAppUser = { id: null, numRoutes: 0, numReviews: 0 };
-    this.loginService.login(credentials);
-    this.authServerProvider
-      .linkAppUser(appUser)
-      .pipe()
-      .subscribe({
-        next: () => console.log('Success!'),
-      });
   }
 }

@@ -7,6 +7,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { isPresent } from 'app/core/util/operators';
 import { Pagination } from 'app/core/request/request.model';
 import { IUser, getUserIdentifier } from './user.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -41,5 +42,14 @@ export class UserService {
       return [...usersToAdd, ...userCollection];
     }
     return userCollection;
+  }
+
+  getUserByLogin(login: string): Observable<IUser | null> {
+    const url = `${this.resourceUrl}?login=${login}`; // Construct URL with login parameter
+    return this.http
+      .get<IUser[]>(url) // Perform a GET request for an array of users
+      .pipe(
+        map(users => users.find(user => user.login === login) || null) // Find the user with matching login and return it, or null if not found
+      );
   }
 }
