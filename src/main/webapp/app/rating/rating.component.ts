@@ -81,6 +81,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouteService } from './service/route.service';
 import { StopService } from './service/stop.service';
+import { AuthService } from './service/auth.service';
+
 import { icon, Marker } from 'leaflet';
 import * as L from 'leaflet';
 import '../../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js';
@@ -114,15 +116,23 @@ export class RatingComponent implements OnInit {
   tag3: boolean = false;
   routeCost: string = '';
 
-  constructor(private routeService: RouteService, private stopService: StopService) {}
+  constructor(private routeService: RouteService, private stopService: StopService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.initMap();
+    // this.testGetAppUserId(); // Add this line to test the method
   }
 
   clearAllWaypoints(): void {
     this.routingControl.getPlan().setWaypoints([]);
     this.routeFound = false;
+    this.routeTitle = '';
+    this.routeDescription = '';
+    this.routeCost = '';
+    this.selectedCity = '';
+    this.tag1 = false;
+    this.tag2 = false;
+    this.tag3 = false;
   }
 
   private initMarker(): void {
@@ -156,7 +166,7 @@ export class RatingComponent implements OnInit {
   }
 
   private initMap(): void {
-    this.map = L.map('map').setView([22.2816654, 114.1757015], 10);
+    this.map = L.map('map').setView([52.4508, -1.9305], 3);
 
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
@@ -171,11 +181,59 @@ export class RatingComponent implements OnInit {
 
     this.initRouting();
   }
+
+  // testGetAppUserId(): void {
+  //   const username = this.authService.getCurrentUserId(); // This gets the username
+  //   console.log(username);
+  //   if (username) {
+  //     this.authService.getAppUserIdByUsername(username).subscribe(appUserId => {
+  //       console.log(`AppUser ID for username '${username}':`, appUserId);
+  //     }, error => {
+  //       console.error('Failed to fetch AppUser ID:', error);
+  //     });
+  //   } else {
+  //     console.log('No user is currently logged in.');
+  //   }
+  // }
+
   submitRoute(): void {
     // Assuming this part stays the same - creating the route
+
+    const userId = this.authService.getCurrentUserId();
+    console.log(userId);
+    if (!userId) {
+      alert('User must be logged in to create a route.');
+      return;
+    }
+
     let numberDistance: number = +this.travelDistance;
     let numberCost: number = +this.routeCost;
-    console.log(numberDistance, numberCost);
+    const waypoints = this.routingControl.getWaypoints() as MyWaypoint[];
+
+    // Check if distance has a value
+    if (!this.travelDistance || numberDistance <= 0) {
+      alert('Route cannot be found. Make sure you have at least 2 stops, and that the route is valid.');
+      return;
+    }
+
+    // Check if there is a title
+    if (!this.routeTitle.trim()) {
+      alert('Please provide a title for the route.');
+      return;
+    }
+
+    // Check if there is a description
+    if (!this.routeDescription.trim()) {
+      alert('Please provide a description for the route.');
+      return;
+    }
+
+    // Check if cost is formatted correctly (at most two decimal places)
+    if (isNaN(numberCost) || numberCost.toFixed(2) !== this.routeCost) {
+      alert('Cost must be a number with exactly two decimal places.');
+      return;
+    }
+
     const routeData = {
       id: null,
       title: this.routeTitle,
@@ -194,7 +252,6 @@ export class RatingComponent implements OnInit {
         console.log(routeId);
 
         // Now, handle the creation of stops based on waypoints
-        const waypoints = this.routingControl.getWaypoints() as MyWaypoint[];
         waypoints.forEach((waypoint, index) => {
           if (waypoint.latLng) {
             // Ensure the waypoint has latitude and longitude
@@ -213,6 +270,11 @@ export class RatingComponent implements OnInit {
               next: response => {
                 console.log(`Stop ${index + 1} created`, response);
                 // Handle successful stop creation here
+                if (index === waypoints.length - 1) {
+                  // This is the last stop being processed
+                  alert(`Route and stops have been successfully created. Route ID: ${routeId}`);
+                }
+                this.clearAllWaypoints();
               },
               error: error => {
                 console.error(`There was an error creating the stop ${index + 1}:`, error);
