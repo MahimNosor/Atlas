@@ -58,6 +58,18 @@
         </select>
       </div>
       <div class="form-group">
+        <label for="routeCost">Give the cost the route:</label>
+        <input
+          type="text"
+          [(ngModel)]="routeCost"
+          name="routeCost"
+          id="routeCost"
+          placeholder="Enter a rough estimate for cost"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
         <label for="tags">Pick tags:</label>
         <div class="checkbox-group">
           <label> <input type="checkbox" [(ngModel)]="tag1" name="tag1" id="tag1" /> Tag 1 </label>

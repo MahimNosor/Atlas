@@ -86,6 +86,14 @@ import * as L from 'leaflet';
 import '../../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js';
 import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js';
 
+interface MyWaypoint {
+  latLng: {
+    lat: number;
+    lng: number;
+  };
+  name?: string;
+}
+
 @Component({
   selector: 'jhi-map-display',
   templateUrl: './rating.component.html',
@@ -104,6 +112,7 @@ export class RatingComponent implements OnInit {
   tag1: boolean = false;
   tag2: boolean = false;
   tag3: boolean = false;
+  routeCost: string = '';
 
   constructor(private routeService: RouteService, private stopService: StopService) {}
 
@@ -163,52 +172,60 @@ export class RatingComponent implements OnInit {
     this.initRouting();
   }
   submitRoute(): void {
-    // Implement the logic to handle the submission of the route
-    // For now, we'll just log the route details to the console
+    // Assuming this part stays the same - creating the route
+    let numberDistance: number = +this.travelDistance;
+    let numberCost: number = +this.routeCost;
+    console.log(numberDistance, numberCost);
     const routeData = {
       id: null,
-      distance: 1,
-      stops: 1,
-      cost: 1000000,
-      duration: 1,
-      tagName: null,
-      city: null,
-      tags: null,
-    };
-
-    const stopData = {
-      id: null,
-      name: 'a',
-      description: 'a',
-      latitude: 0,
-      longitude: 0,
-      sequence: 0,
+      title: this.routeTitle,
+      description: this.routeDescription,
       rating: 0,
-      route: null,
+      distance: numberDistance,
+      cost: numberCost,
+      numReviews: 0,
     };
 
+    // You can handle the route creation logic as before
     this.routeService.createRoute(routeData).subscribe({
-      next(response) {
-        alert('Route created');
-        // Handle successful creation here (e.g., redirecting the user or showing a success message)
+      next: httpResponse => {
+        console.log('Route created', httpResponse.body);
+        const routeId = httpResponse.body?.id; // Assuming response contains the ID of the newly created route
+        console.log(routeId);
+
+        // Now, handle the creation of stops based on waypoints
+        const waypoints = this.routingControl.getWaypoints() as MyWaypoint[];
+        waypoints.forEach((waypoint, index) => {
+          if (waypoint.latLng) {
+            // Ensure the waypoint has latitude and longitude
+            const stopData = {
+              id: null,
+              name: waypoint.name || `Stop ${index + 1}`,
+              description: `Description for ${waypoint.name || `Stop ${index + 1}`}`,
+              latitude: waypoint.latLng.lat,
+              longitude: waypoint.latLng.lng,
+              sequenceNumber: index,
+              route: { id: routeId }, // Associate the stop with the route
+            };
+
+            // Create the stop
+            this.stopService.createStop(stopData).subscribe({
+              next: response => {
+                console.log(`Stop ${index + 1} created`, response);
+                // Handle successful stop creation here
+              },
+              error: error => {
+                console.error(`There was an error creating the stop ${index + 1}:`, error);
+                // Handle stop creation errors here
+              },
+            });
+          }
+        });
       },
       error: error => {
         console.error('There was an error creating the route:', error);
-        // Handle errors here (e.g., showing an error message to the user)
+        // Handle route creation errors here
       },
     });
-
-    this.stopService.createStop(stopData).subscribe({
-      next(response) {
-        alert('Stop created');
-        // Handle successful creation here (e.g., redirecting the user or showing a success message)
-      },
-      error: error => {
-        console.error('There was an error creating the stop:', error);
-        // Handle errors here (e.g., showing an error message to the user)
-      },
-    });
-
-    // Here you would typically send this data to a backend server for processing
   }
 }
