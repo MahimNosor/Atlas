@@ -40,7 +40,7 @@
       "otherEntityField": "id",
       "otherEntityName": "route",
       "otherEntityRelationshipName": "stop",
-      "relationshipName": "city",
+      "relationshipName": "route",
       "relationshipType": "many-to-one"
     }
   ],

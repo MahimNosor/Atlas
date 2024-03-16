@@ -7,7 +7,7 @@ export interface IStop {
   latitude?: number | null;
   longitude?: number | null;
   sequenceNumber?: number | null;
-  city?: Pick<IRoute, 'id'> | null;
+  route?: Pick<IRoute, 'id'> | null;
 }
 
 export type NewStop = Omit<IStop, 'id'> & { id: null };

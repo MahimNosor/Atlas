@@ -18,26 +18,6 @@
             <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required"> This field is required. </small>
           </div>
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_rating">Rating</label>
-          <input type="number" class="form-control" name="rating" id="field_rating" data-cy="rating" formControlName="rating" />
-          <div *ngIf="editForm.get('rating')!.invalid && (editForm.get('rating')!.dirty || editForm.get('rating')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('rating')?.errors?.required"> This field is required. </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('rating')?.errors?.number"> This field should be a number. </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_numRoutes">Num Routes</label>
-          <input type="number" class="form-control" name="numRoutes" id="field_numRoutes" data-cy="numRoutes" formControlName="numRoutes" />
-          <div *ngIf="editForm.get('numRoutes')!.invalid && (editForm.get('numRoutes')!.dirty || editForm.get('numRoutes')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('numRoutes')?.errors?.required"> This field is required. </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('numRoutes')?.errors?.number">
-              This field should be a number.
-            </small>
-          </div>
-        </div>
       </div>
 
       <div>

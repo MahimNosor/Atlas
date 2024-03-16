@@ -19,8 +19,6 @@ type CityFormDefaults = Pick<NewCity, 'id'>;
 type CityFormGroupContent = {
   id: FormControl<ICity['id'] | NewCity['id']>;
   name: FormControl<ICity['name']>;
-  rating: FormControl<ICity['rating']>;
-  numRoutes: FormControl<ICity['numRoutes']>;
 };
 
 export type CityFormGroup = FormGroup<CityFormGroupContent>;
@@ -41,12 +39,6 @@ export class CityFormService {
         }
       ),
       name: new FormControl(cityRawValue.name, {
-        validators: [Validators.required],
-      }),
-      rating: new FormControl(cityRawValue.rating, {
-        validators: [Validators.required],
-      }),
-      numRoutes: new FormControl(cityRawValue.numRoutes, {
         validators: [Validators.required],
       }),
     });

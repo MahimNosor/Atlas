@@ -9,16 +9,6 @@
       "fieldName": "name",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "rating",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "numRoutes",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,

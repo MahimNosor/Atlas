@@ -30,14 +30,6 @@ public class City implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "rating", nullable = false)
-    private Integer rating;
-
-    @NotNull
-    @Column(name = "num_routes", nullable = false)
-    private Integer numRoutes;
-
     @OneToMany(mappedBy = "city")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "stops", "city", "appUser", "tags" }, allowSetters = true)
@@ -69,32 +61,6 @@ public class City implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getRating() {
-        return this.rating;
-    }
-
-    public City rating(Integer rating) {
-        this.setRating(rating);
-        return this;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
-
-    public Integer getNumRoutes() {
-        return this.numRoutes;
-    }
-
-    public City numRoutes(Integer numRoutes) {
-        this.setNumRoutes(numRoutes);
-        return this;
-    }
-
-    public void setNumRoutes(Integer numRoutes) {
-        this.numRoutes = numRoutes;
     }
 
     public Set<Route> getRoutes() {
@@ -153,8 +119,6 @@ public class City implements Serializable {
         return "City{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", rating=" + getRating() +
-            ", numRoutes=" + getNumRoutes() +
             "}";
     }
 }

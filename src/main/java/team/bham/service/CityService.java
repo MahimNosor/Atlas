@@ -62,12 +62,6 @@ public class CityService {
                 if (city.getName() != null) {
                     existingCity.setName(city.getName());
                 }
-                if (city.getRating() != null) {
-                    existingCity.setRating(city.getRating());
-                }
-                if (city.getNumRoutes() != null) {
-                    existingCity.setNumRoutes(city.getNumRoutes());
-                }
 
                 return existingCity;
             })

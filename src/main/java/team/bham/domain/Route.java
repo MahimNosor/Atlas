@@ -49,9 +49,9 @@ public class Route implements Serializable {
     @Column(name = "num_reviews", nullable = false)
     private Integer numReviews;
 
-    @OneToMany(mappedBy = "city")
+    @OneToMany(mappedBy = "route")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "city" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "route" }, allowSetters = true)
     private Set<Stop> stops = new HashSet<>();
 
     @ManyToOne
@@ -166,10 +166,10 @@ public class Route implements Serializable {
 
     public void setStops(Set<Stop> stops) {
         if (this.stops != null) {
-            this.stops.forEach(i -> i.setCity(null));
+            this.stops.forEach(i -> i.setRoute(null));
         }
         if (stops != null) {
-            stops.forEach(i -> i.setCity(this));
+            stops.forEach(i -> i.setRoute(this));
         }
         this.stops = stops;
     }
@@ -181,13 +181,13 @@ public class Route implements Serializable {
 
     public Route addStop(Stop stop) {
         this.stops.add(stop);
-        stop.setCity(this);
+        stop.setRoute(this);
         return this;
     }
 
     public Route removeStop(Stop stop) {
         this.stops.remove(stop);
-        stop.setCity(null);
+        stop.setRoute(null);
         return this;
     }
 

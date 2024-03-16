@@ -20,8 +20,6 @@ entity Tag {
 
 entity City {
     name String required
-    rating Integer required
-    numRoutes Integer required
 }
 
 entity Stop {
@@ -48,7 +46,7 @@ relationship OneToOne {
 
 relationship OneToMany {
     City to Route{city(id)}
-    Route to Stop{city(id)}
+    Route to Stop{route(id)}
     AppUser to Route{appUser(id)}
     AppUser to Review{appUser(id)}
 }

@@ -32,12 +32,6 @@ class CityResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_RATING = 1;
-    private static final Integer UPDATED_RATING = 2;
-
-    private static final Integer DEFAULT_NUM_ROUTES = 1;
-    private static final Integer UPDATED_NUM_ROUTES = 2;
-
     private static final String ENTITY_API_URL = "/api/cities";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -62,7 +56,7 @@ class CityResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static City createEntity(EntityManager em) {
-        City city = new City().name(DEFAULT_NAME).rating(DEFAULT_RATING).numRoutes(DEFAULT_NUM_ROUTES);
+        City city = new City().name(DEFAULT_NAME);
         return city;
     }
 
@@ -73,7 +67,7 @@ class CityResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static City createUpdatedEntity(EntityManager em) {
-        City city = new City().name(UPDATED_NAME).rating(UPDATED_RATING).numRoutes(UPDATED_NUM_ROUTES);
+        City city = new City().name(UPDATED_NAME);
         return city;
     }
 
@@ -96,8 +90,6 @@ class CityResourceIT {
         assertThat(cityList).hasSize(databaseSizeBeforeCreate + 1);
         City testCity = cityList.get(cityList.size() - 1);
         assertThat(testCity.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testCity.getRating()).isEqualTo(DEFAULT_RATING);
-        assertThat(testCity.getNumRoutes()).isEqualTo(DEFAULT_NUM_ROUTES);
     }
 
     @Test
@@ -137,40 +129,6 @@ class CityResourceIT {
 
     @Test
     @Transactional
-    void checkRatingIsRequired() throws Exception {
-        int databaseSizeBeforeTest = cityRepository.findAll().size();
-        // set the field null
-        city.setRating(null);
-
-        // Create the City, which fails.
-
-        restCityMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(city)))
-            .andExpect(status().isBadRequest());
-
-        List<City> cityList = cityRepository.findAll();
-        assertThat(cityList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkNumRoutesIsRequired() throws Exception {
-        int databaseSizeBeforeTest = cityRepository.findAll().size();
-        // set the field null
-        city.setNumRoutes(null);
-
-        // Create the City, which fails.
-
-        restCityMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(city)))
-            .andExpect(status().isBadRequest());
-
-        List<City> cityList = cityRepository.findAll();
-        assertThat(cityList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllCities() throws Exception {
         // Initialize the database
         cityRepository.saveAndFlush(city);
@@ -181,9 +139,7 @@ class CityResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(city.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING)))
-            .andExpect(jsonPath("$.[*].numRoutes").value(hasItem(DEFAULT_NUM_ROUTES)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
 
     @Test
@@ -198,9 +154,7 @@ class CityResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(city.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.rating").value(DEFAULT_RATING))
-            .andExpect(jsonPath("$.numRoutes").value(DEFAULT_NUM_ROUTES));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
     }
 
     @Test
@@ -222,7 +176,7 @@ class CityResourceIT {
         City updatedCity = cityRepository.findById(city.getId()).get();
         // Disconnect from session so that the updates on updatedCity are not directly saved in db
         em.detach(updatedCity);
-        updatedCity.name(UPDATED_NAME).rating(UPDATED_RATING).numRoutes(UPDATED_NUM_ROUTES);
+        updatedCity.name(UPDATED_NAME);
 
         restCityMockMvc
             .perform(
@@ -237,8 +191,6 @@ class CityResourceIT {
         assertThat(cityList).hasSize(databaseSizeBeforeUpdate);
         City testCity = cityList.get(cityList.size() - 1);
         assertThat(testCity.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testCity.getRating()).isEqualTo(UPDATED_RATING);
-        assertThat(testCity.getNumRoutes()).isEqualTo(UPDATED_NUM_ROUTES);
     }
 
     @Test
@@ -309,8 +261,6 @@ class CityResourceIT {
         City partialUpdatedCity = new City();
         partialUpdatedCity.setId(city.getId());
 
-        partialUpdatedCity.rating(UPDATED_RATING);
-
         restCityMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedCity.getId())
@@ -324,8 +274,6 @@ class CityResourceIT {
         assertThat(cityList).hasSize(databaseSizeBeforeUpdate);
         City testCity = cityList.get(cityList.size() - 1);
         assertThat(testCity.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testCity.getRating()).isEqualTo(UPDATED_RATING);
-        assertThat(testCity.getNumRoutes()).isEqualTo(DEFAULT_NUM_ROUTES);
     }
 
     @Test
@@ -340,7 +288,7 @@ class CityResourceIT {
         City partialUpdatedCity = new City();
         partialUpdatedCity.setId(city.getId());
 
-        partialUpdatedCity.name(UPDATED_NAME).rating(UPDATED_RATING).numRoutes(UPDATED_NUM_ROUTES);
+        partialUpdatedCity.name(UPDATED_NAME);
 
         restCityMockMvc
             .perform(
@@ -355,8 +303,6 @@ class CityResourceIT {
         assertThat(cityList).hasSize(databaseSizeBeforeUpdate);
         City testCity = cityList.get(cityList.size() - 1);
         assertThat(testCity.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testCity.getRating()).isEqualTo(UPDATED_RATING);
-        assertThat(testCity.getNumRoutes()).isEqualTo(UPDATED_NUM_ROUTES);
     }
 
     @Test

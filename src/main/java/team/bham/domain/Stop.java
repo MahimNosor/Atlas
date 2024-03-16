@@ -45,7 +45,7 @@ public class Stop implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "stops", "city", "appUser", "tags" }, allowSetters = true)
-    private Route city;
+    private Route route;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -127,16 +127,16 @@ public class Stop implements Serializable {
         this.sequenceNumber = sequenceNumber;
     }
 
-    public Route getCity() {
-        return this.city;
+    public Route getRoute() {
+        return this.route;
     }
 
-    public void setCity(Route route) {
-        this.city = route;
+    public void setRoute(Route route) {
+        this.route = route;
     }
 
-    public Stop city(Route route) {
-        this.setCity(route);
+    public Stop route(Route route) {
+        this.setRoute(route);
         return this;
     }
 

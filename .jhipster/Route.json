@@ -43,7 +43,7 @@
   "relationships": [
     {
       "otherEntityName": "stop",
-      "otherEntityRelationshipName": "city",
+      "otherEntityRelationshipName": "route",
       "relationshipName": "stop",
       "relationshipType": "one-to-many"
     },

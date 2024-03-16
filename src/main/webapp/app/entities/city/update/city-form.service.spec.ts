@@ -21,8 +21,6 @@ describe('City Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             name: expect.any(Object),
-            rating: expect.any(Object),
-            numRoutes: expect.any(Object),
           })
         );
       });
@@ -34,8 +32,6 @@ describe('City Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             name: expect.any(Object),
-            rating: expect.any(Object),
-            numRoutes: expect.any(Object),
           })
         );
       });
