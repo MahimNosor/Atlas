@@ -34,3 +34,43 @@
   margin-bottom: 10px; // Add some space between checkboxes
   // Add more styles as needed
 }
+
+#routeDescription {
+  height: 200px;
+}
+
+.routeMenuContainer {
+  padding: 20px; // Adjust the padding as needed
+}
+
+.form-group {
+  margin-bottom: 10px; // Adds space below each form group
+}
+
+.center-text {
+  display: flex;
+  justify-content: space-between; // This will space out the buttons
+  margin-top: 20px; // Add some space above the button group
+}
+.button {
+  flex-basis: 48%; // Each button will try to take up 48% of the container's width
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px; // Gives the buttons a rounded appearance
+  color: white; // Text color
+  background-color: grey; // Example background color, adjust as needed
+  cursor: pointer; // Changes the cursor to a pointer when hovering over the buttons
+  transition: background-color 0.3s ease; // Smooth background color transition on hover
+
+  &:hover {
+    background-color: #0056b3; // Darker shade when hovered, adjust as needed
+  }
+}
+
+.button-clear {
+  background-color: grey; // Red color for the clear button
+
+  &:hover {
+    background-color: #c82333; // Darker shade for the clear button when hovered
+  }
+}
