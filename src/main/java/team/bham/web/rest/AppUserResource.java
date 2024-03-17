@@ -177,6 +177,12 @@ public class AppUserResource {
         return ResponseUtil.wrapOrNotFound(appUser);
     }
 
+    @GetMapping("/app-users/by-username/{username}")
+    public ResponseEntity<AppUser> getAppUserByUsername(@PathVariable String username) {
+        log.debug("REST request to get AppUser by username : {}", username);
+        return appUserService.findOneByUserLogin(username).map(ResponseEntity::ok).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     /**
      * {@code GET  /app-users?login=:login} : get the "login" appUser.
      *

@@ -7,7 +7,7 @@
         Added the constraints for entity Route.
     -->
     <changeSet id="20240229213456-2" author="jhipster">
-
+    <validCheckSum>8:590f539c0a738900f61d6b1caf0e22f3</validCheckSum>
         <addForeignKeyConstraint baseColumnNames="route_id"
                                  baseTableName="rel_route__tag"
                                  constraintName="fk_rel_route__tag__route_id"

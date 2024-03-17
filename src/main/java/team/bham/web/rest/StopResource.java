@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import team.bham.domain.Stop;
+import team.bham.repository.RouteRepository;
 import team.bham.repository.StopRepository;
 import team.bham.service.StopService;
 import team.bham.web.rest.errors.BadRequestAlertException;
@@ -161,6 +162,13 @@ public class StopResource {
         log.debug("REST request to get Stop : {}", id);
         Optional<Stop> stop = stopService.findOne(id);
         return ResponseUtil.wrapOrNotFound(stop);
+    }
+
+    @GetMapping("/stops/by-routeId/{routeId}")
+    public ResponseEntity<List<Stop>> getAllStopsWithRouteID(@PathVariable(value = "routeId") Long routeId) {
+        log.debug("REST request to get Stops with route id : {}", routeId);
+        List<Stop> stops = stopRepository.findByRouteId(routeId);
+        return new ResponseEntity<>(stops, HttpStatus.OK);
     }
 
     /**
