@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouteService } from './service/route.service';
 import { StopService } from './service/stop.service';
 import { AuthService } from './service/auth.service';
-
+import { ICity } from 'app/entities/city/city.model';
 import { icon, Marker } from 'leaflet';
 import * as L from 'leaflet';
 import '../../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js';
 import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js';
+import { CityService } from 'app/entities/city/service/city.service';
 
 interface MyWaypoint {
   latLng: {
@@ -32,16 +33,34 @@ export class RatingComponent implements OnInit {
   routeTitle: string = '';
   routeDescription: string = '';
   selectedCity: string = '';
+  cities: ICity[] = [];
   tag1: boolean = false;
   tag2: boolean = false;
   tag3: boolean = false;
   routeCost: string = '';
 
-  constructor(private routeService: RouteService, private stopService: StopService, private authService: AuthService) {}
+  constructor(
+    private routeService: RouteService,
+    private stopService: StopService,
+    private authService: AuthService,
+    private cityService: CityService
+  ) {}
 
   ngOnInit(): void {
     this.initMap();
     this.testGetAppUserId(); // Add this line to test the method
+    this.loadCities();
+  }
+
+  loadCities(): void {
+    this.cityService.query().subscribe({
+      next: response => {
+        this.cities = response.body ?? [];
+      },
+      error: () => {
+        console.error('Failed to load cities');
+      },
+    });
   }
 
   clearAllWaypoints(): void {
@@ -151,12 +170,19 @@ export class RatingComponent implements OnInit {
       alert('Please provide a description for the route.');
       return;
     }
+    console.log(this.selectedCity);
+    if (!this.selectedCity) {
+      alert('Please select a valid city for the route.');
+      return;
+    }
 
     // Check if cost is formatted correctly (at most two decimal places)
     if (isNaN(numberCost) || numberCost.toFixed(2) !== this.routeCost) {
       alert('Cost must be a number with exactly two decimal places.');
       return;
     }
+
+    let cityId: number = +this.selectedCity;
 
     const routeData = {
       id: null,
@@ -167,6 +193,7 @@ export class RatingComponent implements OnInit {
       cost: numberCost,
       numReviews: 0,
       appUser: { id: this.appUserId },
+      city: { id: cityId }, // Add the selected city here
     };
 
     // You can handle the route creation logic as before

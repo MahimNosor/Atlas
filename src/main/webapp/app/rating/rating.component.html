@@ -51,11 +51,13 @@
       <div class="form-group">
         <label for="city">Choose a city:</label>
         <select [(ngModel)]="selectedCity" name="city" id="city" class="form-control">
-          <option value="city1">City 1</option>
-          <option value="city2">City 2</option>
-          <option value="city3">City 3</option>
+          <!-- Ensure ngValue is bound to cityOption.id -->
+          <option *ngFor="let cityOption of cities" [ngValue]="cityOption.id">
+            {{ cityOption.name }}
+          </option>
         </select>
       </div>
+
       <div class="form-group">
         <label for="routeCost">Give the cost of the route in £:</label>
         <input
