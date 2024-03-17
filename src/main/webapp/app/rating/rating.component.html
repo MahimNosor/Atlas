@@ -33,7 +33,6 @@
     <h2>Create your own route!</h2>
     <p *ngIf="routeFound">Total time: {{ travelTime }}h</p>
     <p *ngIf="routeFound">Total distance: {{ travelDistance }}km</p>
-    <button type="button" (click)="clearAllWaypoints()">Clear all</button>
     <form>
       <div class="form-group">
         <label for="routeTitle">Title your route:</label>
@@ -79,6 +78,7 @@
       </div>
       <div class="center-text">
         <button type="submit" (click)="submitRoute()">Submit Route</button>
+        <button type="button" (click)="clearAllWaypoints()">Clear all</button>
       </div>
     </form>
   </div>
