@@ -8,6 +8,10 @@ import * as L from 'leaflet';
 import '../../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js';
 import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js';
 import { CityService } from 'app/entities/city/service/city.service';
+import { TagService } from 'app/entities/tag/service/tag.service'; // Adjust the path as necessary
+import { ITag } from 'app/entities/tag/tag.model'; // Adjust the path as necessary
+
+// Inside your component class:
 
 interface MyWaypoint {
   latLng: {
@@ -27,6 +31,8 @@ export class RatingComponent implements OnInit {
   travelDistance!: string;
   routingControl!: any;
   routeFound!: boolean;
+  tagsSharedCollection: ITag[] = [];
+  selectedTags: ITag[] = [];
 
   private map: any;
   private appUserId: number | null = null;
@@ -43,13 +49,25 @@ export class RatingComponent implements OnInit {
     private routeService: RouteService,
     private stopService: StopService,
     private authService: AuthService,
-    private cityService: CityService
+    private cityService: CityService,
+    private tagService: TagService
   ) {}
 
   ngOnInit(): void {
     this.initMap();
     this.testGetAppUserId(); // Add this line to test the method
     this.loadCities();
+    this.loadTags();
+  }
+  loadTags(): void {
+    this.tagService.query().subscribe({
+      next: response => {
+        this.tagsSharedCollection = response.body ?? [];
+      },
+      error: () => {
+        console.error('Failed to load tags');
+      },
+    });
   }
 
   loadCities(): void {
@@ -170,7 +188,6 @@ export class RatingComponent implements OnInit {
       alert('Please provide a description for the route.');
       return;
     }
-    console.log(this.selectedCity);
     if (!this.selectedCity) {
       alert('Please select a valid city for the route.');
       return;
@@ -179,6 +196,10 @@ export class RatingComponent implements OnInit {
     // Check if cost is formatted correctly (at most two decimal places)
     if (isNaN(numberCost) || numberCost.toFixed(2) !== this.routeCost) {
       alert('Cost must be a number with exactly two decimal places.');
+      return;
+    }
+    if (this.selectedTags.length === 0) {
+      alert('Please select at least one tag for the route.');
       return;
     }
 
@@ -194,6 +215,7 @@ export class RatingComponent implements OnInit {
       numReviews: 0,
       appUser: { id: this.appUserId },
       city: { id: cityId }, // Add the selected city here
+      tags: this.selectedTags,
     };
 
     // You can handle the route creation logic as before
