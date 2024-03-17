@@ -10,6 +10,7 @@
         Added the entity AppUser.
     -->
     <changeSet id="20240229213455-1" author="jhipster">
+        <validCheckSum>8:e71ca5263a291a167cdf5d90899c11a1</validCheckSum>
         <createTable tableName="app_user">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
@@ -52,6 +53,7 @@
           Spring Boot configuration key.
     -->
     <changeSet id="20240229213455-1-data" author="jhipster" context="faker">
+        <validCheckSum>8:e71ca5263a291a167cdf5d90899c11a1</validCheckSum>
         <loadData
                   file="config/liquibase/fake-data/app_user.csv"
                   separator=";"

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MapDisplayService } from './service/map-display.service';
-import { RouteService } from 'app/entities/route/service/route.service';
 import { IRoute } from '../entities/route/route.model';
 
 import { icon, Marker } from 'leaflet';
@@ -16,20 +15,16 @@ import { IStop } from '../entities/stop/stop.model';
   styleUrls: ['./map-display.component.scss'],
 })
 export class MapDisplayComponent implements OnInit {
-  routeFound!: boolean;
+  selectedRoute!: number;
 
   routeList!: IRoute[];
   stops!: IStop[] | null;
 
   routingControl!: any;
 
-  routeForm = this.formBuilder.group({
-    routeId: '',
-  });
-
   private map: any;
 
-  constructor(private mapDisplayService: MapDisplayService, private formBuilder: FormBuilder, private routeService: RouteService) {}
+  constructor(private mapDisplayService: MapDisplayService) {}
 
   ngOnInit(): void {
     this.getAllRoutes();
@@ -38,13 +33,23 @@ export class MapDisplayComponent implements OnInit {
 
   clearAllWaypoints(): void {
     this.routingControl.getPlan().setWaypoints([]);
-    this.routeFound = false;
+  }
+
+  displayRoute(): void {
+    this.mapDisplayService.getStops(this.selectedRoute).subscribe({
+      next: stopsResult => {
+        this.setRouteWaypoints(stopsResult!);
+      },
+      error() {
+        alert('Please log in to view a route');
+      },
+    });
   }
 
   getAllRoutes(): void {
-    this.routeService.query().subscribe({
+    this.mapDisplayService.getAllRoute().subscribe({
       next: routesResult => {
-        this.routeList = routesResult.body ?? [];
+        this.routeList = routesResult ?? [];
       },
       error() {
         alert('No routes are available');
@@ -52,16 +57,12 @@ export class MapDisplayComponent implements OnInit {
     });
   }
 
-  getStopsFromRouteId(routeId: number): IStop[] | null {
-    this.mapDisplayService.getStops(routeId).subscribe({
-      next: stopsResult => {
-        this.stops = stopsResult;
-      },
-      error() {
-        alert('Cannot find stops for this route');
-      },
-    });
-    return this.stops;
+  setRouteWaypoints(stops: IStop[]): void {
+    let i = 0;
+    for (const stop of stops) {
+      this.routingControl.spliceWaypoints(i, 1, new L.latLng(stop.latitude, stop.longitude));
+      i++;
+    }
   }
 
   private initMarker(): void {

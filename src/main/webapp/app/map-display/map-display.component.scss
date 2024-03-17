@@ -12,6 +12,18 @@
   padding-left: 15px;
 }
 
+.routeSelectorForm {
+  label {
+    margin-bottom: 10px;
+  }
+  input {
+    margin-bottom: 10px;
+  }
+  button {
+    margin-bottom: 10px;
+  }
+}
+
 .mapContainer {
   height: auto;
   width: 70%;
