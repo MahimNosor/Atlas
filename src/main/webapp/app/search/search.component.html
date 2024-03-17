@@ -8,8 +8,7 @@
     <div class="search-container">
       <div class="search">
         <form role="form" (ngSubmit)="$event.preventDefault(); onSearchSubmit()">
-          <input type="search" class="input-box" [(ngModel)]="searchQuery" name="searchQuery" />
-          <button type="submit" class="button">Search</button>
+          <input type="search" class="input-box" [(ngModel)]="searchQuery" name="searchQuery" (keyup)="onSearchSubmit()" />
         </form>
 
         <!--
@@ -39,7 +38,8 @@
       --></div>
     </div>
     <div class="result">
-      <p style="color: red">NOTE: YOU MUST SIGN IN TO USE THIS FUNCTIONALITY (if only JHipster wasn't as tedious)</p>
+      <br />
+      <br />
       <p class="field">Username</p>
       <p class="field">Routes travelled</p>
       <p class="field">Reviews posted</p>

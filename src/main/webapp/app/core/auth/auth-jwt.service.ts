@@ -32,9 +32,6 @@ export class AuthServerProvider {
       .post<JwtToken>(this.applicationConfigService.getEndpointFor('api/authenticate'), credentials)
       .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
   }
-  doSearch(query: string): Observable<any[]> {
-    return this.http.get<any[]>(this.applicationConfigService.getEndpointFor('api/app-users?idStartsWith=' + query));
-  }
 
   logout(): Observable<void> {
     return new Observable(observer => {

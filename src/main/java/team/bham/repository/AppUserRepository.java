@@ -21,6 +21,10 @@ public interface AppUserRepository extends AppUserRepositoryWithBagRelationships
         return this.fetchBagRelationships(this.findOneWithToOneRelationships(id));
     }
 
+    default List<AppUser> findAllWithEagerRelationships(String login) {
+        return this.fetchBagRelationships(this.findAllWithToOneRelationships(login));
+    }
+
     default List<AppUser> findAllWithEagerRelationships() {
         return this.fetchBagRelationships(this.findAllWithToOneRelationships());
     }
@@ -40,4 +44,7 @@ public interface AppUserRepository extends AppUserRepositoryWithBagRelationships
 
     @Query("select appUser from AppUser appUser left join fetch appUser.user where appUser.id =:id")
     Optional<AppUser> findOneWithToOneRelationships(@Param("id") Long id);
+
+    @Query("SELECT appUser from AppUser appUser left join fetch appUser.user where appUser.user.login like :login%")
+    List<AppUser> findAllWithToOneRelationships(@Param("login") String login);
 }

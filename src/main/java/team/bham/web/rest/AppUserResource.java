@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -155,9 +156,11 @@ public class AppUserResource {
         if (eagerload) {
             page = appUserService.findAllWithEagerRelationships(pageable);
         } else {
+            log.debug("Pagination info: " + pageable.toString());
             page = appUserService.findAll(pageable);
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        log.debug(headers.toString());
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
@@ -172,6 +175,23 @@ public class AppUserResource {
         log.debug("REST request to get AppUser : {}", id);
         Optional<AppUser> appUser = appUserService.findOne(id);
         return ResponseUtil.wrapOrNotFound(appUser);
+    }
+
+    /**
+     * {@code GET  /app-users?login=:login} : get the "login" appUser.
+     *
+     * @param login the login of the appUser to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of appUsers in body.
+     */
+    @GetMapping("/app-users/by-login")
+    public ResponseEntity<List<AppUser>> getAppUser(@RequestParam String login) {
+        log.debug("REST request to get AppUsers by login : {}", login);
+        List<AppUser> appUsers = appUserService.findByLogin(login);
+        if (appUsers.isEmpty()) {
+            return ResponseEntity.notFound().build(); // Return 404 Not Found for empty list
+        } else {
+            return ResponseEntity.ok(appUsers); // Return 200 OK with the list
+        }
     }
 
     /**

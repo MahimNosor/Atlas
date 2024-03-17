@@ -1,5 +1,6 @@
 package team.bham.service;
 
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,6 +103,18 @@ public class AppUserService {
     public Optional<AppUser> findOne(Long id) {
         log.debug("Request to get AppUser : {}", id);
         return appUserRepository.findOneWithEagerRelationships(id);
+    }
+
+    /**
+     * Get multiple appUsers by login.
+     *
+     * @param login the login of the entity.
+     * @return the entity.
+     */
+    @Transactional(readOnly = true)
+    public List<AppUser> findByLogin(String login) {
+        log.debug("Request to get AppUser by login : {}", login);
+        return appUserRepository.findAllWithEagerRelationships(login);
     }
 
     /**
