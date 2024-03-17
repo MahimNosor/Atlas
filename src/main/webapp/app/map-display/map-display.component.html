@@ -3,11 +3,16 @@
 <div class="divContainer">
   <div class="routeMenuContainer">
     <h2>Route Summary</h2>
-    <p *ngIf="routeFound">Total time: {{ travelTime }}h</p>
-    <p *ngIf="routeFound">Total distance: {{ travelDistance }}km</p>
+    <form [formGroup]="routeForm">
+      <div>
+        <label for="routeIdSelector"></label>
+        <select id="routeIdSelector">
+          <option *ngFor="let routeId of routeList" [ngValue]="routeId.id">{{ routeId.title }}</option>
+        </select>
+      </div>
+      <button type="submit" (click)="getStopsFromRouteId(1)">Get Stops</button>
+    </form>
     <button type="button" (click)="clearAllWaypoints()">Clear all</button>
-    <button type="button" (click)="getRouteFromId(1351)">Get Route</button>
-    <button type="button" (click)="getStopsFromRouteId(1351)">Get Stops</button>
   </div>
   <div class="mapContainer">
     <div class="mapBorder">

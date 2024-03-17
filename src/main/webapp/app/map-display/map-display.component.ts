@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { MapDisplayService } from './service/map-display.service';
+import { RouteService } from 'app/entities/route/service/route.service';
 import { IRoute } from '../entities/route/route.model';
 
 import { icon, Marker } from 'leaflet';
@@ -14,21 +16,23 @@ import { IStop } from '../entities/stop/stop.model';
   styleUrls: ['./map-display.component.scss'],
 })
 export class MapDisplayComponent implements OnInit {
-  travelTime!: string;
-  travelDistance!: string;
-  routeId!: number;
   routeFound!: boolean;
 
-  route!: IRoute | null;
+  routeList!: IRoute[];
   stops!: IStop[] | null;
 
   routingControl!: any;
 
+  routeForm = this.formBuilder.group({
+    routeId: '',
+  });
+
   private map: any;
 
-  constructor(private mapDisplayService: MapDisplayService) {}
+  constructor(private mapDisplayService: MapDisplayService, private formBuilder: FormBuilder, private routeService: RouteService) {}
 
   ngOnInit(): void {
+    this.getAllRoutes();
     this.initMap();
   }
 
@@ -37,22 +41,19 @@ export class MapDisplayComponent implements OnInit {
     this.routeFound = false;
   }
 
-  getRouteFromId(id: number): IRoute | null {
-    this.mapDisplayService.findRoute(id).subscribe({
-      next: routeResult => {
-        this.route = routeResult;
-        this.routeId = id;
+  getAllRoutes(): void {
+    this.routeService.query().subscribe({
+      next: routesResult => {
+        this.routeList = routesResult.body ?? [];
       },
       error() {
-        alert('Route does not exist');
-        return null;
+        alert('No routes are available');
       },
     });
-    return this.route;
   }
 
   getStopsFromRouteId(routeId: number): IStop[] | null {
-    this.mapDisplayService.findStops(routeId).subscribe({
+    this.mapDisplayService.getStops(routeId).subscribe({
       next: stopsResult => {
         this.stops = stopsResult;
       },
@@ -83,14 +84,6 @@ export class MapDisplayComponent implements OnInit {
       geocoder: L.Control.Geocoder.nominatim(),
       routeWhileDragging: true,
     }).addTo(this.map);
-
-    this.routeFound = false;
-
-    this.routingControl.on('routesfound', (e: any) => {
-      this.travelTime = (e.routes[0].summary.totalTime / 3600).toFixed(2);
-      this.travelDistance = (e.routes[0].summary.totalDistance / 1000).toFixed(2);
-      this.routeFound = true;
-    });
   }
 
   private initMap(): void {
