@@ -20,3 +20,17 @@
 #map {
   height: 900px;
 }
+
+.tags-container {
+  height: 200px;
+  overflow-y: scroll;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  border-radius: 0.25rem;
+  // Add more styles as needed
+}
+
+.form-check {
+  margin-bottom: 10px; // Add some space between checkboxes
+  // Add more styles as needed
+}

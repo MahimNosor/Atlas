@@ -20,6 +20,9 @@ interface MyWaypoint {
   };
   name?: string;
 }
+interface ITagExtended extends ITag {
+  checked?: boolean;
+}
 
 @Component({
   selector: 'jhi-map-display',
@@ -31,8 +34,8 @@ export class RatingComponent implements OnInit {
   travelDistance!: string;
   routingControl!: any;
   routeFound!: boolean;
-  tagsSharedCollection: ITag[] = [];
-  selectedTags: ITag[] = [];
+  tagsSharedCollection: ITagExtended[] = [];
+  selectedTags: ITagExtended[] = [];
 
   private map: any;
   private appUserId: number | null = null;
@@ -40,9 +43,6 @@ export class RatingComponent implements OnInit {
   routeDescription: string = '';
   selectedCity: string = '';
   cities: ICity[] = [];
-  tag1: boolean = false;
-  tag2: boolean = false;
-  tag3: boolean = false;
   routeCost: string = '';
 
   constructor(
@@ -88,9 +88,25 @@ export class RatingComponent implements OnInit {
     this.routeDescription = '';
     this.routeCost = '';
     this.selectedCity = '';
-    this.tag1 = false;
-    this.tag2 = false;
-    this.tag3 = false;
+
+    // Clear all selected tags by setting their checked property to false
+    this.tagsSharedCollection.forEach(tag => (tag.checked = false));
+
+    // Clear the array of selected tags
+    this.selectedTags = [];
+  }
+
+  onTagCheckChange(tag: ITagExtended, event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    tag.checked = isChecked; // Update tag's checked state based on the checkbox
+
+    if (isChecked) {
+      this.selectedTags.push(tag);
+      console.log(this.selectedTags);
+    } else {
+      this.selectedTags = this.selectedTags.filter(t => t.id !== tag.id);
+      console.log(this.selectedTags);
+    }
   }
 
   private initMarker(): void {
@@ -159,6 +175,8 @@ export class RatingComponent implements OnInit {
   }
 
   submitRoute(): void {
+    console.log(this.selectedTags);
+    console.log(this.tagsSharedCollection);
     // Assuming this part stays the same - creating the route
 
     if (!this.appUserId) {
