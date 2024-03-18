@@ -89,6 +89,11 @@ public class SecurityConfiguration {
             .antMatchers(HttpMethod.GET,"/api/routes").permitAll()
             .antMatchers(HttpMethod.GET,"/api/routes/{id}").permitAll()
             .antMatchers(HttpMethod.GET,"/api/stops/by-routeId/{routeId}").permitAll()
+            .antMatchers("/api/tags").permitAll()
+            .antMatchers("/api/cities").permitAll()
+
+
+
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
