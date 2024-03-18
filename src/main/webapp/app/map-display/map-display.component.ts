@@ -42,6 +42,7 @@ export class MapDisplayComponent implements OnInit {
   }
 
   displayRoute(): void {
+    this.clearAllWaypoints();
     this.mapDisplayService.getStops(this.selectedRouteId).subscribe({
       next: stopsResult => {
         this.setRouteWaypoints(stopsResult!);
