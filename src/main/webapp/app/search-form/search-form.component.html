@@ -1,33 +1,38 @@
 <!--<p>search-form works!</p>-->
-<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="form-container">
   <div class="form-group">
-    <label for="keywords">Keywords:</label>
-    <input type="text" formControlName="keywords" id="keywords" class="form-control" placeholder="Enter keywords" />
+    <label for="city">City:</label>
+    <input id="city" type="text" class="form-control" formControlName="city" [ngbTypeahead]="typeaheadSearch" placeholder="Enter a city" />
   </div>
 
   <div class="form-group">
-    <label for="location">Preferred Location:</label>
-    <input type="text" formControlName="location" id="location" class="form-control" placeholder="Enter preferred location" />
+    <label for="price">Price(£):</label>
+    <input type="number" formControlName="price" id="price" class="form-control" placeholder="Enter price" />
   </div>
 
   <div class="form-group">
-    <label for="tripDate">Trip Date:</label>
-    <input type="date" formControlName="tripDate" id="tripDate" class="form-control" />
+    <label for="distance">Distance(km):</label>
+    <input type="number" formControlName="distance" id="distance" class="form-control" placeholder="Enter distance" />
   </div>
 
   <div class="form-group">
-    <label for="priceFilter">Price Filter:</label>
-    <select formControlName="priceFilter" id="priceFilter" class="form-control">
-      <option value="lowToHigh">Low to High</option>
-      <option value="highToLow">High to Low</option>
-    </select>
+    <label>Tags:</label>
+    <div class="tag-cloud">
+      <!-- Display clickable buttons for each available tag -->
+      <button *ngFor="let tag of availableTags" class="btn btn-outline-primary" (click)="selectTag(tag)">
+        {{ tag }}
+      </button>
+    </div>
+    <!-- Display selected tags -->
+    <div class="selected-tags">
+      <span *ngFor="let selectedTag of selectedTags" class="badge badge-pill badge-secondary">
+        {{ selectedTag }}
+        <button type="button" class="btn-close" aria-label="Close" (click)="removeTag(selectedTag)"></button>
+      </span>
+    </div>
   </div>
 
   <!-- Add more filter options as needed -->
 
-  <!--<button type="submit" class="btn btn-primary">Search</button>-->
-  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-    <!-- Other form fields -->
-    <button type="submit">Search</button>
-  </form>
+  <button type="submit" class="btn btn-primary">Search</button>
 </form>
