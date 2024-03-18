@@ -41,13 +41,13 @@ export class MapDisplayComponent implements OnInit {
         this.setRouteWaypoints(stopsResult!);
       },
       error() {
-        alert('Please log in to view a route');
+        alert('Something went wrong with displaying the route');
       },
     });
   }
 
   getAllRoutes(): void {
-    this.mapDisplayService.getAllRoute().subscribe({
+    this.mapDisplayService.getAllRoutes().subscribe({
       next: routesResult => {
         this.routeList = routesResult ?? [];
       },

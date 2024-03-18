@@ -86,6 +86,8 @@ public class SecurityConfiguration {
             .antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/app-users").permitAll()
             .antMatchers("/api/app-users/by-login").permitAll()
+            .antMatchers("/api/routes").permitAll()
+            .antMatchers("/api/stops/by-routeId/**").permitAll()
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()

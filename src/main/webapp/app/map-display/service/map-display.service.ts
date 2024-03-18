@@ -16,7 +16,7 @@ export class MapDisplayService {
   protected stopResourceURL = this.applicationConfigService.getEndpointFor('api/stops/by-routeId');
   constructor(private http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  getAllRoute(): Observable<IRoute[] | null> {
+  getAllRoutes(): Observable<IRoute[] | null> {
     return this.http.get<IRoute[]>(this.routeResourceURL);
   }
 
