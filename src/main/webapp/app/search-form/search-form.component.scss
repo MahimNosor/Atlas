@@ -1,31 +1,34 @@
-/* Add your CSS styles for the form and search results */
-form {
+.form-container {
   display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  margin: auto;
+  flex-wrap: wrap;
 }
 
-label {
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-input,
-select,
-button {
+.form-group {
+  flex: 1;
+  margin-right: 10px; /* Adjust spacing between form elements */
   margin-bottom: 10px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 
-button {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-button:hover {
-  background-color: #0056b3;
+.tag-cloud {
+  margin-right: 5px; /* Adjust spacing between tag buttons */
+}
+
+.selected-tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.selected-tags .badge {
+  margin-right: 5px; /* Adjust spacing between selected tags */
+}
+
+.btn-primary {
+  /* Additional styles for the search button */
+  vertical-align: center; /* Align the button to the center vertically */
+  margin: 1vem;
 }
