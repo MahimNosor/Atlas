@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MapDisplayService } from './service/map-display.service';
-import { RouteService } from 'app/entities/route/service/route.service';
 import { IRoute } from '../entities/route/route.model';
 
 import { icon, Marker } from 'leaflet';
@@ -16,20 +14,22 @@ import { IStop } from '../entities/stop/stop.model';
   styleUrls: ['./map-display.component.scss'],
 })
 export class MapDisplayComponent implements OnInit {
-  routeFound!: boolean;
+  selectedRouteId!: number;
+  routeTitle!: string;
+  routeDescription!: string;
+  routeRating!: number;
+  routeDistance!: number;
+  routeCost!: number;
+  isRouteSelected = false;
 
   routeList!: IRoute[];
   stops!: IStop[] | null;
 
   routingControl!: any;
 
-  routeForm = this.formBuilder.group({
-    routeId: '',
-  });
-
   private map: any;
 
-  constructor(private mapDisplayService: MapDisplayService, private formBuilder: FormBuilder, private routeService: RouteService) {}
+  constructor(private mapDisplayService: MapDisplayService) {}
 
   ngOnInit(): void {
     this.getAllRoutes();
@@ -38,13 +38,42 @@ export class MapDisplayComponent implements OnInit {
 
   clearAllWaypoints(): void {
     this.routingControl.getPlan().setWaypoints([]);
-    this.routeFound = false;
+    this.isRouteSelected = false;
+  }
+
+  displayRoute(): void {
+    this.clearAllWaypoints();
+    this.mapDisplayService.getStops(this.selectedRouteId).subscribe({
+      next: stopsResult => {
+        this.setRouteWaypoints(stopsResult!);
+        this.setRouteInformation();
+      },
+      error() {
+        alert('Something went wrong with displaying the route');
+      },
+    });
+  }
+
+  setRouteInformation(): void {
+    this.mapDisplayService.getRoute(this.selectedRouteId).subscribe({
+      next: routeResult => {
+        this.routeTitle = routeResult!.title ?? '';
+        this.routeDescription = routeResult!.description ?? '';
+        this.routeRating = routeResult!.rating ?? 0;
+        this.routeDistance = routeResult!.distance ?? 0;
+        this.routeCost = routeResult!.cost ?? 0;
+        this.isRouteSelected = true;
+      },
+      error() {
+        alert('Something went wrong with retrieving information about the route');
+      },
+    });
   }
 
   getAllRoutes(): void {
-    this.routeService.query().subscribe({
+    this.mapDisplayService.getAllRoutes().subscribe({
       next: routesResult => {
-        this.routeList = routesResult.body ?? [];
+        this.routeList = routesResult ?? [];
       },
       error() {
         alert('No routes are available');
@@ -52,16 +81,12 @@ export class MapDisplayComponent implements OnInit {
     });
   }
 
-  getStopsFromRouteId(routeId: number): IStop[] | null {
-    this.mapDisplayService.getStops(routeId).subscribe({
-      next: stopsResult => {
-        this.stops = stopsResult;
-      },
-      error() {
-        alert('Cannot find stops for this route');
-      },
-    });
-    return this.stops;
+  setRouteWaypoints(stops: IStop[]): void {
+    let i = 0;
+    for (const stop of stops) {
+      this.routingControl.spliceWaypoints(i, 1, new L.latLng(stop.latitude, stop.longitude));
+      i++;
+    }
   }
 
   private initMarker(): void {

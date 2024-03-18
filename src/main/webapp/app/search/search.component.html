@@ -46,9 +46,11 @@
     </div>
     <div class="result" *ngIf="arrayBufferData$ | async as arrayBufferData">
       <div *ngFor="let item of arrayBufferData">
-        <p class="field">{{ item.user.login }}</p>
-        <p class="field">{{ item.numRoutes }}</p>
-        <p class="field">{{ item.numReviews }}</p>
+        <a routerLink="../app-user/{{ item.id }}/view">
+          <p class="field">{{ item.user.login }}</p>
+          <p class="field">{{ item.numRoutes }}</p>
+          <p class="field">{{ item.numReviews }}</p>
+        </a>
       </div>
     </div>
   </body>
