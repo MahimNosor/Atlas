@@ -6,12 +6,17 @@
     <form class="routeSelectorForm">
       <div>
         <label for="routeIdSelector">Select route: </label>
-        <select id="routeIdSelector" name="selectedRouteId" [(ngModel)]="selectedRoute">
+        <select id="routeIdSelector" name="selectedRouteId" [(ngModel)]="selectedRouteId">
           <option *ngFor="let routeId of routeList" [ngValue]="routeId.id">{{ routeId.title }}</option>
         </select>
       </div>
       <button type="submit" (click)="displayRoute()">Display Route</button>
     </form>
+    <p *ngIf="isRouteSelected">Title: {{ routeTitle }}</p>
+    <p *ngIf="isRouteSelected">Description: {{ routeDescription }}</p>
+    <p *ngIf="isRouteSelected">Rating: {{ routeRating }}</p>
+    <p *ngIf="isRouteSelected">Total Distance:{{ routeDistance }}</p>
+    <p *ngIf="isRouteSelected">Total Cost: {{ routeCost }}</p>
     <button type="button" (click)="clearAllWaypoints()">Clear all</button>
   </div>
   <div class="mapContainer">

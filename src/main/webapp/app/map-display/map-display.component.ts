@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MapDisplayService } from './service/map-display.service';
 import { IRoute } from '../entities/route/route.model';
 
@@ -15,7 +14,13 @@ import { IStop } from '../entities/stop/stop.model';
   styleUrls: ['./map-display.component.scss'],
 })
 export class MapDisplayComponent implements OnInit {
-  selectedRoute!: number;
+  selectedRouteId!: number;
+  routeTitle!: string;
+  routeDescription!: string;
+  routeRating!: number;
+  routeDistance!: number;
+  routeCost!: number;
+  isRouteSelected = false;
 
   routeList!: IRoute[];
   stops!: IStop[] | null;
@@ -33,15 +38,33 @@ export class MapDisplayComponent implements OnInit {
 
   clearAllWaypoints(): void {
     this.routingControl.getPlan().setWaypoints([]);
+    this.isRouteSelected = false;
   }
 
   displayRoute(): void {
-    this.mapDisplayService.getStops(this.selectedRoute).subscribe({
+    this.mapDisplayService.getStops(this.selectedRouteId).subscribe({
       next: stopsResult => {
         this.setRouteWaypoints(stopsResult!);
+        this.setRouteInformation();
       },
       error() {
         alert('Something went wrong with displaying the route');
+      },
+    });
+  }
+
+  setRouteInformation(): void {
+    this.mapDisplayService.getRoute(this.selectedRouteId).subscribe({
+      next: routeResult => {
+        this.routeTitle = routeResult!.title ?? '';
+        this.routeDescription = routeResult!.description ?? '';
+        this.routeRating = routeResult!.rating ?? 0;
+        this.routeDistance = routeResult!.distance ?? 0;
+        this.routeCost = routeResult!.cost ?? 0;
+        this.isRouteSelected = true;
+      },
+      error() {
+        alert('Something went wrong with retrieving information about the route');
       },
     });
   }

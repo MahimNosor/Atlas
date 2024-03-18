@@ -20,6 +20,10 @@ export class MapDisplayService {
     return this.http.get<IRoute[]>(this.routeResourceURL);
   }
 
+  getRoute(routeId: number): Observable<IRoute | null> {
+    return this.http.get<IRoute>(`${this.routeResourceURL}/${routeId}`);
+  }
+
   getStops(routeId: number): Observable<IStop[] | null> {
     return this.http.get<IStop[]>(`${this.stopResourceURL}/${routeId}`);
   }
