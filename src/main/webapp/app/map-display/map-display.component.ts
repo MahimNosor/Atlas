@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MapDisplayService } from './service/map-display.service';
-import { IRoute } from '../entities/route/route.model';
+import { RatingService } from './service/rating.service';
 
 import { icon, Marker } from 'leaflet';
 import * as L from 'leaflet';
 import '../../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js';
 import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js';
+import { IRoute } from '../entities/route/route.model';
 import { IStop } from '../entities/stop/stop.model';
 
 @Component({
@@ -22,6 +23,9 @@ export class MapDisplayComponent implements OnInit {
   routeCost!: number;
   isRouteSelected = false;
 
+  userRating!: number;
+  isReviewPosted = false;
+
   routeList!: IRoute[];
   stops!: IStop[] | null;
 
@@ -29,7 +33,7 @@ export class MapDisplayComponent implements OnInit {
 
   private map: any;
 
-  constructor(private mapDisplayService: MapDisplayService) {}
+  constructor(private mapDisplayService: MapDisplayService, private ratingService: RatingService) {}
 
   ngOnInit(): void {
     this.getAllRoutes();
@@ -39,6 +43,7 @@ export class MapDisplayComponent implements OnInit {
   clearAllWaypoints(): void {
     this.routingControl.getPlan().setWaypoints([]);
     this.isRouteSelected = false;
+    this.isReviewPosted = false;
   }
 
   displayRoute(): void {
@@ -88,6 +93,30 @@ export class MapDisplayComponent implements OnInit {
       this.routingControl.spliceWaypoints(i, 1, new L.latLng(stop.latitude, stop.longitude));
       i++;
     }
+  }
+
+  // TODO: implement appropriate logic and log in requirements
+  updateRating(): void {
+    const routeData: IRoute = {
+      id: this.selectedRouteId,
+      title: null,
+      description: null,
+      rating: this.userRating,
+      distance: null,
+      cost: null,
+      numReviews: null,
+      appUser: null,
+      city: null,
+      tags: null,
+    };
+    this.ratingService.updateRouteRating(this.selectedRouteId, routeData).subscribe({
+      next: response => {
+        this.isReviewPosted = true;
+      },
+      error() {
+        alert('Something went wrong with posting your review');
+      },
+    });
   }
 
   private initMarker(): void {
