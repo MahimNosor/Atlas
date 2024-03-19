@@ -1,13 +1,18 @@
 package team.bham.service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import team.bham.domain.AppUser;
 import team.bham.domain.Route;
+import team.bham.repository.AppUserRepository;
 import team.bham.repository.RouteRepository;
 
 /**
@@ -20,9 +25,11 @@ public class RouteService {
     private final Logger log = LoggerFactory.getLogger(RouteService.class);
 
     private final RouteRepository routeRepository;
+    private final AppUserRepository appUserRepository;
 
-    public RouteService(RouteRepository routeRepository) {
+    public RouteService(RouteRepository routeRepository, AppUserRepository appUserRepository) {
         this.routeRepository = routeRepository;
+        this.appUserRepository = appUserRepository;
     }
 
     /**
@@ -124,5 +131,9 @@ public class RouteService {
     public void delete(Long id) {
         log.debug("Request to delete Route : {}", id);
         routeRepository.deleteById(id);
+    }
+
+    public List<Route> findPreviousRoutesByUserId(Long userId) {
+        return routeRepository.findByAppUserId(userId);
     }
 }
