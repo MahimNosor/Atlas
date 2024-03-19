@@ -10,14 +10,16 @@
           <option *ngFor="let routeId of routeList" [ngValue]="routeId.id">{{ routeId.title }}</option>
         </select>
       </div>
-      <button type="submit" (click)="displayRoute()">Display Route</button>
+      <div class="routeControlButtons">
+        <app-button [label]="'Display Route'" (buttonClick)="displayRoute()"></app-button>
+        <app-button [label]="'Clear All'" (buttonClick)="clearAllWaypoints()"></app-button>
+      </div>
     </form>
     <p *ngIf="isRouteSelected">Title: {{ routeTitle }}</p>
     <p *ngIf="isRouteSelected">Description: {{ routeDescription }}</p>
     <p *ngIf="isRouteSelected">Rating: {{ routeRating }}</p>
     <p *ngIf="isRouteSelected">Total Distance:{{ routeDistance }}</p>
     <p *ngIf="isRouteSelected">Total Cost: {{ routeCost }}</p>
-    <button type="button" (click)="clearAllWaypoints()">Clear all</button>
   </div>
   <div class="mapContainer">
     <div class="mapBorder">
