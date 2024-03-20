@@ -1,6 +1,8 @@
 .form-container {
   display: flex;
-  flex-wrap: wrap;
+}
+.row {
+  height: fit-content;
 }
 
 .form-group {
@@ -9,26 +11,46 @@
   margin-bottom: 10px;
 }
 
-.tag-cloud {
-  display: flex;
-  flex-wrap: wrap;
+.custom-div {
+  width: 10%; /* Take up 15% of the width of its parent element */
+  margin-top: 20px;
 }
 
-.tag-cloud {
-  margin-right: 5px; /* Adjust spacing between tag buttons */
-}
-
-.selected-tags {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.selected-tags .badge {
-  margin-right: 5px; /* Adjust spacing between selected tags */
+.custom-div-1 {
+  width: 80%; /* Take up 15% of the width of its parent element */
+  margin-top: 20px;
 }
 
 .btn-primary {
   /* Additional styles for the search button */
-  vertical-align: center; /* Align the button to the center vertically */
-  margin: 1vem;
+  // Set dimensions
+  width: 150px;
+  height: 40px;
+
+  // Typography
+  font-size: 16px;
+
+  // Spacing
+  padding: 10px 20px;
+
+  // Border
+  border: 2px solid #007bff; // Blue border
+  border-radius: 5px;
+
+  // Background and text color
+  background-color: #007bff; // Blue background
+  color: #ffffff; // White text
+
+  // Shadow effect
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+  // Text alignment
+  text-align: center;
+
+  // Hover effect
+  &:hover {
+    background-color: #0056b3; // Darker blue on hover
+    border-color: #0056b3; // Darker blue border on hover
+    color: #ffffff; // White text on hover
+  }
 }

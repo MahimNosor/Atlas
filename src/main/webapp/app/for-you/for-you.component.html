@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>For You Page</title>
-  <style>
-      /* Add your CSS styles here */
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For You Page</title>
+    <style>
+      /* Add CSS styles here */
       body {
         font-family: Arial, sans-serif;
         margin: 0;
@@ -17,6 +17,7 @@
         color: #fff;
         padding: 10px 0;
         text-align: center;
+        font-size: 24px; /* Increase header font size */
       }
       .container {
         max-width: 800px;
@@ -25,7 +26,7 @@
       }
       section {
         background-color: #fff;
-        margin-bottom: 20px;
+        margin-bottom: 40px; /* Add wider space between sections */
         padding: 20px;
         border-radius: 5px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -39,52 +40,20 @@
       }
       section p {
         flex: 1; /* Expand text to fill remaining space */
-      }
-      footer {
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        padding: 10px 0;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-      }
-      footer button {
-        background-color: #4caf50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        text-align: center; /* Center text horizontally */
+        font-size: 18px; /* Increase font size for route details */
       }
     </style>
-</head>
-<body>
-<header>
-  <h1>Welcome Back, User ###</h1>
-  <p>ready for your next journey?</p>
-</header>
-<div class="container">
-  <section>
-    <img src="image1.jpg" alt="Route#03172" />
-    <p>- 6 stops<br />- Tags:?????<br />- Rating:4.9</p>
-  </section>
-  <section>
-    <img src="image2.jpg" alt="Route#21172" />
-    <p>- 5 stops<br />- Tags:?????<br />- Rating:4.8</p>
-  </section>
-  <section>
-    <img src="image3.jpg" alt="Route#03142" />
-    <p>- 2 stops<br />- Tags:?????<br />- Rating:4.4</p>
-  </section>
-</div>
-<footer>
-  <button>Click me to load more routes for you.</button>
-</footer>
-</body>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome Back, User 2651</h1>
+      <p>prepare for your next journey?</p>
+    </header>
+    <div class="container">
+      <section *ngFor="let route of routes">
+        <img [src]="'image' + route.id + '.jpg'" [alt]="'Route#' + route.id" />
+        <p>- {{ route.distance }} Km <br />- Tags: {{ route.tags?.join(', ') }}<br />- Rating: {{ route.rating }}</p>
+      </section>
+    </div>
+  </body>
 </html>
-
