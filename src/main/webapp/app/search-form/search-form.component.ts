@@ -4,11 +4,11 @@ import { Observable, OperatorFunction, switchMap } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, startWith, tap } from 'rxjs/operators';
 import { NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
-import { CityService } from './service/city.service';
-import { RouteService } from './service/route.service';
-import { TagService } from './service/tag.service';
-import { Tag } from './service/tag.interface';
-import { CityInterface } from './service/city.interface';
+import { CityService } from './services/city.service';
+import { RouteService } from './services/route.service';
+import { TagService } from './services/tag.service';
+import { Tag } from './services/tag.interface';
+import { CityInterface } from './services/city.interface';
 import { Route } from '@angular/router';
 
 @Component({
@@ -59,8 +59,8 @@ export class SearchFormComponent implements OnInit {
           map(value => this._filterCities(value).map(city => city.name))
         );
       },
-      error: error => {
-        console.error('Error fetching cities:', error);
+      error() {
+        console.error('Error fetching cities');
       },
     });
   }
@@ -71,8 +71,8 @@ export class SearchFormComponent implements OnInit {
       next: (tags: Tag[]) => {
         this.allTags = tags;
       },
-      error: error => {
-        console.error('Error fetching tags:', error);
+      error() {
+        console.error('Error fetching tags');
       },
     });
   }
@@ -101,15 +101,15 @@ export class SearchFormComponent implements OnInit {
   }
 
   fetchRoutes(city: string): void {
-    this.routeService.fetchRoutesByCity(city).subscribe(
-      (routes: Route[]) => {
+    this.routeService.fetchRoutesByCity(city).subscribe({
+      next: (routes: Route[]) => {
         console.log('Fetched routes:', routes);
         // Handle fetched routes as needed
       },
-      error => {
-        console.error('Error fetching routes:', error);
-      }
-    );
+      error() {
+        console.error('Error fetching routes');
+      },
+    });
   }
 
   private _filterCities(value: string): CityInterface[] {
