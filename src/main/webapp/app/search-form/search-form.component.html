@@ -1,38 +1,41 @@
 <!--<p>search-form works!</p>-->
 <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="form-container">
-  <div class="form-group">
-    <label for="city">City:</label>
-    <input id="city" type="text" class="form-control" formControlName="city" [ngbTypeahead]="typeaheadSearch" placeholder="Enter a city" />
-  </div>
-
-  <div class="form-group">
-    <label for="price">Price(£):</label>
-    <input type="number" formControlName="price" id="price" class="form-control" placeholder="Enter price" />
-  </div>
-
-  <div class="form-group">
-    <label for="distance">Distance(km):</label>
-    <input type="number" formControlName="distance" id="distance" class="form-control" placeholder="Enter distance" />
-  </div>
-
-  <div class="form-group">
-    <label>Tags:</label>
-    <div class="tag-cloud">
-      <!-- Display clickable buttons for each available tag -->
-      <button *ngFor="let tag of availableTags" class="btn btn-outline-primary" (click)="selectTag(tag)">
-        {{ tag }}
-      </button>
+  <div class="row custom-div-1">
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="city">City:</label>
+        <input
+          id="city"
+          type="text"
+          class="form-control"
+          formControlName="city"
+          [ngbTypeahead]="typeaheadSearch"
+          placeholder="Enter a city"
+        />
+      </div>
     </div>
-    <!-- Display selected tags -->
-    <div class="selected-tags">
-      <span *ngFor="let selectedTag of selectedTags" class="badge badge-pill badge-secondary">
-        {{ selectedTag }}
-        <button type="button" class="btn-close" aria-label="Close" (click)="removeTag(selectedTag)"></button>
-      </span>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="price">Price(£):</label>
+        <input type="text" formControlName="price" id="price" class="form-control" placeholder="Enter price" />
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="distance">Distance(km):</label>
+        <input type="text" formControlName="distance" id="distance" class="form-control" placeholder="Enter distance" />
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label>Tags:</label>
+        <input id="tags" type="text" class="form-control" formControlName="tags" [ngbTypeahead]="typeaheadTags" placeholder="Enter tags" />
+      </div>
     </div>
   </div>
-
-  <!-- Add more filter options as needed -->
-
-  <button type="submit" class="btn btn-primary">Search</button>
+  <div class="row custom-div">
+    <div class="col-md-12 d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  </div>
 </form>
