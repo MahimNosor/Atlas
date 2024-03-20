@@ -16,8 +16,8 @@
     </header>
     <div class="container">
       <section *ngFor="let route of routes">
-        <img [src]="'image' + route.routeID + '.jpg'" [alt]="'Route#' + route.routeID" />
-        <p>- {{ route.distance }} Km <br />- Tags: {{ route.tags.join(', ') }}<br />- Rating: {{ route.rating }}</p>
+        <img [src]="'image' + route.id + '.jpg'" [alt]="'Route#' + route.id" />
+        <p>- {{ route.distance }} Km <br />- Tags: {{ route.tags?.join(', ') }}<br />- Rating: {{ route.rating }}</p>
       </section>
     </div>
   </body>
