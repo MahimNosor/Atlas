@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from './search.service';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
+import { RouteService } from '../entities/route/service/route.service';
 
 @Component({
   selector: 'jhi-search',
@@ -11,7 +12,7 @@ export class SearchComponent implements OnInit {
   searchQuery: string = '';
   arrayBufferData$: Observable<any[]> | undefined;
 
-  constructor(private searchService: SearchService) {}
+  constructor(private searchService: SearchService, private routeService: RouteService) {}
 
   ngOnInit(): void {
     // Initializations or other logic
@@ -23,11 +24,23 @@ export class SearchComponent implements OnInit {
     this.searchService.doSearch(this.searchQuery).subscribe({
       next: data => {
         console.log(data);
-        this.arrayBufferData$ = of(data);
+
+        // Fetch routes for each user concurrently using forkJoin
+        const combinedResults$ = data.map(user => this.routeService.findPreviousRoutesByUserId(user.id));
+        forkJoin(combinedResults$).subscribe(routesByUserId => {
+          this.arrayBufferData$ = of(
+            data.map((user, index) => ({
+              ...user,
+              routes: routesByUserId[index],
+            }))
+          );
+        });
       },
 
-      error: () => console.log('Error in doSearch'),
+      error: error => {
+        console.error('Error in doSearch', error);
+        // Handle error gracefully, e.g., display an error message to the user
+      },
     });
-    console.log(this.arrayBufferData$);
   }
 }

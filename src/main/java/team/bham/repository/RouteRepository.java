@@ -28,4 +28,6 @@ public interface RouteRepository extends RouteRepositoryWithBagRelationships, Jp
     default Page<Route> findAllWithEagerRelationships(Pageable pageable) {
         return this.fetchBagRelationships(this.findAll(pageable));
     }
+
+    List<Route> findByAppUserId(Long userId);
 }

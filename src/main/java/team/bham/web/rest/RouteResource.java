@@ -187,4 +187,10 @@ public class RouteResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/routes/find-by-user/{userId}")
+    public ResponseEntity<List<Route>> findRoutesByUserId(@PathVariable Long userId) {
+        List<Route> routes = routeService.findPreviousRoutesByUserId(userId);
+        return ResponseEntity.ok().body(routes);
+    }
 }

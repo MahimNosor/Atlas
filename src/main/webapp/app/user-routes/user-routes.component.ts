@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { RouteService } from '../entities/route/service/route.service';
+import { IAppUser } from '../entities/app-user/app-user.model';
+import { IRoute } from '../entities/route/route.model'; // Import IRoute interface
 
 @Component({
   selector: 'jhi-user-routes',
@@ -6,13 +9,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-routes.component.scss'],
 })
 export class UserRoutesComponent implements OnInit {
-  images: { src: string; caption: string }[] = [
-    { src: 'content/images/london.png', caption: 'London<br />30/01/2024' },
-    { src: 'content/images/paris.jpg', caption: 'Paris<br />29/01/2024' },
-    { src: 'content/images/dhaka.png', caption: 'Dhaka<br />28/01/2024' },
-  ];
+  @Input() username: string = '';
+  user: IAppUser | undefined; // Updated type
+  routes: IRoute[] = []; // Array to store retrieved routes
+  error: string = '';
+  numPreviousRoutes = 0; // Added property
 
-  constructor() {}
+  constructor(private routeService: RouteService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {} // Inject RouteService
 }

@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IRoute, NewRoute } from '../route.model';
+import { IAppUser } from '../../app-user/app-user.model';
+import { of } from 'rxjs';
 
 export type PartialUpdateRoute = Partial<IRoute> & Pick<IRoute, 'id'>;
 
@@ -69,5 +73,14 @@ export class RouteService {
       return [...routesToAdd, ...routeCollection];
     }
     return routeCollection;
+  }
+  findPreviousRoutesByUserId(userId: number): Observable<IRoute[]> {
+    return this.http.get<IRoute[]>(`${this.resourceUrl}/find-by-user/${userId}`, { observe: 'response' }).pipe(
+      map((res: EntityArrayResponseType) => res.body!),
+      catchError(error => {
+        console.error('Error retrieving routes by user ID:', error);
+        return of([]); // Return an empty array on error
+      })
+    );
   }
 }

@@ -20,6 +20,16 @@
     <p *ngIf="isRouteSelected">Rating: {{ routeRating }}</p>
     <p *ngIf="isRouteSelected">Total Distance:{{ routeDistance }}</p>
     <p *ngIf="isRouteSelected">Total Cost: {{ routeCost }}</p>
+    <div class="reviewMenu">
+      <form class="reviewForm">
+        <div *ngIf="isRouteSelected">
+          <label for="ratingUserInput">Rate this route:</label>
+          <input id="ratingUserInput" name="ratingUserInput" type="number" placeholder="Enter a rating" [(ngModel)]="userRating" />
+          <app-button [label]="'Submit Review'" (buttonClick)="updateRating()"></app-button>
+          <p *ngIf="isReviewPosted" id="reviewSuccessText">Review successfully posted!</p>
+        </div>
+      </form>
+    </div>
   </div>
   <div class="mapContainer">
     <div class="mapBorder">
