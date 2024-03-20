@@ -27,4 +27,8 @@ export class MapDisplayService {
   getStops(routeId: number): Observable<IStop[] | null> {
     return this.http.get<IStop[]>(`${this.stopResourceURL}/${routeId}`);
   }
+
+  updateRouteRating(routeId: number, route: IRoute): Observable<any> {
+    return this.http.patch(`${this.routeResourceURL}/${routeId}`, route);
+  }
 }

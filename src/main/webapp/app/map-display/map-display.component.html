@@ -12,7 +12,7 @@
       </div>
       <div class="routeControlButtons">
         <app-button [label]="'Display Route'" (buttonClick)="displayRoute()"></app-button>
-        <app-button [label]="'Clear All'" (buttonClick)="clearAllWaypoints()"></app-button>
+        <app-button [label]="'Clear All'" (buttonClick)="clearAll()"></app-button>
       </div>
     </form>
     <p *ngIf="isRouteSelected">Title: {{ routeTitle }}</p>
@@ -23,10 +23,21 @@
     <div class="reviewMenu">
       <form class="reviewForm">
         <div *ngIf="isRouteSelected">
-          <label for="ratingUserInput">Rate this route:</label>
-          <input id="ratingUserInput" name="ratingUserInput" type="number" placeholder="Enter a rating" [(ngModel)]="userRating" />
-          <app-button [label]="'Submit Review'" (buttonClick)="updateRating()"></app-button>
-          <p *ngIf="isReviewPosted" id="reviewSuccessText">Review successfully posted!</p>
+          <div *jhiHasAnyAuthority="'ROLE_USER'">
+            <label for="ratingUserInput">Rate this route:</label>
+            <input
+              id="ratingUserInput"
+              name="ratingUserInput"
+              type="number"
+              placeholder="Enter a rating"
+              min="1"
+              max="5"
+              [(ngModel)]="userRating"
+            />
+            <app-button [label]="'Submit Review'" (buttonClick)="updateRating()"></app-button>
+            <p *ngIf="isReviewPosted" id="reviewSuccessText">Review successfully posted!</p>
+            <p *ngIf="isRatingInvalid" id="reviewFailureText">Rating must be between 1 and 5!</p>
+          </div>
         </div>
       </form>
     </div>

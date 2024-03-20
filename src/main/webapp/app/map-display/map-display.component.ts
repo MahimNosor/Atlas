@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MapDisplayService } from './service/map-display.service';
-import { RatingService } from './service/rating.service';
 
 import { icon, Marker } from 'leaflet';
 import * as L from 'leaflet';
@@ -16,6 +15,7 @@ import { IStop } from '../entities/stop/stop.model';
 })
 export class MapDisplayComponent implements OnInit {
   selectedRouteId!: number;
+  reviewRouteId!: number; // route id used for rating feature
   routeTitle!: string;
   routeDescription!: string;
   routeRating!: number;
@@ -24,6 +24,7 @@ export class MapDisplayComponent implements OnInit {
   isRouteSelected = false;
 
   userRating!: number;
+  isRatingInvalid!: boolean;
   isReviewPosted = false;
 
   routeList!: IRoute[];
@@ -33,21 +34,23 @@ export class MapDisplayComponent implements OnInit {
 
   private map: any;
 
-  constructor(private mapDisplayService: MapDisplayService, private ratingService: RatingService) {}
+  constructor(private mapDisplayService: MapDisplayService) {}
 
   ngOnInit(): void {
     this.getAllRoutes();
     this.initMap();
   }
 
-  clearAllWaypoints(): void {
+  clearAll(): void {
     this.routingControl.getPlan().setWaypoints([]);
     this.isRouteSelected = false;
+    this.isRatingInvalid = false;
     this.isReviewPosted = false;
   }
 
   displayRoute(): void {
-    this.clearAllWaypoints();
+    this.clearAll();
+    this.reviewRouteId = this.selectedRouteId;
     this.mapDisplayService.getStops(this.selectedRouteId).subscribe({
       next: stopsResult => {
         stopsResult = stopsResult!.sort((a, b) => ((a.sequenceNumber ?? 0) < (b.sequenceNumber ?? 1) ? -1 : 1));
@@ -95,10 +98,18 @@ export class MapDisplayComponent implements OnInit {
     }
   }
 
-  // TODO: implement appropriate logic and log in requirements
   updateRating(): void {
+    // Potential problem where user selected another route before posting their review, but they did not click "display route"
+    // this will give the route a wrong id after updating the rating
+    // using another variable(savedRouteId) to save the id should prevent this problem
+    this.isRatingInvalid = false;
+    if (this.userRating < 1 || this.userRating > 5) {
+      this.isRatingInvalid = true;
+      return;
+    }
+
     const routeData: IRoute = {
-      id: this.selectedRouteId,
+      id: this.reviewRouteId,
       title: null,
       description: null,
       rating: this.userRating,
@@ -109,7 +120,7 @@ export class MapDisplayComponent implements OnInit {
       city: null,
       tags: null,
     };
-    this.ratingService.updateRouteRating(this.selectedRouteId, routeData).subscribe({
+    this.mapDisplayService.updateRouteRating(this.selectedRouteId, routeData).subscribe({
       next: response => {
         this.isReviewPosted = true;
       },
