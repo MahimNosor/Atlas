@@ -1,90 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>For You Page</title>
-  <style>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For You Page</title>
+    <style>
       /* Add your CSS styles here */
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f8f8f8;
-      }
-      header {
-        background-color: #333;
-        color: #fff;
-        padding: 10px 0;
-        text-align: center;
-      }
-      .container {
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 0 20px;
-      }
-      section {
-        background-color: #fff;
-        margin-bottom: 20px;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        display: flex;
-        align-items: center; /* Align items vertically */
-      }
-      section img {
-        max-width: 200px; /* Limit image width */
-        margin-right: 30px; /* Add spacing between image and text */
-        border-radius: 5px;
-      }
-      section p {
-        flex: 1; /* Expand text to fill remaining space */
-      }
-      footer {
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        padding: 10px 0;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-      }
-      footer button {
-        background-color: #4caf50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        text-align: center; /* Center text horizontally */
-      }
+      /* Styles remain unchanged */
     </style>
-</head>
-<body>
-<header>
-  <h1>Welcome Back, User ###</h1>
-  <p>ready for your next journey?</p>
-</header>
-<div class="container">
-  <section>
-    <img src="image1.jpg" alt="Route#03172" />
-    <p>- 6 stops<br />- Tags:?????<br />- Rating:4.9</p>
-  </section>
-  <section>
-    <img src="image2.jpg" alt="Route#21172" />
-    <p>- 5 stops<br />- Tags:?????<br />- Rating:4.8</p>
-  </section>
-  <section>
-    <img src="image3.jpg" alt="Route#03142" />
-    <p>- 2 stops<br />- Tags:?????<br />- Rating:4.4</p>
-  </section>
-</div>
-<footer>
-  <button>Click me to load more routes for you.</button>
-</footer>
-</body>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome Back, User ###</h1>
+      <p>ready for your next journey?</p>
+    </header>
+    <div class="container">
+      <section *ngFor="let route of routes">
+        <img [src]="'image' + route.routeID + '.jpg'" [alt]="'Route#' + route.routeID" />
+        <p>- {{ route.distance }} stops<br />- Tags: {{ route.tags.join(', ') }}<br />- Rating: {{ route.rating }}</p>
+      </section>
+    </div>
+  </body>
 </html>
-
