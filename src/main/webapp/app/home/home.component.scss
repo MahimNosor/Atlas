@@ -23,6 +23,54 @@ Main page styles
   }
 }*/
 
+.background {
+  /* Adjust the color codes as needed */
+  background-size: cover;
+  background: linear-gradient(to bottom, #005757, #000000) center;
+  min-height: 100vh; /* Ensures that the background covers the entire viewport height */
+}
+
+/////card css begin
+.behindCard {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 80%;
+  transition: box-shadow 0.3s ease;
+  margin: 0 auto;
+  background-color: white;
+}
+
+.behindCard:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.behindCard h2 span {
+  font-size: 18px;
+}
+
+.behindCard dl.row-md {
+  margin-top: 10px;
+}
+
+.behindCard dt {
+  margin-top: 5px;
+}
+
+.behindCard dd {
+  margin-bottom: 10px;
+}
+
+.behindCard a {
+  text-decoration: none;
+}
+
+.behindCard a:hover {
+  text-decoration: underline;
+}
+//////card css end
+
 .mySlides {
 }
 
@@ -38,7 +86,7 @@ Main page styles
 }
 
 .adventurous {
-  background-color: #000000;
+  background-color: #005757;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

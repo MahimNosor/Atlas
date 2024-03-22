@@ -1,6 +1,6 @@
 import { CityInterface } from './city.interface';
 
-export interface Route {
+export interface RouteInterface {
   id: number;
   title: string;
   description: 'Technician systems Chips';

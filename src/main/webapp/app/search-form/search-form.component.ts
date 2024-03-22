@@ -2,14 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, OperatorFunction, switchMap } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, startWith, tap } from 'rxjs/operators';
-import { NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTypeaheadConfig, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { CityService } from './services/city.service';
 import { RouteService } from './services/route.service';
 import { TagService } from './services/tag.service';
 import { Tag } from './services/tag.interface';
 import { CityInterface } from './services/city.interface';
+
 import { Route } from '@angular/router';
+
+import { RouteInterface } from './services/route.interface';
 
 @Component({
   selector: 'jhi-search-form',
@@ -21,8 +24,14 @@ export class SearchFormComponent implements OnInit {
   searchForm!: FormGroup;
   allTags: Tag[] = [];
   cities: CityInterface[] = [];
+  selectedCity!: CityInterface;
+  selectedDistance!: number;
+  selectedPrice!: number;
+  selectedTags: Tag[] = [];
 
   filteredCities!: Observable<string[]>;
+
+  returnedRoutes!: RouteInterface[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,7 +49,7 @@ export class SearchFormComponent implements OnInit {
       city: [''],
       price: ['', [Validators.pattern(/^\d*\.?\d*$/)]], // Accepts only numeric characters and decimals
       distance: ['', [Validators.pattern(/^\d*\.?\d*$/)]], // Accepts only numeric characters and decimals
-      selectedTags: [[]],
+      tags: [[] as Tag[]],
     });
 
     this.fetchCities();
@@ -69,10 +78,11 @@ export class SearchFormComponent implements OnInit {
     // Call the TagService method to fetch tags
     this.tagService.fetchTags().subscribe({
       next: (tags: Tag[]) => {
+        console.log('Tags fetched successfully! 🏷️✨', tags);
         this.allTags = tags;
       },
-      error() {
-        console.error('Error fetching tags');
+      error: error => {
+        console.error('Error fetching tags:', error);
       },
     });
   }
@@ -90,30 +100,76 @@ export class SearchFormComponent implements OnInit {
     text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      map(term => (term.length < 2 ? [] : this.allTags.filter(tag => tag.name.toLowerCase().includes(term.toLowerCase()))))
+      map(term =>
+        term.length < 2
+          ? this.allTags
+          : this.allTags
+              .filter(tag => tag.name.toLowerCase().includes(term.toLowerCase()))
+              .filter(tag => !this.selectedTags.some(selectedTag => selectedTag.id === tag.id))
+              .slice(0, 10)
+      ),
+      map(tags => tags.map(tag => tag.name)) // Map tags array to an array of tag names
     );
-
-  onSubmit() {
-    if (this.searchForm.valid) {
-      const { city, price, distance } = this.searchForm.value;
-      this.fetchRoutes(city);
-    }
-  }
-
-  fetchRoutes(city: string): void {
-    this.routeService.fetchRoutesByCity(city).subscribe({
-      next: (routes: Route[]) => {
-        console.log('Fetched routes:', routes);
-        // Handle fetched routes as needed
-      },
-      error() {
-        console.error('Error fetching routes');
-      },
-    });
-  }
 
   private _filterCities(value: string): CityInterface[] {
     const filterValue = value.toLowerCase();
     return this.cities.filter(city => city.name.toLowerCase().includes(filterValue));
+  }
+
+  onSubmit() {
+    if (this.searchForm.valid) {
+      console.log("Form submitted! 📝🚀 Let's go on an adventure!");
+      const { city, price, distance, tags } = this.searchForm.value;
+      // Set the selected values
+      this.selectedCity = city;
+      this.selectedPrice = parseFloat(price);
+      this.selectedDistance = parseFloat(distance);
+      this.selectedTags = tags;
+      // Call the service method and subscribe to the returned observable
+      this.routeService.fetchRoutesByCity(this.selectedCity, this.selectedPrice, this.selectedDistance, this.selectedTags).subscribe(
+        (routes: RouteInterface[]) => {
+          // Handle the fetched routes
+          console.log('Routes:', routes);
+          // Assign the fetched routes to a component property to display them in the template
+          this.returnedRoutes = routes;
+        },
+        error => {
+          console.error('Error fetching routes:', error);
+          // Handle error appropriately (e.g., display error message)
+        }
+      );
+    } else {
+      console.log('Form submission failed! 😢 Check your form for errors!');
+    }
+  }
+
+  onSelectedTagsChange(selectedTags: Tag[]): void {
+    this.selectedTags = selectedTags;
+  }
+
+  removeTag(tag: Tag): void {
+    const index = this.selectedTags.findIndex(selectedTag => selectedTag.id === tag.id);
+    if (index !== -1) {
+      this.selectedTags.splice(index, 1);
+    }
+  }
+
+  onSelectTag(event: NgbTypeaheadSelectItemEvent<Tag>): void {
+    // Specify the type of event.item
+    const selectedTag: Tag = event.item;
+    if (this.searchForm && this.searchForm.get('tags')) {
+      if (!this.selectedTags.find(tag => tag.id === selectedTag.id)) {
+        this.selectedTags.push(selectedTag);
+        this.searchForm.get('tags')?.setValue('');
+      }
+    }
+  }
+
+  removeTagValue(tag: Tag): void {
+    const index = this.selectedTags.findIndex(selectedTag => selectedTag.id === tag.id);
+    if (index !== -1) {
+      this.selectedTags.splice(index, 1);
+      this.searchForm.get('tags')?.setValue('');
+    }
   }
 }

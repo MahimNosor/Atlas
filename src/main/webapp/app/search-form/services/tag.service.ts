@@ -10,6 +10,6 @@ export class TagService {
   constructor(private httpClient: HttpClient) {}
 
   fetchTags(): Observable<Tag[]> {
-    return this.httpClient.get<Tag[]>('http://localhost:9000/api/tags');
+    return this.httpClient.get<Tag[]>('http://localhost:4200/api/tags');
   }
 }

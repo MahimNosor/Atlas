@@ -193,4 +193,16 @@ public class RouteResource {
         List<Route> routes = routeService.findPreviousRoutesByUserId(userId);
         return ResponseEntity.ok().body(routes);
     }
+
+    @GetMapping("/routes/search") // This maps the method to the /api/routes/search URL path
+    public ResponseEntity<List<Route>> fetchRoutesByCity(
+        @RequestParam("cityId") Long cityId,
+        @RequestParam("price") Double price,
+        @RequestParam("distance") Double distance,
+        @RequestParam("tagId") List<Long> tagIds
+    ) {
+        // Call the service method to fetch routes based on the provided parameters
+        List<Route> routes = routeService.findRoutesByCityAndCriteria(cityId, price, distance, tagIds);
+        return ResponseEntity.ok(routes);
+    }
 }

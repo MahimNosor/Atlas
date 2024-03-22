@@ -17,7 +17,7 @@
     <div class="col-md-3">
       <div class="form-group">
         <label for="price">Price(£):</label>
-        <input type="text" formControlName="price" id="price" class="form-control" placeholder="Enter price" />
+        <input type="text" formControlName="price" id="price" class="form-control" placeholder="Enter price in (£)" />
       </div>
     </div>
     <div class="col-md-3">
@@ -29,10 +29,26 @@
     <div class="col-md-3">
       <div class="form-group">
         <label>Tags:</label>
-        <input id="tags" type="text" class="form-control" formControlName="tags" [ngbTypeahead]="typeaheadTags" placeholder="Enter tags" />
+        <div class="tags-input-container">
+          <input
+            id="tags"
+            type="text"
+            class="form-control"
+            formControlName="tags"
+            [ngbTypeahead]="typeaheadTags"
+            (selectItem)="onSelectTag($event)"
+            placeholder="Enter tags"
+          />
+          <div class="selected-tags">
+            <button *ngFor="let tag of selectedTags" class="tag" (click)="removeTag(tag)">
+              <span>{{ tag.name }}</span> <span class="tag-close" (click)="removeTagValue(tag)">{{ tag.name }}</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
   <div class="row custom-div">
     <div class="col-md-12 d-flex justify-content-end">
       <button type="submit" class="btn btn-primary">Search</button>

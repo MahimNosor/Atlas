@@ -54,3 +54,29 @@
     color: #ffffff; // White text on hover
   }
 }
+
+.tags-input-container {
+  position: relative;
+}
+
+.selected-tags {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  padding: 4px 8px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.tag-close {
+  margin-left: 5px;
+  cursor: pointer;
+}
