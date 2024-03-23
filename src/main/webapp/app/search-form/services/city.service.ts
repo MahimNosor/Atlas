@@ -7,7 +7,7 @@ import { CityInterface } from './city.interface';
   providedIn: 'root',
 })
 export class CityService {
-  private baseUrl = 'http://localhost:9000/api/cities'; // Adjust the URL to your backend API
+  private baseUrl = '/api/cities'; // Adjust the URL to your backend API
 
   constructor(private http: HttpClient) {}
 

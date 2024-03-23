@@ -11,14 +11,18 @@
   margin-bottom: 10px;
 }
 
-.custom-div {
-  width: 10%; /* Take up 15% of the width of its parent element */
-  margin-top: 20px;
+.equal-columns {
+  display: flex;
 }
 
-.custom-div-1 {
-  width: 80%; /* Take up 15% of the width of its parent element */
-  margin-top: 20px;
+.equal-columns .col {
+  flex: 1;
+  margin-right: 10px; /* Adjust spacing between columns as needed */
+}
+
+.equal-columns .col:last-child {
+  margin-right: 0; /* Remove margin from the last column */
+  flex-grow: 0;
 }
 
 .btn-primary {

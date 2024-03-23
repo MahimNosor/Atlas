@@ -1,7 +1,7 @@
 <!--<p>search-form works!</p>-->
 <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="form-container">
-  <div class="row custom-div-1">
-    <div class="col-md-3">
+  <div class="row equal-columns align-items-baseline">
+    <div class="col-md col-lg-2 flex-grow-1">
       <div class="form-group">
         <label for="city">City:</label>
         <input
@@ -14,19 +14,19 @@
         />
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md col-lg-2 flex-grow-1">
       <div class="form-group">
         <label for="price">Price(£):</label>
         <input type="text" formControlName="price" id="price" class="form-control" placeholder="Enter price in (£)" />
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md col-lg-2 flex-grow-1">
       <div class="form-group">
         <label for="distance">Distance(km):</label>
         <input type="text" formControlName="distance" id="distance" class="form-control" placeholder="Enter distance" />
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md col-lg-2 flex-grow-1">
       <div class="form-group">
         <label>Tags:</label>
         <div class="tags-input-container">
@@ -47,11 +47,11 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="row custom-div">
-    <div class="col-md-12 d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary">Search</button>
+    <div class="col-md col-lg-2 flex-grow-1 d-flex justify-content-center">
+      <div class="form-group">
+        <label></label>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
     </div>
   </div>
 </form>

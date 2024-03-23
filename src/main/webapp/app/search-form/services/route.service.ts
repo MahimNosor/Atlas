@@ -9,12 +9,12 @@ import { Tag } from './tag.interface';
   providedIn: 'root',
 })
 export class RouteService {
-  private baseUrl = 'http://localhost:8080/api/routes';
+  private baseUrl = '/api/routes';
 
   constructor(private httpClient: HttpClient) {}
 
   fetchRoutes(city: string, price: number, distance: number): Observable<any> {
-    return this.httpClient.get(`http://localhost:8080/api/routes`);
+    return this.httpClient.get(`/api/routes`);
   }
   fetchRoutesByCity(city: CityInterface, price: number, distance: number, tags: Tag[]): Observable<RouteInterface[]> {
     const url = `${this.baseUrl}/search`; // Assuming there's a search endpoint to filter routes
