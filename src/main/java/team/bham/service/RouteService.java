@@ -147,7 +147,7 @@ public class RouteService {
         routes = filterRoutesByDistance(routes, distance);
 
         // Filter routes by tagIds
-        routes = filterRoutesByTagIds(routes, tagIds);
+        //        routes = filterRoutesByTagIds(routes, tagIds);
 
         return routes;
     }
@@ -159,8 +159,7 @@ public class RouteService {
     private List<Route> filterRoutesByDistance(List<Route> routes, Double distance) {
         return routes.stream().filter(route -> route.getDistance().compareTo(distance) <= 0).collect(Collectors.toList());
     }
-
-    private List<Route> filterRoutesByTagIds(List<Route> routes, List<Long> tagIds) {
-        return routes.stream().filter(route -> route.getTagIds().containsAll(tagIds)).collect(Collectors.toList());
-    }
+    //    private List<Route> filterRoutesByTagIds(List<Route> routes, List<Long> tagIds) {
+    //        return routes.stream().filter(route -> route.getTagIds().containsAll(tagIds)).collect(Collectors.toList());
+    //    }
 }

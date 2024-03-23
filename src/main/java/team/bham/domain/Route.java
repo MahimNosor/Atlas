@@ -275,12 +275,11 @@ public class Route implements Serializable {
             ", numReviews=" + getNumReviews() +
             "}";
     }
-
-    public Set<Long> getTagIds() {
-        Set<Long> tagIds = new HashSet<>();
-        for (Tag tag : tags) {
-            tagIds.add(tag.getId());
-        }
-        return tagIds;
-    }
+    //    public Set<Long> getTagIds() {
+    //        Set<Long> tagIds = new HashSet<>();
+    //        for (Tag tag : tags) {
+    //            tagIds.add(tag.getId());
+    //        }
+    //        return tagIds;
+    //    }
 }
