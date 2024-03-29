@@ -24,19 +24,24 @@
       <form class="reviewForm">
         <div *ngIf="isRouteSelected">
           <div *jhiHasAnyAuthority="'ROLE_USER'">
-            <label for="ratingUserInput">Rate this route:</label>
-            <input
-              id="ratingUserInput"
-              name="ratingUserInput"
-              type="number"
-              placeholder="Enter a rating"
-              min="1"
-              max="5"
-              [(ngModel)]="userRating"
-            />
-            <app-button [label]="'Submit Review'" (buttonClick)="updateRating()"></app-button>
-            <p *ngIf="isReviewPosted" id="reviewSuccessText">Review successfully posted!</p>
-            <p *ngIf="isRatingInvalid" id="reviewFailureText">Rating must be between 1 and 5!</p>
+            <div *ngIf="!hasUserPostedReview">
+              <label for="ratingUserInput">Rate this route:</label>
+              <input
+                id="ratingUserInput"
+                name="ratingUserInput"
+                type="number"
+                placeholder="Enter a rating"
+                min="1"
+                max="5"
+                [(ngModel)]="userRating"
+              />
+              <app-button [label]="'Submit Review'" (buttonClick)="postReview()"></app-button>
+              <p *ngIf="isReviewPosted" id="reviewSuccessText">Review successfully posted!</p>
+              <p *ngIf="isRatingInvalid" id="reviewFailureText">Rating must be between 1 and 5!</p>
+            </div>
+            <div *ngIf="hasUserPostedReview">
+              <p>Your Review</p>
+            </div>
           </div>
         </div>
       </form>

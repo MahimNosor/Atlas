@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { MapDisplayService } from './service/map-display.service';
+import { AuthService } from '../rating/service/auth.service';
 
 import { icon, Marker } from 'leaflet';
 import * as L from 'leaflet';
 import '../../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js';
 import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js';
+
+import dayjs from 'dayjs/esm';
+
 import { IRoute } from '../entities/route/route.model';
 import { IStop } from '../entities/stop/stop.model';
+import { NewReview } from '../entities/review/review.model';
 
 @Component({
   selector: 'jhi-map-display',
@@ -23,9 +28,12 @@ export class MapDisplayComponent implements OnInit {
   routeCost!: number;
   isRouteSelected = false;
 
+  appUserId: number | null = null;
+  username: string | null = null;
   userRating!: number;
   isRatingInvalid!: boolean;
   isReviewPosted = false;
+  hasUserPostedReview = false;
 
   routeList!: IRoute[];
   stops!: IStop[] | null;
@@ -34,11 +42,12 @@ export class MapDisplayComponent implements OnInit {
 
   private map: any;
 
-  constructor(private mapDisplayService: MapDisplayService) {}
+  constructor(private mapDisplayService: MapDisplayService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.getAllRoutes();
     this.initMap();
+    this.getAppUserId();
   }
 
   clearAll(): void {
@@ -46,6 +55,7 @@ export class MapDisplayComponent implements OnInit {
     this.isRouteSelected = false;
     this.isRatingInvalid = false;
     this.isReviewPosted = false;
+    this.hasUserPostedReview = false;
   }
 
   displayRoute(): void {
@@ -98,15 +108,41 @@ export class MapDisplayComponent implements OnInit {
     }
   }
 
-  updateRating(): void {
-    // Potential problem where user selected another route before posting their review, but they did not click "display route"
-    // this will give the route a wrong id after updating the rating
-    // using another variable(savedRouteId) to save the id should prevent this problem
+  postReview(): void {
+    if (this.appUserId === null) {
+      alert('Please log in to post a review');
+      return;
+    }
+
     this.isRatingInvalid = false;
     if (this.userRating < 1 || this.userRating > 5) {
       this.isRatingInvalid = true;
       return;
     }
+    const review: NewReview = {
+      id: null,
+      username: this.username,
+      title: 'test',
+      content: 'test',
+      rating: this.userRating,
+      reviewDate: dayjs('2024-1-1'),
+      appUser: { id: this.appUserId },
+    };
+
+    this.mapDisplayService.postReview(review).subscribe({
+      next: () => {
+        this.updateRating();
+      },
+      error() {
+        alert('Something went wrong with posting your review');
+      },
+    });
+  }
+
+  updateRating(): void {
+    // Potential problem where user selected another route before posting their review, but they did not click "display route"
+    // this will give the route a wrong id after updating the rating
+    // using another variable(savedRouteId) to save the id should prevent this problem
 
     const routeData: IRoute = {
       id: this.reviewRouteId,
@@ -121,13 +157,27 @@ export class MapDisplayComponent implements OnInit {
       tags: null,
     };
     this.mapDisplayService.updateRouteRating(this.selectedRouteId, routeData).subscribe({
-      next: response => {
+      next: () => {
         this.isReviewPosted = true;
       },
       error() {
         alert('Something went wrong with posting your review');
       },
     });
+  }
+
+  getAppUserId(): void {
+    this.username = this.authService.getCurrentUserId();
+    if (this.username) {
+      this.authService.getAppUserIdByUsername(this.username).subscribe({
+        next: response => {
+          this.appUserId = response;
+        },
+        error() {
+          alert('User cannot be found');
+        },
+      });
+    }
   }
 
   private initMarker(): void {

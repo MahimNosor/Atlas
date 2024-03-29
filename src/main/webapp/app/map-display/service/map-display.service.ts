@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { ApplicationConfigService } from '../../core/config/application-config.service';
 import { IRoute } from '../../entities/route/route.model';
 import { IStop } from '../../entities/stop/stop.model';
-
-export type EntityResponseType = HttpResponse<IRoute>;
+import { NewReview } from '../../entities/review/review.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +13,7 @@ export type EntityResponseType = HttpResponse<IRoute>;
 export class MapDisplayService {
   protected routeResourceURL = this.applicationConfigService.getEndpointFor('api/routes');
   protected stopResourceURL = this.applicationConfigService.getEndpointFor('api/stops/by-routeId');
+  protected reviewResourceURL = this.applicationConfigService.getEndpointFor('api/reviews');
   constructor(private http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   getAllRoutes(): Observable<IRoute[] | null> {
@@ -30,5 +30,9 @@ export class MapDisplayService {
 
   updateRouteRating(routeId: number, route: IRoute): Observable<any> {
     return this.http.patch(`${this.routeResourceURL}/${routeId}`, route);
+  }
+
+  postReview(review: NewReview): Observable<NewReview> {
+    return this.http.post<NewReview>(this.reviewResourceURL, review);
   }
 }
