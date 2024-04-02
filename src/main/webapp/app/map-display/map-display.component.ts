@@ -30,8 +30,13 @@ export class MapDisplayComponent implements OnInit {
 
   appUserId: number | null = null;
   username: string | null = null;
-  userRating!: number;
+  isLoggedIn = false;
+  reviewTitle = '';
+  reviewDescription = '';
+  reviewRating = -1;
+  isTitleEmpty!: boolean;
   isRatingInvalid!: boolean;
+  isDescriptionEmpty!: boolean;
   isReviewPosted = false;
   hasUserPostedReview = false;
 
@@ -114,17 +119,32 @@ export class MapDisplayComponent implements OnInit {
       return;
     }
 
+    const isEmpty = (str: string): boolean => !str.trim().length;
+    this.isTitleEmpty = false;
     this.isRatingInvalid = false;
-    if (this.userRating < 1 || this.userRating > 5) {
+    this.isDescriptionEmpty = false;
+
+    if (isEmpty(this.reviewTitle)) {
+      this.isTitleEmpty = true;
+      return;
+    }
+
+    if (this.reviewRating < 1 || this.reviewRating > 5) {
       this.isRatingInvalid = true;
       return;
     }
+
+    if (isEmpty(this.reviewDescription)) {
+      this.isDescriptionEmpty = true;
+      return;
+    }
+
     const review: NewReview = {
       id: null,
       username: this.username,
-      title: 'test',
-      content: 'test',
-      rating: this.userRating,
+      title: this.reviewTitle,
+      content: this.reviewDescription,
+      rating: this.reviewRating,
       reviewDate: dayjs('2024-1-1'),
       appUser: { id: this.appUserId },
     };
@@ -132,6 +152,7 @@ export class MapDisplayComponent implements OnInit {
     this.mapDisplayService.postReview(review).subscribe({
       next: () => {
         this.updateRating();
+        this.isReviewPosted = true;
       },
       error() {
         alert('Something went wrong with posting your review');
@@ -148,7 +169,7 @@ export class MapDisplayComponent implements OnInit {
       id: this.reviewRouteId,
       title: null,
       description: null,
-      rating: this.userRating,
+      rating: this.reviewRating,
       distance: null,
       cost: null,
       numReviews: null,
@@ -157,9 +178,6 @@ export class MapDisplayComponent implements OnInit {
       tags: null,
     };
     this.mapDisplayService.updateRouteRating(this.selectedRouteId, routeData).subscribe({
-      next: () => {
-        this.isReviewPosted = true;
-      },
       error() {
         alert('Something went wrong with posting your review');
       },
@@ -172,6 +190,7 @@ export class MapDisplayComponent implements OnInit {
       this.authService.getAppUserIdByUsername(this.username).subscribe({
         next: response => {
           this.appUserId = response;
+          this.isLoggedIn = true;
         },
         error() {
           alert('User cannot be found');

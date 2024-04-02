@@ -9,7 +9,7 @@
   height: auto;
   width: 30%;
   display: inline;
-  padding-left: 15px;
+  padding-left: 10px;
 }
 
 .routeSelectorForm {
@@ -23,12 +23,21 @@
   width: 70%;
 }
 
-#reviewSuccessText {
-  color: green;
+.reviewInput {
+  margin: 10px;
 }
 
-#reviewFailureText {
+.reviewInvalidWarning {
   color: red;
+}
+
+#userReviewForm {
+  display: flex;
+  flex-direction: column;
+}
+
+#reviewSuccessText {
+  color: green;
 }
 
 #map {

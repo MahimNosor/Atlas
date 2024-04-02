@@ -23,23 +23,34 @@
     <div class="reviewMenu">
       <form class="reviewForm">
         <div *ngIf="isRouteSelected">
+          <p *ngIf="!isLoggedIn">Log in to post a Review!</p>
           <div *jhiHasAnyAuthority="'ROLE_USER'">
-            <div *ngIf="!hasUserPostedReview">
-              <label for="ratingUserInput">Rate this route:</label>
+            <h4>Rate this route:</h4>
+            <div *ngIf="!hasUserPostedReview" id="userReviewForm">
+              <input type="text" placeholder="Enter a title" [(ngModel)]="reviewTitle" name="reviewTitle" class="reviewInput" />
               <input
-                id="ratingUserInput"
-                name="ratingUserInput"
                 type="number"
-                placeholder="Enter a rating"
+                placeholder="Give a rating (1-5)"
                 min="1"
                 max="5"
-                [(ngModel)]="userRating"
+                [(ngModel)]="reviewRating"
+                name="reviewRating"
+                class="reviewInput"
+              />
+              <input
+                type="text"
+                placeholder="Describe your experience"
+                [(ngModel)]="reviewDescription"
+                name="reviewDescription"
+                class="reviewInput"
               />
               <app-button [label]="'Submit Review'" (buttonClick)="postReview()"></app-button>
               <p *ngIf="isReviewPosted" id="reviewSuccessText">Review successfully posted!</p>
-              <p *ngIf="isRatingInvalid" id="reviewFailureText">Rating must be between 1 and 5!</p>
+              <p *ngIf="isTitleEmpty" class="reviewInvalidWarning">Please enter a title!</p>
+              <p *ngIf="isRatingInvalid" class="reviewInvalidWarning">Rating must be between 1 and 5!</p>
+              <p *ngIf="isDescriptionEmpty" class="reviewInvalidWarning">Please enter a description!</p>
             </div>
-            <div *ngIf="hasUserPostedReview">
+            <div *ngIf="hasUserPostedReview" class="userReviewForm">
               <p>Your Review</p>
             </div>
           </div>
