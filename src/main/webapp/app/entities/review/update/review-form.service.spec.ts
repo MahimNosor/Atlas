@@ -25,6 +25,7 @@ describe('Review Form Service', () => {
             content: expect.any(Object),
             rating: expect.any(Object),
             reviewDate: expect.any(Object),
+            route: expect.any(Object),
             appUser: expect.any(Object),
           })
         );
@@ -41,6 +42,7 @@ describe('Review Form Service', () => {
             content: expect.any(Object),
             rating: expect.any(Object),
             reviewDate: expect.any(Object),
+            route: expect.any(Object),
             appUser: expect.any(Object),
           })
         );

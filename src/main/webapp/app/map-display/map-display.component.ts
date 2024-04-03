@@ -146,6 +146,7 @@ export class MapDisplayComponent implements OnInit {
       content: this.reviewDescription,
       rating: this.reviewRating,
       reviewDate: dayjs('2024-1-1'),
+      route: { id: this.reviewRouteId },
       appUser: { id: this.appUserId },
     };
 

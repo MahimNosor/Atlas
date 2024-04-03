@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { ReviewFormService } from './review-form.service';
 import { ReviewService } from '../service/review.service';
 import { IReview } from '../review.model';
+import { IRoute } from 'app/entities/route/route.model';
+import { RouteService } from 'app/entities/route/service/route.service';
 import { IAppUser } from 'app/entities/app-user/app-user.model';
 import { AppUserService } from 'app/entities/app-user/service/app-user.service';
 
@@ -20,6 +22,7 @@ describe('Review Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let reviewFormService: ReviewFormService;
   let reviewService: ReviewService;
+  let routeService: RouteService;
   let appUserService: AppUserService;
 
   beforeEach(() => {
@@ -43,12 +46,35 @@ describe('Review Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     reviewFormService = TestBed.inject(ReviewFormService);
     reviewService = TestBed.inject(ReviewService);
+    routeService = TestBed.inject(RouteService);
     appUserService = TestBed.inject(AppUserService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
+    it('Should call Route query and add missing value', () => {
+      const review: IReview = { id: 456 };
+      const route: IRoute = { id: 50360 };
+      review.route = route;
+
+      const routeCollection: IRoute[] = [{ id: 50714 }];
+      jest.spyOn(routeService, 'query').mockReturnValue(of(new HttpResponse({ body: routeCollection })));
+      const additionalRoutes = [route];
+      const expectedCollection: IRoute[] = [...additionalRoutes, ...routeCollection];
+      jest.spyOn(routeService, 'addRouteToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ review });
+      comp.ngOnInit();
+
+      expect(routeService.query).toHaveBeenCalled();
+      expect(routeService.addRouteToCollectionIfMissing).toHaveBeenCalledWith(
+        routeCollection,
+        ...additionalRoutes.map(expect.objectContaining)
+      );
+      expect(comp.routesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should call AppUser query and add missing value', () => {
       const review: IReview = { id: 456 };
       const appUser: IAppUser = { id: 84805 };
@@ -73,12 +99,15 @@ describe('Review Management Update Component', () => {
 
     it('Should update editForm', () => {
       const review: IReview = { id: 456 };
+      const route: IRoute = { id: 24289 };
+      review.route = route;
       const appUser: IAppUser = { id: 16790 };
       review.appUser = appUser;
 
       activatedRoute.data = of({ review });
       comp.ngOnInit();
 
+      expect(comp.routesSharedCollection).toContain(route);
       expect(comp.appUsersSharedCollection).toContain(appUser);
       expect(comp.review).toEqual(review);
     });
@@ -153,6 +182,16 @@ describe('Review Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
+    describe('compareRoute', () => {
+      it('Should forward to routeService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(routeService, 'compareRoute');
+        comp.compareRoute(entity, entity2);
+        expect(routeService.compareRoute).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
     describe('compareAppUser', () => {
       it('Should forward to appUserService', () => {
         const entity = { id: 123 };

@@ -39,6 +39,13 @@
   "relationships": [
     {
       "otherEntityField": "id",
+      "otherEntityName": "route",
+      "otherEntityRelationshipName": "review",
+      "relationshipName": "route",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
       "otherEntityName": "appUser",
       "otherEntityRelationshipName": "review",
       "relationshipName": "appUser",
