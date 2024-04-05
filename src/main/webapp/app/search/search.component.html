@@ -25,14 +25,6 @@
           <p class="field">{{ item.user.login }}</p>
           <p class="field">{{ item.numRoutes }}</p>
           <p class="field">{{ item.numReviews }}</p>
-          <div class="previous-routes">
-            <h4>Previous Routes</h4>
-            <ul *ngIf="item.routes?.length > 0">
-              <li *ngFor="let route of item.routes">
-                {{ route.name }}
-              </li>
-            </ul>
-          </div>
         </a>
       </div>
     </div>
