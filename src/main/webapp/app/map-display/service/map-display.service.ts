@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { ApplicationConfigService } from '../../core/config/application-config.service';
 import { IRoute } from '../../entities/route/route.model';
 import { IStop } from '../../entities/stop/stop.model';
-import { NewReview } from '../../entities/review/review.model';
+import { IReview, NewReview } from '../../entities/review/review.model';
 
 @Injectable({
   providedIn: 'root',
@@ -34,5 +34,9 @@ export class MapDisplayService {
 
   postReview(review: NewReview): Observable<NewReview> {
     return this.http.post<NewReview>(this.reviewResourceURL, review);
+  }
+
+  checkExistingReview(appUserId: number, routeId: number): Observable<IReview> {
+    return this.http.get<IReview>(`${this.reviewResourceURL}/${appUserId}/${routeId}`);
   }
 }

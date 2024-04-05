@@ -25,33 +25,42 @@
         <div *ngIf="isRouteSelected">
           <p *ngIf="!isLoggedIn">Log in to post a Review!</p>
           <div *jhiHasAnyAuthority="'ROLE_USER'">
-            <h4>Rate this route:</h4>
             <div *ngIf="!hasUserPostedReview" id="userReviewForm">
-              <input type="text" placeholder="Enter a title" [(ngModel)]="reviewTitle" name="reviewTitle" class="reviewInput" />
+              <h4>Rate this route:</h4>
+              <label for="reviewTitle">Title your review:</label>
               <input
-                type="number"
-                placeholder="Give a rating (1-5)"
-                min="1"
-                max="5"
-                [(ngModel)]="reviewRating"
-                name="reviewRating"
+                type="text"
+                placeholder="Enter a title"
+                [(ngModel)]="reviewTitle"
+                id="reviewTitle"
+                name="reviewTitle"
                 class="reviewInput"
               />
+              <label for="reviewRating">Give a rating:</label>
+              <select id="reviewRating" name="reviewRating" class="reviewInput" [(ngModel)]="reviewRating">
+                <option *ngFor="let rating of ratings">{{ rating }}</option>
+              </select>
+              <label for="reviewDescription">Give a description:</label>
               <input
                 type="text"
                 placeholder="Describe your experience"
                 [(ngModel)]="reviewDescription"
+                id="reviewDescription"
                 name="reviewDescription"
                 class="reviewInput"
               />
               <app-button [label]="'Submit Review'" (buttonClick)="postReview()"></app-button>
               <p *ngIf="isReviewPosted" id="reviewSuccessText">Review successfully posted!</p>
               <p *ngIf="isTitleEmpty" class="reviewInvalidWarning">Please enter a title!</p>
-              <p *ngIf="isRatingInvalid" class="reviewInvalidWarning">Rating must be between 1 and 5!</p>
+              <p *ngIf="isRatingInvalid" class="reviewInvalidWarning">Please give a rating!</p>
               <p *ngIf="isDescriptionEmpty" class="reviewInvalidWarning">Please enter a description!</p>
             </div>
             <div *ngIf="hasUserPostedReview" class="userReviewForm">
-              <p>Your Review</p>
+              <h4>Your Review</h4>
+              <p>Title: {{ userReviewTitle }}</p>
+              <p>Rating: {{ userReviewRating }}/5</p>
+              <p>Description: {{ userReviewDescription }}</p>
+              <p>Date: {{ userReviewDate }}</p>
             </div>
           </div>
         </div>

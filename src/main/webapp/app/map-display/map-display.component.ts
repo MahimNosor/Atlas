@@ -19,6 +19,8 @@ import { NewReview } from '../entities/review/review.model';
   styleUrls: ['./map-display.component.scss'],
 })
 export class MapDisplayComponent implements OnInit {
+  ratings = [1, 2, 3, 4, 5];
+
   selectedRouteId!: number;
   reviewRouteId!: number; // route id used for rating feature
   routeTitle!: string;
@@ -31,14 +33,20 @@ export class MapDisplayComponent implements OnInit {
   appUserId: number | null = null;
   username: string | null = null;
   isLoggedIn = false;
+
   reviewTitle = '';
   reviewDescription = '';
-  reviewRating = -1;
+  reviewRating!: number | null;
   isTitleEmpty!: boolean;
   isRatingInvalid!: boolean;
   isDescriptionEmpty!: boolean;
   isReviewPosted = false;
+
   hasUserPostedReview = false;
+  userReviewTitle = '';
+  userReviewRating = 1;
+  userReviewDescription = '';
+  userReviewDate = dayjs();
 
   routeList!: IRoute[];
   stops!: IStop[] | null;
@@ -58,7 +66,9 @@ export class MapDisplayComponent implements OnInit {
   clearAll(): void {
     this.routingControl.getPlan().setWaypoints([]);
     this.isRouteSelected = false;
+    this.isTitleEmpty = false;
     this.isRatingInvalid = false;
+    this.isDescriptionEmpty = false;
     this.isReviewPosted = false;
     this.hasUserPostedReview = false;
   }
@@ -86,6 +96,9 @@ export class MapDisplayComponent implements OnInit {
         this.routeRating = routeResult!.rating ?? 0;
         this.routeDistance = routeResult!.distance ?? 0;
         this.routeCost = routeResult!.cost ?? 0;
+        if (this.appUserId !== null) {
+          this.checkUserHasReview(this.appUserId, this.reviewRouteId);
+        }
         this.isRouteSelected = true;
       },
       error() {
@@ -119,23 +132,7 @@ export class MapDisplayComponent implements OnInit {
       return;
     }
 
-    const isEmpty = (str: string): boolean => !str.trim().length;
-    this.isTitleEmpty = false;
-    this.isRatingInvalid = false;
-    this.isDescriptionEmpty = false;
-
-    if (isEmpty(this.reviewTitle)) {
-      this.isTitleEmpty = true;
-      return;
-    }
-
-    if (this.reviewRating < 1 || this.reviewRating > 5) {
-      this.isRatingInvalid = true;
-      return;
-    }
-
-    if (isEmpty(this.reviewDescription)) {
-      this.isDescriptionEmpty = true;
+    if (!this.validateReview()) {
       return;
     }
 
@@ -154,9 +151,30 @@ export class MapDisplayComponent implements OnInit {
       next: () => {
         this.updateRating();
         this.isReviewPosted = true;
+        this.displayRoute();
       },
       error() {
         alert('Something went wrong with posting your review');
+      },
+    });
+  }
+
+  checkUserHasReview(appUserId: number, routeId: number): void {
+    this.mapDisplayService.checkExistingReview(appUserId, routeId).subscribe({
+      next: reviewResponse => {
+        this.hasUserPostedReview = true;
+        this.userReviewTitle = reviewResponse.title ?? '';
+        this.userReviewRating = reviewResponse.rating ?? 1;
+        this.userReviewDescription = reviewResponse.content ?? '';
+        this.userReviewDate = reviewResponse.reviewDate ?? dayjs();
+      },
+      error: errorResult => {
+        if (errorResult.status === 404) {
+          this.hasUserPostedReview = false;
+        } else {
+          alert('Something went wrong with getting your review');
+          this.hasUserPostedReview = false;
+        }
       },
     });
   }
@@ -183,6 +201,30 @@ export class MapDisplayComponent implements OnInit {
         alert('Something went wrong with posting your review');
       },
     });
+  }
+
+  validateReview(): boolean {
+    const isEmpty = (str: string): boolean => !str.trim().length;
+    this.isTitleEmpty = false;
+    this.isRatingInvalid = false;
+    this.isDescriptionEmpty = false;
+
+    if (isEmpty(this.reviewTitle)) {
+      this.isTitleEmpty = true;
+      return false;
+    }
+
+    if (this.reviewRating == null) {
+      this.isRatingInvalid = true;
+      return false;
+    }
+
+    if (isEmpty(this.reviewDescription)) {
+      this.isDescriptionEmpty = true;
+      return false;
+    }
+
+    return true;
   }
 
   getAppUserId(): void {
