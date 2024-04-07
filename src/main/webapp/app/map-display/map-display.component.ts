@@ -28,6 +28,8 @@ export class MapDisplayComponent implements OnInit {
   routeRating!: number;
   routeDistance!: number;
   routeCost!: number;
+  routeCurrentRating!: number;
+  routeTotalReviews!: number;
   isRouteSelected = false;
 
   appUserId: number | null = null;
@@ -36,11 +38,10 @@ export class MapDisplayComponent implements OnInit {
 
   reviewTitle = '';
   reviewDescription = '';
-  reviewRating!: number | null;
+  reviewRating = 1;
   isTitleEmpty!: boolean;
   isRatingInvalid!: boolean;
   isDescriptionEmpty!: boolean;
-  isReviewPosted = false;
 
   hasUserPostedReview = false;
   userReviewTitle = '';
@@ -69,13 +70,17 @@ export class MapDisplayComponent implements OnInit {
     this.isTitleEmpty = false;
     this.isRatingInvalid = false;
     this.isDescriptionEmpty = false;
-    this.isReviewPosted = false;
     this.hasUserPostedReview = false;
   }
 
   displayRoute(): void {
     this.clearAll();
+
+    // Potential problem where user selected another route before posting their review, but they did not click "display route"
+    // this will give the route a wrong id after updating the rating
+    // using another variable(reviewRouteId) to save the id should prevent this problem
     this.reviewRouteId = this.selectedRouteId;
+
     this.mapDisplayService.getStops(this.selectedRouteId).subscribe({
       next: stopsResult => {
         stopsResult = stopsResult!.sort((a, b) => ((a.sequenceNumber ?? 0) < (b.sequenceNumber ?? 1) ? -1 : 1));
@@ -96,6 +101,9 @@ export class MapDisplayComponent implements OnInit {
         this.routeRating = routeResult!.rating ?? 0;
         this.routeDistance = routeResult!.distance ?? 0;
         this.routeCost = routeResult!.cost ?? 0;
+        this.routeCurrentRating = routeResult!.rating ?? 0;
+        this.routeTotalReviews = routeResult!.numReviews ?? 0;
+
         if (this.appUserId !== null) {
           this.checkUserHasReview(this.appUserId, this.reviewRouteId);
         }
@@ -142,7 +150,7 @@ export class MapDisplayComponent implements OnInit {
       title: this.reviewTitle,
       content: this.reviewDescription,
       rating: this.reviewRating,
-      reviewDate: dayjs('2024-1-1'),
+      reviewDate: dayjs(),
       route: { id: this.reviewRouteId },
       appUser: { id: this.appUserId },
     };
@@ -150,7 +158,6 @@ export class MapDisplayComponent implements OnInit {
     this.mapDisplayService.postReview(review).subscribe({
       next: () => {
         this.updateRating();
-        this.isReviewPosted = true;
         this.displayRoute();
       },
       error() {
@@ -180,18 +187,17 @@ export class MapDisplayComponent implements OnInit {
   }
 
   updateRating(): void {
-    // Potential problem where user selected another route before posting their review, but they did not click "display route"
-    // this will give the route a wrong id after updating the rating
-    // using another variable(savedRouteId) to save the id should prevent this problem
+    const newTotalReviews = this.routeTotalReviews + 1;
+    const newRating = Math.round((Number(this.routeCurrentRating * this.routeTotalReviews) + Number(this.reviewRating)) / newTotalReviews);
 
     const routeData: IRoute = {
       id: this.reviewRouteId,
       title: null,
       description: null,
-      rating: this.reviewRating,
+      rating: newRating,
       distance: null,
       cost: null,
-      numReviews: null,
+      numReviews: newTotalReviews,
       appUser: null,
       city: null,
       tags: null,
@@ -211,11 +217,6 @@ export class MapDisplayComponent implements OnInit {
 
     if (isEmpty(this.reviewTitle)) {
       this.isTitleEmpty = true;
-      return false;
-    }
-
-    if (this.reviewRating == null) {
-      this.isRatingInvalid = true;
       return false;
     }
 

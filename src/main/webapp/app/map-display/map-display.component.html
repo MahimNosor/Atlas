@@ -23,7 +23,7 @@
     <div class="reviewMenu">
       <form class="reviewForm">
         <div *ngIf="isRouteSelected">
-          <p *ngIf="!isLoggedIn">Log in to post a Review!</p>
+          <p *ngIf="!isLoggedIn" id="logInHint">Log in to post a Review!</p>
           <div *jhiHasAnyAuthority="'ROLE_USER'">
             <div *ngIf="!hasUserPostedReview" id="userReviewForm">
               <h4>Rate this route:</h4>
@@ -50,7 +50,6 @@
                 class="reviewInput"
               />
               <app-button [label]="'Submit Review'" (buttonClick)="postReview()"></app-button>
-              <p *ngIf="isReviewPosted" id="reviewSuccessText">Review successfully posted!</p>
               <p *ngIf="isTitleEmpty" class="reviewInvalidWarning">Please enter a title!</p>
               <p *ngIf="isRatingInvalid" class="reviewInvalidWarning">Please give a rating!</p>
               <p *ngIf="isDescriptionEmpty" class="reviewInvalidWarning">Please enter a description!</p>
