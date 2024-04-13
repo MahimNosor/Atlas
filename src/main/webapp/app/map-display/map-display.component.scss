@@ -4,12 +4,14 @@
 }
 
 .routeMenuContainer {
-  background-color: #2f2d2d;
+  background-color: #333;
   color: white;
   height: auto;
   width: 30%;
   display: inline;
-  padding-left: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-y: auto;
 }
 
 .routeSelectorForm {
@@ -23,8 +25,14 @@
   width: 70%;
 }
 
-.reviewInput {
-  margin: 10px;
+.routeViewerInput {
+  background-color: #555;
+  border: 2px solid #777;
+  border-radius: 4px;
+  color: #ddd;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: large;
 }
 
 .reviewInvalidWarning {

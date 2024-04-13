@@ -2,11 +2,11 @@
 
 <div class="divContainer">
   <div class="routeMenuContainer">
-    <h2>Route Summary</h2>
+    <h2>Route Viewer</h2>
     <form class="routeSelectorForm">
       <div>
         <label for="routeIdSelector">Select route: </label>
-        <select id="routeIdSelector" name="selectedRouteId" [(ngModel)]="selectedRouteId">
+        <select id="routeIdSelector" name="selectedRouteId" [(ngModel)]="selectedRouteId" class="routeViewerInput">
           <option *ngFor="let routeId of routeList" [ngValue]="routeId.id">{{ routeId.title }}</option>
         </select>
       </div>
@@ -15,47 +15,50 @@
         <app-button [label]="'Clear All'" (buttonClick)="clearAll()"></app-button>
       </div>
     </form>
-    <p *ngIf="isRouteSelected">Title: {{ routeTitle }}</p>
-    <p *ngIf="isRouteSelected">Description: {{ routeDescription }}</p>
-    <p *ngIf="isRouteSelected">Rating: {{ routeRating }}</p>
-    <p *ngIf="isRouteSelected">Total Distance:{{ routeDistance }}</p>
-    <p *ngIf="isRouteSelected">Total Cost: {{ routeCost }}</p>
+    <div *ngIf="isRouteSelected">
+      <h3>Route Summary</h3>
+      <p>Title: {{ routeTitle }}</p>
+      <p>Description: {{ routeDescription }}</p>
+      <p>Rating: {{ routeRating }}/5</p>
+      <p>Total Distance:{{ routeDistance }}</p>
+      <p>Total Cost: {{ routeCost }}</p>
+    </div>
     <div class="reviewMenu">
       <form class="reviewForm">
         <div *ngIf="isRouteSelected">
           <p *ngIf="!isLoggedIn" id="logInHint">Log in to post a Review!</p>
           <div *jhiHasAnyAuthority="'ROLE_USER'">
             <div *ngIf="!hasUserPostedReview" id="userReviewForm">
-              <h4>Rate this route:</h4>
-              <label for="reviewTitle">Title your review:</label>
+              <h3>Rate this route:</h3>
+              <label for="reviewTitle">Title:</label>
               <input
                 type="text"
                 placeholder="Enter a title"
                 [(ngModel)]="reviewTitle"
                 id="reviewTitle"
                 name="reviewTitle"
-                class="reviewInput"
+                class="routeViewerInput"
               />
-              <label for="reviewRating">Give a rating:</label>
-              <select id="reviewRating" name="reviewRating" class="reviewInput" [(ngModel)]="reviewRating">
+              <label for="reviewRating">Rating(1 to 5):</label>
+              <select id="reviewRating" name="reviewRating" class="routeViewerInput" [(ngModel)]="reviewRating">
                 <option *ngFor="let rating of ratings">{{ rating }}</option>
               </select>
-              <label for="reviewDescription">Give a description:</label>
-              <input
+              <label for="reviewDescription">Description:</label>
+              <textarea
                 type="text"
                 placeholder="Describe your experience"
                 [(ngModel)]="reviewDescription"
                 id="reviewDescription"
                 name="reviewDescription"
-                class="reviewInput"
-              />
+                class="routeViewerInput"
+              ></textarea>
               <app-button [label]="'Submit Review'" (buttonClick)="postReview()"></app-button>
               <p *ngIf="isTitleEmpty" class="reviewInvalidWarning">Please enter a title!</p>
-              <p *ngIf="isRatingInvalid" class="reviewInvalidWarning">Please give a rating!</p>
+              <p *ngIf="isRatingInvalid" class="reviewInvalidWarning">Please give a rating(1 to 5)!</p>
               <p *ngIf="isDescriptionEmpty" class="reviewInvalidWarning">Please enter a description!</p>
             </div>
             <div *ngIf="hasUserPostedReview" class="userReviewForm">
-              <h4>Your Review</h4>
+              <h3>Your Review</h3>
               <p>Title: {{ userReviewTitle }}</p>
               <p>Rating: {{ userReviewRating }}/5</p>
               <p>Description: {{ userReviewDescription }}</p>
