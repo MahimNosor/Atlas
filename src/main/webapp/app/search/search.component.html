@@ -5,27 +5,30 @@
     <link rel="stylesheet" href="search.component.scss" />
   </head>
   <body>
-    <div class="search-container">
-      <div class="search">
-        <form role="form" (ngSubmit)="$event.preventDefault(); onSearchSubmit()">
-          <input type="search" class="input-box" [(ngModel)]="searchQuery" name="searchQuery" (keyup)="onSearchSubmit()" />
-        </form>
-      </div>
-    </div>
-    <div class="result">
+    <div class="container">
+      <form role="form" (ngSubmit)="$event.preventDefault(); onSearchSubmit()">
+        <input
+          type="search"
+          class="input-box"
+          [(ngModel)]="searchQuery"
+          name="searchQuery"
+          (keyup)="onSearchSubmit()"
+          placeholder="Search user"
+        />
+      </form>
       <br />
       <br />
-      <p class="field">Username</p>
-      <p class="field">Routes travelled</p>
-      <p class="field">Reviews posted</p>
-    </div>
-    <div class="result" *ngIf="arrayBufferData$ | async as arrayBufferData">
-      <div *ngFor="let item of arrayBufferData">
-        <a routerLink="../app-user/{{ item.id }}/view">
-          <p class="field">{{ item.user.login }}</p>
-          <p class="field">{{ item.numRoutes }}</p>
-          <p class="field">{{ item.numReviews }}</p>
-        </a>
+      <div *ngIf="arrayBufferData$ | async as arrayBufferData">
+        <p class="field">Username</p>
+        <p class="field">Routes travelled</p>
+        <p class="field">Reviews posted</p>
+        <div *ngFor="let item of arrayBufferData">
+          <a class="link" routerLink="../app-user/{{ item.id }}/view">
+            <p class="field">{{ item.user.login }}</p>
+            <p class="field">{{ item.numRoutes }}</p>
+            <p class="field">{{ item.numReviews }}</p>
+          </a>
+        </div>
       </div>
     </div>
   </body>
