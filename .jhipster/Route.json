@@ -48,6 +48,12 @@
       "relationshipType": "one-to-many"
     },
     {
+      "otherEntityName": "review",
+      "otherEntityRelationshipName": "route",
+      "relationshipName": "review",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityField": "name",
       "otherEntityName": "tag",
       "otherEntityRelationshipName": "route",

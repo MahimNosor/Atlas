@@ -46,6 +46,10 @@ public class Review implements Serializable {
     private LocalDate reviewDate;
 
     @ManyToOne
+    @JsonIgnoreProperties(value = { "stops", "reviews", "tags", "city", "appUser" }, allowSetters = true)
+    private Route route;
+
+    @ManyToOne
     @JsonIgnoreProperties(value = { "user", "routes", "reviews", "tags" }, allowSetters = true)
     private AppUser appUser;
 
@@ -127,6 +131,19 @@ public class Review implements Serializable {
 
     public void setReviewDate(LocalDate reviewDate) {
         this.reviewDate = reviewDate;
+    }
+
+    public Route getRoute() {
+        return this.route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
+    public Review route(Route route) {
+        this.setRoute(route);
+        return this;
     }
 
     public AppUser getAppUser() {

@@ -1,10 +1,9 @@
-<div class="user-routes">
-  <div class="overlap-group">
-    <div class="overlay-text">User's Routes</div>
-  </div>
-
-  <div class="image-container" *ngFor="let image of images">
-    <img [src]="image.src" />
-    <div class="image-caption" [innerHTML]="image.caption"></div>
-  </div>
+<div *ngIf="error">
+  {{ error }}
 </div>
+
+<div *ngIf="user && numPreviousRoutes > 0">Number of Previous Routes: {{ numPreviousRoutes }}</div>
+
+<p *ngIf="user && !numPreviousRoutes">No previous routes found.</p>
+
+<p *ngIf="!user">User not found.</p>

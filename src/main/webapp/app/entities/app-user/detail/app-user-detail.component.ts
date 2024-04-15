@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { RouteService } from '../../route/service/route.service';
 import { IAppUser } from '../app-user.model';
 
 @Component({
@@ -9,12 +9,18 @@ import { IAppUser } from '../app-user.model';
 })
 export class AppUserDetailComponent implements OnInit {
   appUser: IAppUser | null = null;
+  routes: any[] = [];
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(protected activatedRoute: ActivatedRoute, private routeService: RouteService) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ appUser }) => {
       this.appUser = appUser;
+      if (this.appUser) {
+        this.routeService.findPreviousRoutesByUserId(this.appUser.id).subscribe(fetchedRoutes => {
+          this.routes = fetchedRoutes;
+        });
+      }
     });
   }
 

@@ -26,19 +26,18 @@ Navbar
 
   a.nav-link {
     font-weight: 400;
+    color: white; //sets the colours of the links on the navbar
   }
 
   .navbar-toggler {
+    color: white; //sets the color of the toggler on the navbar
     &:hover {
       color: $navbar-dark-hover-color;
     }
   }
   .container-fluid {
-    background: teal;
-  }
-
-  .nav-link {
-    color: $white;
+    background: #333; //sets the colour of the navbar
+    padding-top: 2rem; //increased the navbar thickness
   }
 
   .navbar-title {

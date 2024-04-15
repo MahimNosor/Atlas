@@ -1,31 +1,86 @@
-/* Add your CSS styles for the form and search results */
-form {
+.form-container {
   display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  margin: auto;
+}
+.row {
+  height: fit-content;
 }
 
-label {
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-input,
-select,
-button {
+.form-group {
+  flex: 1;
+  margin-right: 10px; /* Adjust spacing between form elements */
   margin-bottom: 10px;
-  padding: 8px;
+}
+
+.equal-columns {
+  display: flex;
+}
+
+.equal-columns .col {
+  flex: 1;
+  margin-right: 10px; /* Adjust spacing between columns as needed */
+}
+
+.equal-columns .col:last-child {
+  margin-right: 0; /* Remove margin from the last column */
+  flex-grow: 0;
+}
+
+.btn-primary {
+  /* Additional styles for the search button */
+  // Set dimensions
+  width: 150px;
+  height: 40px;
+
+  // Typography
+  font-size: 16px;
+
+  // Spacing
+  padding: 10px 20px;
+
+  // Border
+  border: 2px solid #007bff; // Blue border
+  border-radius: 5px;
+
+  // Background and text color
+  background-color: #007bff; // Blue background
+  color: #ffffff; // White text
+
+  // Shadow effect
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+  // Text alignment
+  text-align: center;
+
+  // Hover effect
+  &:hover {
+    background-color: #0056b3; // Darker blue on hover
+    border-color: #0056b3; // Darker blue border on hover
+    color: #ffffff; // White text on hover
+  }
+}
+
+.tags-input-container {
+  position: relative;
+}
+
+.selected-tags {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  padding: 4px 8px;
+  background-color: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-button {
-  background-color: #007bff;
-  color: white;
+.tag-close {
+  margin-left: 5px;
   cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
 }

@@ -1,33 +1,57 @@
 <!--<p>search-form works!</p>-->
-<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="keywords">Keywords:</label>
-    <input type="text" formControlName="keywords" id="keywords" class="form-control" placeholder="Enter keywords" />
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="row equal-columns align-items-baseline">
+    <div class="col-md col-lg-2 flex-grow-1">
+      <div class="form-group">
+        <label for="city">City:</label>
+        <input
+          id="city"
+          type="text"
+          class="form-control"
+          formControlName="city"
+          [ngbTypeahead]="typeaheadSearch"
+          placeholder="Enter a city"
+        />
+      </div>
+    </div>
+    <div class="col-md col-lg-2 flex-grow-1">
+      <div class="form-group">
+        <label for="price">Price(£):</label>
+        <input type="text" formControlName="price" id="price" class="form-control" placeholder="Enter price in (£)" />
+      </div>
+    </div>
+    <div class="col-md col-lg-2 flex-grow-1">
+      <div class="form-group">
+        <label for="distance">Distance(km):</label>
+        <input type="text" formControlName="distance" id="distance" class="form-control" placeholder="Enter distance" />
+      </div>
+    </div>
+    <div class="col-md col-lg-2 flex-grow-1">
+      <div class="form-group">
+        <label>Tags:</label>
+        <div class="tags-input-container">
+          <input
+            id="tags"
+            type="text"
+            class="form-control"
+            formControlName="tags"
+            [ngbTypeahead]="typeaheadTags"
+            (selectItem)="onSelectTag($event)"
+            placeholder="Enter tags"
+          />
+          <div class="selected-tags">
+            <button *ngFor="let tag of selectedTags" class="tag" (click)="removeTag(tag)">
+              <span>{{ tag.name }}</span> <span class="tag-close" (click)="removeTagValue(tag)">{{ tag.name }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md col-lg-2 flex-grow-1 d-flex justify-content-center">
+      <div class="form-group">
+        <label></label>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </div>
   </div>
-
-  <div class="form-group">
-    <label for="location">Preferred Location:</label>
-    <input type="text" formControlName="location" id="location" class="form-control" placeholder="Enter preferred location" />
-  </div>
-
-  <div class="form-group">
-    <label for="tripDate">Trip Date:</label>
-    <input type="date" formControlName="tripDate" id="tripDate" class="form-control" />
-  </div>
-
-  <div class="form-group">
-    <label for="priceFilter">Price Filter:</label>
-    <select formControlName="priceFilter" id="priceFilter" class="form-control">
-      <option value="lowToHigh">Low to High</option>
-      <option value="highToLow">High to Low</option>
-    </select>
-  </div>
-
-  <!-- Add more filter options as needed -->
-
-  <!--<button type="submit" class="btn btn-primary">Search</button>-->
-  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-    <!-- Other form fields -->
-    <button type="submit">Search</button>
-  </form>
 </form>

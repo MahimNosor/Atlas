@@ -23,6 +23,7 @@ type ReviewFormGroupContent = {
   content: FormControl<IReview['content']>;
   rating: FormControl<IReview['rating']>;
   reviewDate: FormControl<IReview['reviewDate']>;
+  route: FormControl<IReview['route']>;
   appUser: FormControl<IReview['appUser']>;
 };
 
@@ -58,6 +59,7 @@ export class ReviewFormService {
       reviewDate: new FormControl(reviewRawValue.reviewDate, {
         validators: [Validators.required],
       }),
+      route: new FormControl(reviewRawValue.route),
       appUser: new FormControl(reviewRawValue.appUser),
     });
   }

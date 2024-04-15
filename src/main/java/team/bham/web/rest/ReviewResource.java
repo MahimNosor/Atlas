@@ -165,6 +165,13 @@ public class ReviewResource {
         return ResponseUtil.wrapOrNotFound(review);
     }
 
+    @GetMapping(path = "/reviews/{appUserId}/{routeId}")
+    public ResponseEntity<Review> getReviewWithAppUserIdAndRouteId(@PathVariable Long appUserId, @PathVariable Long routeId) {
+        log.debug("REST request to get Review : {}, {}", appUserId, routeId);
+        Optional<Review> review = reviewRepository.findByAppUserIdAndRouteId(appUserId, routeId);
+        return ResponseUtil.wrapOrNotFound(review);
+    }
+
     /**
      * {@code DELETE  /reviews/:id} : delete the "id" review.
      *

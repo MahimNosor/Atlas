@@ -7,6 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 import { ReviewFormService, ReviewFormGroup } from './review-form.service';
 import { IReview } from '../review.model';
 import { ReviewService } from '../service/review.service';
+import { IRoute } from 'app/entities/route/route.model';
+import { RouteService } from 'app/entities/route/service/route.service';
 import { IAppUser } from 'app/entities/app-user/app-user.model';
 import { AppUserService } from 'app/entities/app-user/service/app-user.service';
 
@@ -18,6 +20,7 @@ export class ReviewUpdateComponent implements OnInit {
   isSaving = false;
   review: IReview | null = null;
 
+  routesSharedCollection: IRoute[] = [];
   appUsersSharedCollection: IAppUser[] = [];
 
   editForm: ReviewFormGroup = this.reviewFormService.createReviewFormGroup();
@@ -25,9 +28,12 @@ export class ReviewUpdateComponent implements OnInit {
   constructor(
     protected reviewService: ReviewService,
     protected reviewFormService: ReviewFormService,
+    protected routeService: RouteService,
     protected appUserService: AppUserService,
     protected activatedRoute: ActivatedRoute
   ) {}
+
+  compareRoute = (o1: IRoute | null, o2: IRoute | null): boolean => this.routeService.compareRoute(o1, o2);
 
   compareAppUser = (o1: IAppUser | null, o2: IAppUser | null): boolean => this.appUserService.compareAppUser(o1, o2);
 
@@ -79,6 +85,7 @@ export class ReviewUpdateComponent implements OnInit {
     this.review = review;
     this.reviewFormService.resetForm(this.editForm, review);
 
+    this.routesSharedCollection = this.routeService.addRouteToCollectionIfMissing<IRoute>(this.routesSharedCollection, review.route);
     this.appUsersSharedCollection = this.appUserService.addAppUserToCollectionIfMissing<IAppUser>(
       this.appUsersSharedCollection,
       review.appUser
@@ -86,6 +93,12 @@ export class ReviewUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    this.routeService
+      .query()
+      .pipe(map((res: HttpResponse<IRoute[]>) => res.body ?? []))
+      .pipe(map((routes: IRoute[]) => this.routeService.addRouteToCollectionIfMissing<IRoute>(routes, this.review?.route)))
+      .subscribe((routes: IRoute[]) => (this.routesSharedCollection = routes));
+
     this.appUserService
       .query()
       .pipe(map((res: HttpResponse<IAppUser[]>) => res.body ?? []))

@@ -1,4 +1,5 @@
 import dayjs from 'dayjs/esm';
+import { IRoute } from 'app/entities/route/route.model';
 import { IAppUser } from 'app/entities/app-user/app-user.model';
 
 export interface IReview {
@@ -8,6 +9,7 @@ export interface IReview {
   content?: string | null;
   rating?: number | null;
   reviewDate?: dayjs.Dayjs | null;
+  route?: Pick<IRoute, 'id'> | null;
   appUser?: Pick<IAppUser, 'id'> | null;
 }
 

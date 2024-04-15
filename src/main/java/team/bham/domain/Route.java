@@ -54,6 +54,11 @@ public class Route implements Serializable {
     @JsonIgnoreProperties(value = { "route" }, allowSetters = true)
     private Set<Stop> stops = new HashSet<>();
 
+    @OneToMany(mappedBy = "route")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "route", "appUser" }, allowSetters = true)
+    private Set<Review> reviews = new HashSet<>();
+
     @ManyToMany
     @JoinTable(name = "rel_route__tag", joinColumns = @JoinColumn(name = "route_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -189,6 +194,37 @@ public class Route implements Serializable {
     public Route removeStop(Stop stop) {
         this.stops.remove(stop);
         stop.setRoute(null);
+        return this;
+    }
+
+    public Set<Review> getReviews() {
+        return this.reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        if (this.reviews != null) {
+            this.reviews.forEach(i -> i.setRoute(null));
+        }
+        if (reviews != null) {
+            reviews.forEach(i -> i.setRoute(this));
+        }
+        this.reviews = reviews;
+    }
+
+    public Route reviews(Set<Review> reviews) {
+        this.setReviews(reviews);
+        return this;
+    }
+
+    public Route addReview(Review review) {
+        this.reviews.add(review);
+        review.setRoute(this);
+        return this;
+    }
+
+    public Route removeReview(Review review) {
+        this.reviews.remove(review);
+        review.setRoute(null);
         return this;
     }
 

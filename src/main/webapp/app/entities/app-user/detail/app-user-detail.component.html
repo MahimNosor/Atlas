@@ -33,6 +33,15 @@
             >{{ last ? '' : ', ' }}
           </span>
         </dd>
+
+        <dt><span>Previous Routes</span></dt>
+        <dd>
+          <ul>
+            <li *ngFor="let route of routes; let last = last">
+              <a [routerLink]="['/route', route.id, 'view']">{{ route.title }}</a> {{ last ? '' : ', ' }}
+            </li>
+          </ul>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

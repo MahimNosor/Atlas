@@ -2,17 +2,72 @@
 
 <div class="divContainer">
   <div class="routeMenuContainer">
-    <h2>Route Summary</h2>
+    <h2>Route Viewer</h2>
     <form class="routeSelectorForm">
       <div>
         <label for="routeIdSelector">Select route: </label>
-        <select id="routeIdSelector" name="selectedRouteId" [(ngModel)]="selectedRoute">
+        <select id="routeIdSelector" name="selectedRouteId" [(ngModel)]="selectedRouteId" class="routeViewerInput">
           <option *ngFor="let routeId of routeList" [ngValue]="routeId.id">{{ routeId.title }}</option>
         </select>
       </div>
-      <button type="submit" (click)="displayRoute()">Display Route</button>
+      <div class="routeControlButtons">
+        <app-button [label]="'Display Route'" (buttonClick)="displayRoute()"></app-button>
+        <app-button [label]="'Clear All'" (buttonClick)="clearAll()"></app-button>
+      </div>
     </form>
-    <button type="button" (click)="clearAllWaypoints()">Clear all</button>
+    <div *ngIf="isRouteSelected">
+      <h3>Route Summary</h3>
+      <p>Title: {{ routeTitle }}</p>
+      <p>Description: {{ routeDescription }}</p>
+      <p>Rating: {{ routeRating }}/5</p>
+      <p>Total Distance:{{ routeDistance }}</p>
+      <p>Total Cost: {{ routeCost }}</p>
+    </div>
+    <div class="reviewMenu">
+      <form class="reviewForm">
+        <div *ngIf="isRouteSelected">
+          <p *ngIf="!isLoggedIn" id="logInHint">Log in to post a Review!</p>
+          <div *jhiHasAnyAuthority="'ROLE_USER'">
+            <div *ngIf="!hasUserPostedReview" id="userReviewForm">
+              <h3>Rate this route:</h3>
+              <label for="reviewTitle">Title:</label>
+              <input
+                type="text"
+                placeholder="Enter a title"
+                [(ngModel)]="reviewTitle"
+                id="reviewTitle"
+                name="reviewTitle"
+                class="routeViewerInput"
+              />
+              <label for="reviewRating">Rating(1 to 5):</label>
+              <select id="reviewRating" name="reviewRating" class="routeViewerInput" [(ngModel)]="reviewRating">
+                <option *ngFor="let rating of ratings">{{ rating }}</option>
+              </select>
+              <label for="reviewDescription">Description:</label>
+              <textarea
+                type="text"
+                placeholder="Describe your experience"
+                [(ngModel)]="reviewDescription"
+                id="reviewDescription"
+                name="reviewDescription"
+                class="routeViewerInput"
+              ></textarea>
+              <app-button [label]="'Submit Review'" (buttonClick)="postReview()"></app-button>
+              <p *ngIf="isTitleEmpty" class="reviewInvalidWarning">Please enter a title!</p>
+              <p *ngIf="isRatingInvalid" class="reviewInvalidWarning">Please give a rating(1 to 5)!</p>
+              <p *ngIf="isDescriptionEmpty" class="reviewInvalidWarning">Please enter a description!</p>
+            </div>
+            <div *ngIf="hasUserPostedReview" class="userReviewForm">
+              <h3>Your Review</h3>
+              <p>Title: {{ userReviewTitle }}</p>
+              <p>Rating: {{ userReviewRating }}/5</p>
+              <p>Description: {{ userReviewDescription }}</p>
+              <p>Date: {{ userReviewDate }}</p>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
   <div class="mapContainer">
     <div class="mapBorder">

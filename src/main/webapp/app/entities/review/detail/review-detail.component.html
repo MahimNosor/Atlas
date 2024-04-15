@@ -34,6 +34,12 @@
         <dd>
           <span>{{ review.reviewDate | formatMediumDate }}</span>
         </dd>
+        <dt><span>Route</span></dt>
+        <dd>
+          <div *ngIf="review.route">
+            <a [routerLink]="['/route', review.route.id, 'view']">{{ review.route.id }}</a>
+          </div>
+        </dd>
         <dt><span>App User</span></dt>
         <dd>
           <div *ngIf="review.appUser">
