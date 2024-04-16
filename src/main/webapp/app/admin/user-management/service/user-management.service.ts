@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
@@ -31,7 +31,14 @@ export class UserManagementService {
   }
 
   delete(login: string): Observable<{}> {
-    return this.http.delete(`${this.resourceUrl}/${login}`);
+    // First, delete the app-user
+    return this.http.delete(`${this.applicationConfigService.getEndpointFor('api/app-users/by-login')}?login=${login}`).pipe(
+      // Use switchMap to wait for the first deletion to complete before initiating the second deletion
+      switchMap(() => {
+        // Once the app-user deletion is successful, delete the user
+        return this.http.delete(`${this.resourceUrl}/${login}`);
+      })
+    );
   }
 
   authorities(): Observable<string[]> {

@@ -138,4 +138,14 @@ public class AppUserService {
         log.debug("Request to delete AppUser : {}", id);
         appUserRepository.deleteById(id);
     }
+
+    /**
+     * Delete the appUser by login.
+     *
+     * @param login the login of the entity.
+     */
+    public void delete(String login) {
+        log.debug("Request to delete AppUser by login : {}", login);
+        appUserRepository.deleteByLogin(login);
+    }
 }

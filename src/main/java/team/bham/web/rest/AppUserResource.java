@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import team.bham.domain.AppUser;
 import team.bham.repository.AppUserRepository;
 import team.bham.service.AppUserService;
+import team.bham.service.UserService;
 import team.bham.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
@@ -214,5 +215,18 @@ public class AppUserResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    /**
+     * {@code DELETE  /app-users/by-login} : delete the "id" appUser.
+     *
+     * @param login the login of the appUser to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping("/app-users/by-login")
+    public ResponseEntity<Void> deleteAppUser(@RequestParam String login) {
+        log.debug("REST request to delete AppUser by login : {}", login);
+        appUserService.delete(login);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, login)).build();
     }
 }

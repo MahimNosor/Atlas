@@ -45,9 +45,20 @@ public interface AppUserRepository extends AppUserRepositoryWithBagRelationships
     @Query("select appUser from AppUser appUser left join fetch appUser.user where appUser.id =:id")
     Optional<AppUser> findOneWithToOneRelationships(@Param("id") Long id);
 
-    @Query("SELECT appUser from AppUser appUser left join fetch appUser.user where appUser.user.login like :login%")
+    @Query("select appUser from AppUser appUser left join fetch appUser.user where appUser.user.login like :login%")
     List<AppUser> findAllWithToOneRelationships(@Param("login") String login);
 
     @Query("select appUser from AppUser appUser where appUser.user.login = :login")
     Optional<AppUser> findOneByUser_Login(@Param("login") String login);
+
+    @Modifying
+    @Query(
+        "delete from AppUser appUser\n" +
+        "where appUser.id in (\n" +
+        "    select au.id from AppUser au\n" +
+        "    join User u on au.user.id = u.id\n" +
+        "    where u.login = :login\n" +
+        ")"
+    )
+    void deleteByLogin(@Param("login") String login);
 }
