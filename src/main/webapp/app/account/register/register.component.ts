@@ -97,8 +97,8 @@ export class RegisterComponent implements AfterViewInit {
 
   registerSuccess(): void {
     this.success = true;
-    const { login, password } = this.registerForm.getRawValue();
-
+    var { login, password } = this.registerForm.getRawValue();
+    login = login.toLowerCase();
     const credentials: Login = new Login(login, password, true);
     this.loginService.login(credentials).subscribe({
       next: () => {
