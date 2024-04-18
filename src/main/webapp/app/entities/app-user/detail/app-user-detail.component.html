@@ -1,12 +1,10 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="appUser">
-      <h2 data-cy="appUserDetailsHeading"><span>App User</span></h2>
-
+      <h2 class="user-details-heading" data-cy="appUserDetailsHeading"><span>App User</span></h2>
       <hr />
 
       <jhi-alert-error></jhi-alert-error>
-
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
@@ -33,7 +31,6 @@
             >{{ last ? '' : ', ' }}
           </span>
         </dd>
-
         <dt><span>Previous Routes</span></dt>
         <dd>
           <ul>
@@ -54,3 +51,26 @@
     </div>
   </div>
 </div>
+
+<style>
+  .row-md.jh-entity-details {
+    /* Maintain existing styles for the data list */
+    background-color: #444; /* Match route creation form background color */
+    color: #ddd; /* Match route creation form text color */
+    padding: 20px; /* Add padding for content */
+    border-radius: 4px; /* Add rounded corners */
+  }
+
+  .dt span {
+    font-weight: bold; /* Make definition terms bolder */
+  }
+
+  .user-details-heading {
+    color: #ffffff; /* Match route creation form text color */
+    font-size: 2rem; /* Adjust font size as needed */
+    margin-bottom: 20px; /* Add some margin for spacing */
+    background-color: #444; /* Set background color to match data list */
+    padding: 5px 10px; /* Add optional padding for the heading */
+    border-radius: 4px; /* Add rounded corners */
+  }
+</style>
