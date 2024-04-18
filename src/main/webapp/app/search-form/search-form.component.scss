@@ -1,83 +1,107 @@
 .form-container {
   display: flex;
+  flex-direction: column; // Ensures that the form is organized vertically
 }
+
 .row {
+  display: flex; // Makes .row a flex container
+  flex-wrap: wrap; // Allows items within the row to wrap onto the next line as needed
+  align-items: center; // Aligns items vertically in the middle of the container
   height: fit-content;
 }
 
 .form-group {
-  flex: 1;
-  margin-right: 10px; /* Adjust spacing between form elements */
-  margin-bottom: 10px;
+  flex: 1; // Allows each form group to expand and fill the available space
+  display: flex;
+  flex-direction: column; // Stack label and input vertically
+  justify-content: center; // Center the input vertically within the form group
+  margin-bottom: 10px; // Provides consistent bottom margin
 }
 
 .equal-columns {
   display: flex;
-}
+  flex: 1; // Ensures that .equal-columns takes full available space within its parent
 
-.equal-columns .col {
-  flex: 1;
-  margin-right: 10px; /* Adjust spacing between columns as needed */
-}
+  .col {
+    flex: 1; // Allows each column to grow equally
+  }
 
-.equal-columns .col:last-child {
-  margin-right: 0; /* Remove margin from the last column */
-  flex-grow: 0;
-}
-
-.btn-primary {
-  /* Additional styles for the search button */
-  // Set dimensions
-  width: 150px;
-  height: 40px;
-
-  // Typography
-  font-size: 16px;
-
-  // Spacing
-  padding: 10px 20px;
-
-  // Border
-  border: 2px solid #007bff; // Blue border
-  border-radius: 5px;
-
-  // Background and text color
-  background-color: #007bff; // Blue background
-  color: #ffffff; // White text
-
-  // Shadow effect
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-
-  // Text alignment
-  text-align: center;
-
-  // Hover effect
-  &:hover {
-    background-color: #0056b3; // Darker blue on hover
-    border-color: #0056b3; // Darker blue border on hover
-    color: #ffffff; // White text on hover
+  .col:last-child {
+    margin-right: 0; // Removes right margin from the last column
+    flex-grow: 0; // Prevents the last column from growing, might need to adjust based on specific needs
   }
 }
 
-.tags-input-container {
+.btn-primary {
+  flex: 0 1 18%; // Allows the button to shrink but limits its growth, adjust percentage as needed
+  height: auto; // Height is automatic to fit content
+  padding: 8px 16px; // Slightly reduced padding compared to other fields
+  font-size: 16px; // Readable font size
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #ffffff;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-align: center;
+
+  &:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    color: #ffffff;
+  }
+}
+
+.input-button-container {
   position: relative;
+  display: inline-block;
+}
+
+.tag-input {
+  padding-right: 30px; /* Adjust as needed */
+}
+
+.arrow-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 30px; /* Adjust as needed */
+  border: none;
+  background-color: transparent;
+}
+
+.arrow-button i {
+  margin-top: 50%;
+  transform: translateY(-50%);
+}
+
+.tag-input-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .selected-tags {
-  position: absolute;
-  top: calc(100% + 5px);
-  left: 0;
-  width: 100%;
+  position: relative; // Set the position to relative to contain the tag cloud
 }
 
-.tag {
-  display: inline-block;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  padding: 4px 8px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.tag-cloud-container {
+  position: absolute; // Position the tag cloud absolutely within the parent container
+  top: calc(100% + 10px); // Position the tag cloud below the selected tags with some space
+  left: 0; // Align the tag cloud to the left edge of the parent container
+  width: 100%; // Make the tag cloud span the entire width of the parent container
+  background-color: #ffffff; // Set background color for the tag cloud
+  border: 1px solid #ced4da; // Add a border around the tag cloud
+  border-radius: 5px; // Add border radius to soften the edges
+  padding: 10px; // Add padding to the tag cloud for spacing
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); // Add shadow to the tag cloud for depth
+  z-index: 999; // Ensure the tag cloud appears above other content
+  display: none; // Initially hide the tag cloud
+}
+
+.selected-tags:hover .tag-cloud-container {
+  display: block; // Show the tag cloud when hovering over the selected tags
 }
 
 .tag-close {

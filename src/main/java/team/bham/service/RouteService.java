@@ -1,8 +1,6 @@
 package team.bham.service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import org.slf4j.Logger;
@@ -142,24 +140,53 @@ public class RouteService {
         // Fetch routes based on the provided cityId
         List<Route> routes = routeRepository.findByCityId(cityId);
 
-        // Filter routes by price and distance criteria
-        routes = filterRoutesByPrice(routes, price);
-        routes = filterRoutesByDistance(routes, distance);
+        // Calculate maximum price and distance for normalization
+        double maxPrice = getMaxPrice(routes);
+        double maxDistance = getMaxDistance(routes);
+        int maxPossibleTags = tagIds.size();
 
-        // Filter routes by tagIds
-        //        routes = filterRoutesByTagIds(routes, tagIds);
+        // Set to store unique routes
+        Set<Route> uniqueRoutes = new HashSet<>(routes);
 
-        return routes;
+        // Calculate scores for each route
+        for (Route route : uniqueRoutes) {
+            double priceScore = (maxPrice - route.getCost()) / maxPrice;
+            double distanceScore = (maxDistance - route.getDistance()) / maxDistance;
+            //            double tagsScore = calculateTagsScore(route, tagIds);
+            double tagsScore = 0;
+
+            // Calculate overall score using weights
+            double overallScore = (2 * priceScore) + distanceScore + (tagsScore / 3);
+
+            // Assign the score to the route
+            route.setRating((int) overallScore);
+        }
+
+        // Sort routes by score in descending order
+        List<Route> rankedRoutes = new ArrayList<>(uniqueRoutes);
+        rankedRoutes.sort(Comparator.comparingDouble(Route::getRating).reversed());
+
+        return rankedRoutes;
     }
 
-    private List<Route> filterRoutesByPrice(List<Route> routes, Double price) {
-        return routes.stream().filter(route -> route.getCost().compareTo(price) <= 0).collect(Collectors.toList());
-    }
-
-    private List<Route> filterRoutesByDistance(List<Route> routes, Double distance) {
-        return routes.stream().filter(route -> route.getDistance().compareTo(distance) <= 0).collect(Collectors.toList());
-    }
-    //    private List<Route> filterRoutesByTagIds(List<Route> routes, List<Long> tagIds) {
-    //        return routes.stream().filter(route -> route.getTagIds().containsAll(tagIds)).collect(Collectors.toList());
+    // Helper method to calculate the tags score for a route
+    //    private double calculateTagsScore(Route route, List<Long> tagIds) {
+    //        int matchedTags = 0;
+    //        for (Long tagId : tagIds) {
+    //            if (route.getTagIds().contains(tagId)) {
+    //                matchedTags++;
+    //            }
+    //        }
+    //        return matchedTags;
     //    }
+
+    // Helper method to get the maximum price among routes
+    private double getMaxPrice(List<Route> routes) {
+        return routes.stream().mapToDouble(Route::getCost).max().orElse(0);
+    }
+
+    // Helper method to get the maximum distance among routes
+    private double getMaxDistance(List<Route> routes) {
+        return routes.stream().mapToDouble(Route::getDistance).max().orElse(0);
+    }
 }
