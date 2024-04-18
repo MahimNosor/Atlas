@@ -259,13 +259,13 @@
               </a>
             </li>
             <li *ngSwitchCase="true">
-              <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
+              <button class="dropdown-item" (click)="logout()" id="logout" data-cy="logout" tabindex="0">
                 <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
-                <span>Sign out</span>
-              </a>
+                Sign out
+              </button>
             </li>
             <li *ngSwitchCase="false">
-              <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
+              <a class="dropdown-item" routerLink="/login" (click)="collapseNavbar()" id="login" data-cy="login">
                 <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
                 <span>Sign in</span>
               </a>
