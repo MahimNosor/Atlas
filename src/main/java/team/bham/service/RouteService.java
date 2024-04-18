@@ -1,10 +1,6 @@
 package team.bham.service;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import org.slf4j.Logger;
@@ -154,38 +150,39 @@ public class RouteService {
 
         // Calculate scores for each route
         for (Route route : uniqueRoutes) {
-            double priceScore = (maxPrice - route.getPrice()) / maxPrice;
+            double priceScore = (maxPrice - route.getCost()) / maxPrice;
             double distanceScore = (maxDistance - route.getDistance()) / maxDistance;
-            double tagsScore = calculateTagsScore(route, tagIds);
+            //            double tagsScore = calculateTagsScore(route, tagIds);
+            double tagsScore = 0;
 
             // Calculate overall score using weights
             double overallScore = (2 * priceScore) + distanceScore + (tagsScore / 3);
 
             // Assign the score to the route
-            route.setScore(overallScore);
+            route.setRating((int) overallScore);
         }
 
         // Sort routes by score in descending order
         List<Route> rankedRoutes = new ArrayList<>(uniqueRoutes);
-        rankedRoutes.sort(Comparator.comparingDouble(Route::getScore).reversed());
+        rankedRoutes.sort(Comparator.comparingDouble(Route::getRating).reversed());
 
         return rankedRoutes;
     }
 
     // Helper method to calculate the tags score for a route
-    private double calculateTagsScore(Route route, List<Long> tagIds) {
-        int matchedTags = 0;
-        for (Long tagId : tagIds) {
-            if (route.getTagIds().contains(tagId)) {
-                matchedTags++;
-            }
-        }
-        return matchedTags;
-    }
+    //    private double calculateTagsScore(Route route, List<Long> tagIds) {
+    //        int matchedTags = 0;
+    //        for (Long tagId : tagIds) {
+    //            if (route.getTagIds().contains(tagId)) {
+    //                matchedTags++;
+    //            }
+    //        }
+    //        return matchedTags;
+    //    }
 
     // Helper method to get the maximum price among routes
     private double getMaxPrice(List<Route> routes) {
-        return routes.stream().mapToDouble(Route::getPrice).max().orElse(0);
+        return routes.stream().mapToDouble(Route::getCost).max().orElse(0);
     }
 
     // Helper method to get the maximum distance among routes
