@@ -251,7 +251,7 @@
               </a>
             </li>
             <li *ngSwitchCase="true">
-              <button class="dropdown-item" (click)="logout()" id="logout" data-cy="logout" tabindex="0">
+              <button class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
                 <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
                 Sign out
               </button>
@@ -277,11 +277,11 @@
           </ul>
         </li>
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link" (click)="toggleDarkMode()">
+          <button class="nav-link" (click)="toggleDarkMode()" title="Switch between light/dark mode">
             <span>
               <fa-icon [icon]="moonIcon"></fa-icon>
             </span>
-          </a>
+          </button>
         </li>
       </ul>
     </div>
