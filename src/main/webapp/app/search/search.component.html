@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="search.component.scss" />
   </head>
-  <body>
+  <!-- Bind the class dynamically based on the isDarkMode variable -->
+  <body [class.dark-mode]="isDarkMode">
     <div class="container">
       <form role="form" (ngSubmit)="$event.preventDefault(); onSearchSubmit()">
         <input
