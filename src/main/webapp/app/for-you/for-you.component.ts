@@ -23,6 +23,12 @@ export class ForYouComponent implements OnInit {
       this.routes = this.routes.slice(0, 3);
     });
   }
+  loadMore() {
+    // Simulate loading for 2 seconds before refreshing the page
+    setTimeout(() => {
+      window.location.reload(); // Refresh the page
+    }, 2000);
+  }
 
   // Function to shuffle an array
   private shuffleArray(array: any[]): any[] {
