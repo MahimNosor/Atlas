@@ -25,8 +25,8 @@
         <p class="field">Reviews posted</p>
         <div *ngFor="let item of arrayBufferData">
           <a class="field" routerLink="../app-user/{{ item.id }}/view">{{ item.user.login }}</a>
-          <a class="field" routerLink="../app-user/{{ item.id }}/view">{{ item.numRoutes }}</a>
-          <a class="field" routerLink="../app-user/{{ item.id }}/view">{{ item.numReviews }}</a>
+          <p class="field">{{ item.numRoutes }}</p>
+          <p class="field">{{ item.numReviews }}</p>
         </div>
       </div>
     </div>
