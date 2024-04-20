@@ -83,4 +83,25 @@ export class RouteService {
       })
     );
   }
+
+  findAll(req?: any): Observable<HttpResponse<IRoute[]>> {
+    const options = createRequestOption(req);
+    return this.http.get<IRoute[]>(this.resourceUrl, { params: options, observe: 'response' }).pipe(
+      map((response: HttpResponse<IRoute[]>) => {
+        const routes =
+          response.body?.map(route => ({
+            id: route.id,
+            title: route.title,
+            description: route.description,
+            rating: route.rating,
+            distance: route.distance,
+            cost: route.cost,
+            numReviews: route.numReviews,
+            city: route.city,
+          })) || [];
+        // Re-create the HttpResponse object with the mapped routes
+        return response.clone({ body: routes });
+      })
+    );
+  }
 }

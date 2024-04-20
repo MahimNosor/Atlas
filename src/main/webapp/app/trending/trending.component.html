@@ -1,14 +1,5 @@
 <h1>Trending</h1>
 
-<h3>Spots</h3>
-
-<div class="horizontal-scroll">
-  <div *ngFor="let spot of spots" class="scroll-item">
-    <img [src]="spot.imageUrl" alt="{{ spot.name }}" />
-    <h3>{{ spot.name }}</h3>
-  </div>
-</div>
-
 <h3>Cities</h3>
 
 <div class="horizontal-scroll">
@@ -16,4 +7,31 @@
     <img [src]="city.imageUrl" alt="{{ city.name }}" />
     <h3>{{ city.name }}</h3>
   </div>
+</div>
+
+<ul class="routes-list">
+  <li *ngFor="let route of routes" (click)="onRouteClicked(route)">
+    <div class="route-item">
+      <h3 class="route-title">{{ route.title }}</h3>
+      <div class="route-info">
+        <p>City: {{ route.city?.id }}</p>
+        <p>Rating: {{ route.rating }}</p>
+        <p>Distance: {{ route.distance }} km</p>
+        <p>Cost: ${{ route.cost }}</p>
+        <p>Number of Reviews: {{ route.numReviews }}</p>
+      </div>
+    </div>
+  </li>
+</ul>
+
+<!-- Details section, displayed when a route is clicked -->
+<div *ngIf="selectedRoute" class="route-details">
+  <h2>{{ selectedRoute.title }}</h2>
+  <p>Description: {{ selectedRoute.description }}</p>
+  <p>City: {{ selectedRoute.city }}</p>
+  <p>Rating: {{ selectedRoute.rating }}</p>
+  <p>Distance: {{ selectedRoute.distance }}</p>
+  <p>Cost: {{ selectedRoute.cost }}</p>
+  <p>Number of Reviews: {{ selectedRoute.numReviews }}</p>
+  <!-- Add more details as needed -->
 </div>

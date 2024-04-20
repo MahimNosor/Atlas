@@ -18,3 +18,52 @@
     }
   }
 }
+
+.route-title {
+  font-size: 24px; /* Adjust the size as needed */
+  font-weight: bold;
+  padding: 8px 20px; /* Adds space above and below the text */
+  font-family: 'Arial', sans-serif; /* Choose a font that fits your design */
+  color: white; /* A dark grey color; feel free to choose your own */
+  background: #333; /* dark grey color */
+  display: inline-block;
+  margin: 0;
+  border-radius: 5px;
+  transition: transform 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+.route-title:hover {
+  transform: scale(1.05); /* Slightly enlarge the title on hover */
+  cursor: pointer; /* Change the cursor to indicate interactivity */
+}
+
+/* Optionally, a text shadow for depth */
+.route-title {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.routes-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.route-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.route-info p {
+  margin: 5px 0;
+}
+
+.route-details {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 10px;
+  background-color: #fff;
+  /* Additional styles for the detailed view */
+}
