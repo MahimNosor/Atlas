@@ -32,11 +32,6 @@
         display: flex;
         align-items: center; /* Align items vertically */
       }
-      section img {
-        max-width: 200px; /* Limit image width */
-        margin-right: 30px; /* Add spacing between image and text */
-        border-radius: 5px;
-      }
       section p {
         flex: 1; /* Expand text to fill remaining space */
         font-size: 18px; /* Increase font size for route details */
@@ -45,14 +40,21 @@
   </head>
   <body>
     <header>
-      <h1>Welcome Back, User 2651</h1>
+      <h1 style="background-color: transparent; color: #eeeeee">Welcome Back, User 2651</h1>
       <p>Prepare for your next journey?</p>
     </header>
     <div class="container">
-      <section *ngFor="let route of routes">
-        <img [src]="'image' + route.id + '.jpg'" [alt]="'Route#' + route.id" />
-        <p>- {{ route.distance }} Km <br />- Tags: {{ route.tags?.join(', ') }}<br />- Rating: {{ route.rating }}</p>
-      </section>
+      <ng-container *ngFor="let route of routes; let i = index">
+        <section>
+          <!-- Existing code for displaying route information -->
+          <img [src]="'image' + route.id + '.jpg'" [alt]="'Route#' + route.id" />
+          <p>- {{ route.distance }} Km <br />- Tags: {{ route.tags?.join(', ') }}<br />- Rating: {{ route.rating }}</p>
+        </section>
+        <!-- Add a button after the third recommended element -->
+        <ng-container *ngIf="i === 2">
+          <button (click)="loadMore()">Load More</button>
+        </ng-container>
+      </ng-container>
     </div>
   </body>
 </html>
