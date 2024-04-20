@@ -10,9 +10,11 @@
 </div>
 
 <ul class="routes-list">
-  <li *ngFor="let route of routes" (click)="onRouteClicked(route)">
+  <li *ngFor="let route of routes">
     <div class="route-item">
-      <h3 class="route-title">{{ route.title }}</h3>
+      <h3 class="route-title">
+        <button id="route-title-button" type="button" (click)="onRouteClicked(route)">{{ route.title }}</button>
+      </h3>
       <div class="route-info">
         <p>City: {{ route.city?.id }}</p>
         <p>Rating: {{ route.rating }}</p>
