@@ -1,4 +1,4 @@
-<nav data-cy="navbar" class="navbar navbar-light navbar-expand-md bg-light">
+<nav data-cy="navbar" class="navbar navbar-light navbar-expand-md bg-black-30">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="navbar-title">Atlas</span>
@@ -19,14 +19,6 @@
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link" routerLink="/user-routes" (click)="collapseNavbar()">
-            <span>
-              <fa-icon icon="car"></fa-icon>
-              <span>User Routes</span>
-            </span>
-          </a>
-        </li>
-        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="/trending" (click)="collapseNavbar()">
             <span>
               <fa-icon icon="line-chart"></fa-icon>
@@ -34,7 +26,7 @@
             </span>
           </a>
         </li>
-        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngIf="account">
           <a class="nav-link" routerLink="/for-you" (click)="collapseNavbar()">
             <span>
               <fa-icon icon="heart"></fa-icon>
@@ -259,13 +251,13 @@
               </a>
             </li>
             <li *ngSwitchCase="true">
-              <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
+              <button class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
                 <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
-                <span>Sign out</span>
-              </a>
+                Sign out
+              </button>
             </li>
             <li *ngSwitchCase="false">
-              <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
+              <a class="dropdown-item" routerLink="/login" (click)="collapseNavbar()" id="login" data-cy="login">
                 <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
                 <span>Sign in</span>
               </a>
@@ -283,6 +275,13 @@
               </a>
             </li>
           </ul>
+        </li>
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <button class="nav-link" (click)="toggleDarkMode()" title="Switch between light/dark mode">
+            <span>
+              <fa-icon [icon]="moonIcon"></fa-icon>
+            </span>
+          </button>
         </li>
       </ul>
     </div>

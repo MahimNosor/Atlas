@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, OperatorFunction, switchMap } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, startWith, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
 import { NgbTypeaheadConfig, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
 import { CityService } from './services/city.service';
 import { RouteService } from './services/route.service';
 import { TagService } from './services/tag.service';
 import { Tag } from './services/tag.interface';
 import { CityInterface } from './services/city.interface';
-
-import { Route } from '@angular/router';
 
 import { RouteInterface } from './services/route.interface';
 
@@ -28,20 +25,21 @@ export class SearchFormComponent implements OnInit {
   selectedDistance!: number;
   selectedPrice!: number;
   selectedTags: Tag[] = [];
+  submitted = false;
 
   filteredCities!: Observable<string[]>;
 
   returnedRoutes!: RouteInterface[];
+  tagSearch: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
     private typeaheadConfig: NgbTypeaheadConfig,
-    private httpClient: HttpClient,
     private cityService: CityService,
     private routeService: RouteService,
     private tagService: TagService
   ) {
-    this.typeaheadConfig.showHint = false;
+    this.typeaheadConfig.showHint = true;
   }
 
   ngOnInit(): void {
@@ -119,57 +117,84 @@ export class SearchFormComponent implements OnInit {
   onSubmit() {
     if (this.searchForm.valid) {
       console.log("Form submitted! 📝🚀 Let's go on an adventure!");
-      const { city, price, distance, tags } = this.searchForm.value;
+      const { city, price, distance } = this.searchForm.value;
+
+      // Find the City object corresponding to the selected city name
+      this.selectedCity = this.cities.find(c => c.name === city)!;
+
       // Set the selected values
-      this.selectedCity = city;
       this.selectedPrice = parseFloat(price);
       this.selectedDistance = parseFloat(distance);
-      this.selectedTags = tags;
+      this.submitted = true;
+
       // Call the service method and subscribe to the returned observable
-      this.routeService.fetchRoutesByCity(this.selectedCity, this.selectedPrice, this.selectedDistance, this.selectedTags).subscribe(
-        (routes: RouteInterface[]) => {
-          // Handle the fetched routes
-          console.log('Routes:', routes);
-          // Assign the fetched routes to a component property to display them in the template
-          this.returnedRoutes = routes;
-        },
-        error => {
-          console.error('Error fetching routes:', error);
-          // Handle error appropriately (e.g., display error message)
-        }
-      );
+      this.fetchRoutes();
     } else {
       console.log('Form submission failed! 😢 Check your form for errors!');
     }
   }
 
-  onSelectedTagsChange(selectedTags: Tag[]): void {
-    this.selectedTags = selectedTags;
+  fetchRoutes(): void {
+    setTimeout(() => {
+      console.log('Selected tags:', this.selectedTags);
+      this.routeService.fetchRoutesByCity(this.selectedCity, this.selectedPrice, this.selectedDistance, this.selectedTags).subscribe({
+        next: (routes: RouteInterface[]) => {
+          // Handle the fetched routes
+          console.log('Routes:', routes);
+          // Assign the fetched routes to a component property to display them in the template
+          this.returnedRoutes = routes;
+        },
+        error: (error: any) => {
+          console.error('Error fetching routes:', error);
+          // Handle error appropriately (e.g., display error message)
+        },
+      });
+    }, 100); // Adjust the delay time as needed
   }
 
   removeTag(tag: Tag): void {
-    const index = this.selectedTags.findIndex(selectedTag => selectedTag.id === tag.id);
-    if (index !== -1) {
-      this.selectedTags.splice(index, 1);
-    }
+    // Find the index of the tag to be removed
+    this.selectedTags = this.selectedTags.filter(selectedTag => selectedTag.id !== tag.id);
+    this.updateTagsFormControlValue();
   }
 
   onSelectTag(event: NgbTypeaheadSelectItemEvent<Tag>): void {
-    // Specify the type of event.item
     const selectedTag: Tag = event.item;
     if (this.searchForm && this.searchForm.get('tags')) {
-      if (!this.selectedTags.find(tag => tag.id === selectedTag.id)) {
-        this.selectedTags.push(selectedTag);
-        this.searchForm.get('tags')?.setValue('');
-      }
+      this.toggleTagSelection(selectedTag);
+      this.tagSearch = '';
     }
   }
 
-  removeTagValue(tag: Tag): void {
-    const index = this.selectedTags.findIndex(selectedTag => selectedTag.id === tag.id);
-    if (index !== -1) {
-      this.selectedTags.splice(index, 1);
-      this.searchForm.get('tags')?.setValue('');
+  isSelectedTag(tag: Tag): boolean {
+    // Check if the tag exists in the list of selected tags
+    return this.selectedTags.some(selectedTag => selectedTag.id === tag.id);
+  }
+
+  toggleTagSelection(tag: Tag): void {
+    // Check if the tag is already selected
+    const isSelected = this.isSelectedTag(tag);
+
+    // If the tag is already selected, remove it from the list of selected tags
+    if (isSelected) {
+      this.selectedTags = this.selectedTags.filter(selectedTag => selectedTag.id !== tag.id);
+    } else {
+      // If the tag is not selected, add it to the list of selected tags
+      this.selectedTags.push(tag);
     }
+
+    // ** Update the tags form control with the updated selected tags as strings **
+    this.updateTagsFormControlValue();
+
+    // Log the updated selectedTags array for debugging
+    console.log('Updated selectedTags:', this.selectedTags);
+  }
+
+  private updateTagsFormControlValue(): void {
+    // Update the value of the tags form control with the updated selectedTags array
+    this.searchForm.get('tags')?.setValue(this.selectedTags.map(tag => tag.name));
+
+    // Log the updated value of the tags form control for debugging
+    console.log('Updated tags form control value:', this.searchForm.get('tags')?.value);
   }
 }

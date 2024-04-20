@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TagService } from 'app/entities/tag/service/tag.service';
-import { UserService } from 'app/entities/user/user.service';
 import { RouteService } from './route.service';
 
 @Component({
@@ -19,11 +17,22 @@ export class ForYouComponent implements OnInit {
 
   loadRoutes() {
     this.routeService.getRoutes().subscribe(routes => {
-      this.routes = routes;
+      // Shuffle the routes array
+      this.routes = this.shuffleArray(routes);
+      // Select only the first three routes
+      this.routes = this.routes.slice(0, 3);
     });
   }
-}
 
+  // Function to shuffle an array
+  private shuffleArray(array: any[]): any[] {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+}
 /*
 export class ForYouComponent {
   // Define routes array

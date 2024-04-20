@@ -31,6 +31,5 @@ public interface RouteRepository extends RouteRepositoryWithBagRelationships, Jp
 
     List<Route> findByAppUserId(Long userId);
 
-    @Query("SELECT r FROM Route r WHERE r.city.id = :cityId")
-    List<Route> findByCityId(@Param("cityId") Long cityId);
+    List<Route> findByCityId(Long cityId);
 }

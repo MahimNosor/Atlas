@@ -13,7 +13,12 @@ interface TokenPayload {
   providedIn: 'root',
 })
 export class AuthService {
+  isLoggedIn = false; // Track user's login status
   constructor(private http: HttpClient) {}
+
+  isAuthenticated(): boolean {
+    return this.isLoggedIn;
+  }
 
   getCurrentUserId(): string | null {
     let token = localStorage.getItem('jhi-authenticationToken') || sessionStorage.getItem('jhi-authenticationToken');
