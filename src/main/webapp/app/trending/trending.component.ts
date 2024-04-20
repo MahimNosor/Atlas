@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RouteService } from '../entities/route/service/route.service'; // Update the path as necessary
+import { IRoute } from '../entities/route/route.model';
 
 interface City {
   id: number;
@@ -20,7 +22,9 @@ interface Spot {
 export class TrendingComponent implements OnInit {
   cities: City[] = []; // Initialized as an empty array
   spots: Spot[] = [];
-  constructor() {}
+  routes: IRoute[] = []; // Declare the routes property
+  selectedRoute: IRoute | null = null;
+  constructor(private routeService: RouteService) {} // Inject RouteService
 
   ngOnInit(): void {
     this.cities = [
@@ -89,5 +93,29 @@ export class TrendingComponent implements OnInit {
         imageUrl: '../../content/images/camp-nou-3.jpg',
       },
     ];
+
+    this.routeService.findAll().subscribe({
+      next: response => {
+        // Assuming response.body is the array of routes
+        if (response.body) {
+          this.routes = response.body;
+          // Now sort the routes by rating in descending order
+          this.routes.sort((a, b) => {
+            // If some ratings could be null or undefined, provide a default value of 0
+            const ratingA = a.rating ?? 0;
+            const ratingB = b.rating ?? 0;
+            return ratingB - ratingA;
+          });
+
+          console.log('Sorted Routes:', this.routes); // Log the sorted array of routes
+        }
+      },
+      error: error => {
+        console.error('Error fetching routes:', error); // Log any errors
+      },
+    });
+  }
+  onRouteClicked(route: IRoute): void {
+    this.selectedRoute = route;
   }
 }

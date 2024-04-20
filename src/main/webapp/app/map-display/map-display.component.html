@@ -1,5 +1,3 @@
-<head> </head>
-
 <div class="divContainer">
   <div class="routeMenuContainer">
     <h2>Route Viewer</h2>
@@ -26,7 +24,7 @@
     <div class="reviewMenu">
       <form class="reviewForm">
         <div *ngIf="isRouteSelected">
-          <p *ngIf="!isLoggedIn" id="logInHint">Log in to post a Review!</p>
+          <p *ngIf="!isLoggedIn" id="logInHint">Log in to post a review!</p>
           <div *jhiHasAnyAuthority="'ROLE_USER'">
             <div *ngIf="!hasUserPostedReview" id="userReviewForm">
               <h3>Rate this route:</h3>

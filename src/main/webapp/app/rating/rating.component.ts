@@ -39,11 +39,11 @@ export class RatingComponent implements OnInit {
 
   private map: any;
   private appUserId: number | null = null;
-  routeTitle: string = '';
-  routeDescription: string = '';
-  selectedCity: string = '';
+  routeTitle = '';
+  routeDescription = '';
+  selectedCity = '';
   cities: ICity[] = [];
-  routeCost: string = '';
+  routeCost = '';
 
   constructor(
     private routeService: RouteService,
@@ -64,8 +64,8 @@ export class RatingComponent implements OnInit {
       next: response => {
         this.tagsSharedCollection = response.body ?? [];
       },
-      error: () => {
-        console.error('Failed to load tags');
+      error() {
+        alert('Failed to load tags');
       },
     });
   }
@@ -75,8 +75,8 @@ export class RatingComponent implements OnInit {
       next: response => {
         this.cities = response.body ?? [];
       },
-      error: () => {
-        console.error('Failed to load cities');
+      error() {
+        alert('Failed to load cities');
       },
     });
   }
@@ -102,10 +102,8 @@ export class RatingComponent implements OnInit {
 
     if (isChecked) {
       this.selectedTags.push(tag);
-      console.log(this.selectedTags);
     } else {
       this.selectedTags = this.selectedTags.filter(t => t.id !== tag.id);
-      console.log(this.selectedTags);
     }
   }
 
@@ -158,35 +156,28 @@ export class RatingComponent implements OnInit {
 
   testGetAppUserId(): void {
     const username = this.authService.getCurrentUserId(); // This gets the username
-    console.log(username);
     if (username) {
       this.authService.getAppUserIdByUsername(username).subscribe(
         appUserId => {
-          console.log(`AppUser ID for username '${username}':`, appUserId);
           this.appUserId = appUserId;
         },
         error => {
-          console.error('Failed to fetch AppUser ID:', error);
+          alert('Cannot find user');
         }
       );
-    } else {
-      console.log('No user is currently logged in.');
     }
   }
 
   submitRoute(): void {
-    console.log(this.selectedTags);
-    console.log(this.tagsSharedCollection);
     // Assuming this part stays the same - creating the route
 
     if (!this.appUserId) {
       alert('User must be logged in to create a route.');
-      console.log(this.appUserId);
       return;
     }
 
-    let numberDistance: number = +this.travelDistance;
-    let numberCost: number = +this.routeCost;
+    const numberDistance: number = +this.travelDistance;
+    const numberCost: number = +this.routeCost;
     const waypoints = this.routingControl.getWaypoints() as MyWaypoint[];
 
     // Check if distance has a value
@@ -221,7 +212,7 @@ export class RatingComponent implements OnInit {
       return;
     }
 
-    let cityId: number = +this.selectedCity;
+    const cityId: number = +this.selectedCity;
 
     const routeData = {
       id: null,
@@ -239,9 +230,7 @@ export class RatingComponent implements OnInit {
     // You can handle the route creation logic as before
     this.routeService.createRoute(routeData).subscribe({
       next: httpResponse => {
-        console.log('Route created', httpResponse.body);
         const routeId = httpResponse.body?.id; // Assuming response contains the ID of the newly created route
-        console.log(routeId);
 
         // Now, handle the creation of stops based on waypoints
         waypoints.forEach((waypoint, index) => {
@@ -260,24 +249,23 @@ export class RatingComponent implements OnInit {
             // Create the stop
             this.stopService.createStop(stopData).subscribe({
               next: response => {
-                console.log(`Stop ${index + 1} created`, response);
                 // Handle successful stop creation here
                 if (index === waypoints.length - 1) {
                   // This is the last stop being processed
-                  alert(`Route and stops have been successfully created. Route ID: ${routeId}`);
+                  alert('Route successfully created');
                 }
                 this.clearAllWaypoints();
               },
-              error: error => {
-                console.error(`There was an error creating the stop ${index + 1}:`, error);
+              error() {
+                alert('Cannot create stops for your route');
                 // Handle stop creation errors here
               },
             });
           }
         });
       },
-      error: error => {
-        console.error('There was an error creating the route:', error);
+      error() {
+        alert('Error from creating your route');
         // Handle route creation errors here
       },
     });

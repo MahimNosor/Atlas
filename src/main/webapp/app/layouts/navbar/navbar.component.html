@@ -1,4 +1,4 @@
-<nav data-cy="navbar" class="navbar navbar-light navbar-expand-md bg-light">
+<nav data-cy="navbar" class="navbar navbar-light navbar-expand-md bg-black-30">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="navbar-title">Atlas</span>
@@ -18,14 +18,6 @@
     </a>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link" routerLink="/user-routes" (click)="collapseNavbar()">
-            <span>
-              <fa-icon icon="car"></fa-icon>
-              <span>User Routes</span>
-            </span>
-          </a>
-        </li>
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="/trending" (click)="collapseNavbar()">
             <span>
@@ -259,7 +251,7 @@
               </a>
             </li>
             <li *ngSwitchCase="true">
-              <button class="dropdown-item" (click)="logout()" id="logout" data-cy="logout" tabindex="0">
+              <button class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
                 <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
                 Sign out
               </button>
@@ -283,6 +275,13 @@
               </a>
             </li>
           </ul>
+        </li>
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <button class="nav-link" (click)="toggleDarkMode()" title="Switch between light/dark mode">
+            <span>
+              <fa-icon [icon]="moonIcon"></fa-icon>
+            </span>
+          </button>
         </li>
       </ul>
     </div>
