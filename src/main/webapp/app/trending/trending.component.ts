@@ -41,8 +41,6 @@ export class TrendingComponent implements OnInit {
             const ratingB = b.rating ?? 0;
             return ratingB - ratingA;
           });
-
-          console.log('Sorted Routes:', this.routes); // Log the sorted array of routes
         }
       },
       error: error => {
@@ -71,7 +69,6 @@ export class TrendingComponent implements OnInit {
       } else if (city.id === 1003) {
         city.imageUrl = '../../content/images/paris.jpg';
       }
-      console.log(city.imageUrl);
       // Add other conditions for other city IDs
     });
   }

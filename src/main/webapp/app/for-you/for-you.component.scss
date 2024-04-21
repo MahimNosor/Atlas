@@ -1,0 +1,41 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8f8;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 24px; /* Increase header font size */
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+section {
+  background-color: #fff;
+  margin-bottom: 40px; /* Add wider space between sections */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center; /* Align items vertically */
+  justify-content: space-between; /* Add space between elements */
+}
+
+section p {
+  flex: 1; /* Expand text to fill remaining space */
+  font-size: 20px; /* Increase font size for route details */
+}
+
+.load-more {
+  text-align: center;
+  margin-top: 20px;
+}
