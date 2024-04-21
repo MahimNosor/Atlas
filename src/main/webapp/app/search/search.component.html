@@ -15,7 +15,9 @@
           name="searchQuery"
           (keyup)="onSearchSubmit()"
           placeholder="Search user"
+          tabindex="1"
         />
+        <!-- Include in tab order -->
       </form>
       <br />
       <br />
@@ -24,9 +26,12 @@
         <p class="field">Routes travelled</p>
         <p class="field">Reviews posted</p>
         <div *ngFor="let item of arrayBufferData">
-          <a class="field" routerLink="../app-user/{{ item.id }}/view">{{ item.user.login }}</a>
-          <p class="field">{{ item.numRoutes }}</p>
-          <p class="field">{{ item.numReviews }}</p>
+          <a class="field" routerLink="../app-user/{{ item.id }}/view" tabindex="2">{{ item.user.login }}</a>
+          <!-- Include in tab order and make clickable -->
+          <a class="field" routerLink="../app-user/{{ item.id }}/view" tabindex="3">{{ item.numRoutes }}</a>
+          <!-- Include in tab order and make clickable -->
+          <a class="field" routerLink="../app-user/{{ item.id }}/view" tabindex="4">{{ item.numReviews }}</a>
+          <!-- Include in tab order and make clickable -->
         </div>
       </div>
     </div>
