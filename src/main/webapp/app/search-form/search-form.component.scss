@@ -5,7 +5,7 @@
 
 .row {
   display: flex; // Makes .row a flex container
-  flex-wrap: wrap; // Allows items within the row to wrap onto the next line as needed
+  //flex-wrap: wrap; // Allows items within the row to wrap onto the next line as needed
   align-items: center; // Aligns items vertically in the middle of the container
   height: fit-content;
 }
@@ -43,6 +43,9 @@
   color: #ffffff;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   text-align: center;
+
+  min-width: fit-content;
+  max-width: 100%;
 
   &:hover {
     background-color: #0056b3;
@@ -107,4 +110,10 @@
 .tag-close {
   margin-left: 5px;
   cursor: pointer;
+}
+.col-md-3 {
+  margin-top: 5px;
+}
+.full-width-row {
+  width: 100%;
 }
