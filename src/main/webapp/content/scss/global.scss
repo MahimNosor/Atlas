@@ -184,3 +184,30 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
   }
 }
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+$extra-small-font-size: 50%; // 50% of the base font size
+$small-font-size: 75%; // 75% of the base font size
+$regular-font-size: 100%; // 100% (base font size)
+$large-font-size: 125%; // 125% of the base font size
+$extra-large-font-size: 150%; // 150% of the base font size
+
+// Apply font size styles
+body {
+  font-size: $regular-font-size; // Default font size (regular)
+}
+
+body.extra-small {
+  font-size: $extra-small-font-size; // Apply extra small font size
+}
+
+body.small {
+  font-size: $small-font-size; // Apply small font size
+}
+
+body.large {
+  font-size: $large-font-size; // Apply large font size
+}
+
+body.extra-large {
+  font-size: $extra-large-font-size; // Apply extra large font size
+}
