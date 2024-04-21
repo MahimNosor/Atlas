@@ -48,6 +48,7 @@
         <dt><span>App User</span></dt>
         <dd>
           <div *ngIf="route.appUser">
+            <!-- Display the login of the user associated with appUser if user is defined -->
             <a [routerLink]="['/app-user', route.appUser.id, 'view']">{{ route.appUser.id }}</a>
           </div>
         </dd>
