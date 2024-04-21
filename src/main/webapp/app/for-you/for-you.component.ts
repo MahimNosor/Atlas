@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouteService } from './route.service';
+import { TagService } from './tag.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'jhi-for-you',
@@ -8,10 +10,12 @@ import { RouteService } from './route.service';
 })
 export class ForYouComponent implements OnInit {
   routes: any[] = [];
+  showLoadMoreButton: boolean = false;
 
-  constructor(private routeService: RouteService) {}
+  constructor(private routeService: RouteService, private tagService: TagService) {}
 
   ngOnInit(): void {
+    console.log(this.showLoadMoreButton);
     this.loadRoutes();
   }
 
@@ -21,8 +25,27 @@ export class ForYouComponent implements OnInit {
       this.routes = this.shuffleArray(routes);
       // Select only the first three routes
       this.routes = this.routes.slice(0, 3);
+
+      // Check if there are more routes available
+      this.showLoadMoreButton = routes.length > 3;
+
+      // Call displayRoutes to process or display the routes
+      this.displayRoutes();
+      console.log(this.showLoadMoreButton);
     });
   }
+
+  displayRoutes(): void {
+    const observables = this.routes.map(route => this.tagService.getTagIdsForRoute(route.id));
+
+    forkJoin(observables).subscribe(tagsArray => {
+      this.routes.forEach((route, index) => {
+        const tags = tagsArray[index];
+        route.tags = tags.map(tag => tag.name);
+      });
+    });
+  }
+
   loadMore() {
     // Simulate loading for 2 seconds before refreshing the page
     setTimeout(() => {
@@ -39,6 +62,7 @@ export class ForYouComponent implements OnInit {
     return array;
   }
 }
+
 /*
 export class ForYouComponent {
   // Define routes array
