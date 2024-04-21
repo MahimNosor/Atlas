@@ -19,6 +19,7 @@ export class RouteService {
   }
 
    */
+
   fetchRoutesByCity(city: CityInterface, price: number, distance: number, tags: Tag[]): Observable<RouteInterface[]> {
     const url = `${this.baseUrl}/search`; // Assuming there's a search endpoint to filter routes
 
@@ -39,6 +40,12 @@ export class RouteService {
     if (tagIds.length > 0) {
       tagIds.forEach(tagId => (params = params.append('tagId', tagId.toString())));
     }
+
+    // Log the constructed parameters
+    console.log('Query Parameters:', params.toString());
+
+    // Log the entire URL with parameters
+    console.log('Request URL:', `${url}?${params.toString()}`);
 
     // Make the HTTP GET request with the constructed URL and query parameters
     return this.httpClient.get<RouteInterface[]>(url, { params });

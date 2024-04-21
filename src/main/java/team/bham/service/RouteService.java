@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team.bham.domain.AppUser;
 import team.bham.domain.Route;
+import team.bham.domain.Tag;
 import team.bham.repository.AppUserRepository;
 import team.bham.repository.RouteRepository;
 
@@ -145,40 +146,46 @@ public class RouteService {
         double maxDistance = getMaxDistance(routes);
         int maxPossibleTags = tagIds.size();
 
-        // Set to store unique routes
-        Set<Route> uniqueRoutes = new HashSet<>(routes);
+        // Create a map to store route scores
+        Map<Route, Double> routeScores = new HashMap<>();
 
         // Calculate scores for each route
-        for (Route route : uniqueRoutes) {
+        for (Route route : routes) {
             double priceScore = (maxPrice - route.getCost()) / maxPrice;
             double distanceScore = (maxDistance - route.getDistance()) / maxDistance;
-            //            double tagsScore = calculateTagsScore(route, tagIds);
-            double tagsScore = 0;
+            double tagsScore = calculateTagsScore(route, tagIds);
 
             // Calculate overall score using weights
             double overallScore = (2 * priceScore) + distanceScore + (tagsScore / 3);
 
-            // Assign the score to the route
-            route.setRating((int) overallScore);
+            // Store the score in the map
+            routeScores.put(route, overallScore);
         }
 
         // Sort routes by score in descending order
-        List<Route> rankedRoutes = new ArrayList<>(uniqueRoutes);
-        rankedRoutes.sort(Comparator.comparingDouble(Route::getRating).reversed());
+        List<Route> rankedRoutes = routeScores
+            .entrySet()
+            .stream()
+            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toList());
 
         return rankedRoutes;
     }
 
     // Helper method to calculate the tags score for a route
-    //    private double calculateTagsScore(Route route, List<Long> tagIds) {
-    //        int matchedTags = 0;
-    //        for (Long tagId : tagIds) {
-    //            if (route.getTagIds().contains(tagId)) {
-    //                matchedTags++;
-    //            }
-    //        }
-    //        return matchedTags;
-    //    }
+    private double calculateTagsScore(Route route, List<Long> tagIds) {
+        int matchedTags = 0;
+        Set<Long> routeTagIds = route.getTags().stream().map(Tag::getId).collect(Collectors.toSet());
+
+        for (Long tagId : tagIds) {
+            if (routeTagIds.contains(tagId)) {
+                matchedTags++;
+            }
+        }
+
+        return matchedTags;
+    }
 
     // Helper method to get the maximum price among routes
     private double getMaxPrice(List<Route> routes) {

@@ -11,6 +11,7 @@
         padding: 0;
         background-color: #f8f8f8;
       }
+
       header {
         background-color: #333;
         color: #fff;
@@ -18,11 +19,13 @@
         text-align: center;
         font-size: 24px; /* Increase header font size */
       }
+
       .container {
         max-width: 800px;
         margin: 20px auto;
         padding: 0 20px;
       }
+
       section {
         background-color: #fff;
         margin-bottom: 40px; /* Add wider space between sections */
@@ -31,28 +34,42 @@
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         display: flex;
         align-items: center; /* Align items vertically */
+        justify-content: space-between; /* Add space between elements */
       }
-      section img {
-        max-width: 200px; /* Limit image width */
-        margin-right: 30px; /* Add spacing between image and text */
-        border-radius: 5px;
-      }
+
       section p {
         flex: 1; /* Expand text to fill remaining space */
-        font-size: 18px; /* Increase font size for route details */
+        font-size: 20px; /* Increase font size for route details */
+      }
+
+      .load-more {
+        text-align: center;
+        margin-top: 20px;
       }
     </style>
   </head>
   <body>
     <header>
-      <h1>Welcome Back, User 2651</h1>
+      <<<<<<< HEAD
+      <h1>Welcome Back, User</h1>
+      =======
+      <h1 style="background-color: transparent; color: #eeeeee">Welcome Back, User 2651</h1>
+      >>>>>>> 0dd33e8fedbf65daa2b4382a430a19aa3bee8567
       <p>Prepare for your next journey?</p>
     </header>
+    <!-- Update the section in your for-you.component.html file -->
     <div class="container">
       <section *ngFor="let route of routes">
-        <img [src]="'image' + route.id + '.jpg'" [alt]="'Route#' + route.id" />
-        <p>- {{ route.distance }} Km <br />- Tags: {{ route.tags?.join(', ') }}<br />- Rating: {{ route.rating }}</p>
+        <p>
+          <strong>[Route#{{ route.id }}]</strong> <br />
+          - {{ route.distance }} Km <br />
+          - Rating: {{ route.rating }}
+        </p>
+        <a class="learn-more" [routerLink]="['/route', route.id, 'view']">Learn More</a>
       </section>
+      <div class="load-more" *ngIf="showLoadMoreButton">
+        <button (click)="loadMore()">Load Other Recommended Routes</button>
+      </div>
     </div>
   </body>
 </html>
