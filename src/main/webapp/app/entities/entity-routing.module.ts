@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Authority } from '../config/authority.constants';
 
 @NgModule({
   imports: [
@@ -16,22 +17,22 @@ import { RouterModule } from '@angular/router';
       },
       {
         path: 'tag',
-        data: { pageTitle: 'Tags' },
+        data: { pageTitle: 'Tags', authorities: [Authority.ADMIN] },
         loadChildren: () => import('./tag/tag.module').then(m => m.TagModule),
       },
       {
         path: 'city',
-        data: { pageTitle: 'Cities' },
+        data: { pageTitle: 'Cities', authorities: [Authority.ADMIN] },
         loadChildren: () => import('./city/city.module').then(m => m.CityModule),
       },
       {
         path: 'stop',
-        data: { pageTitle: 'Stops' },
+        data: { pageTitle: 'Stops', authorities: [Authority.ADMIN] },
         loadChildren: () => import('./stop/stop.module').then(m => m.StopModule),
       },
       {
         path: 'review',
-        data: { pageTitle: 'Reviews' },
+        data: { pageTitle: 'Reviews', authorities: [Authority.ADMIN] },
         loadChildren: () => import('./review/review.module').then(m => m.ReviewModule),
       },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */

@@ -1,105 +1,136 @@
 <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="form-container" role="search">
-  <div class="row align-items-center">
-    <!-- City Input -->
-    <div class="col-md">
-      <div class="form-group">
-        <label for="city" class="sr-only">City:</label>
-        <input
-          id="city"
-          type="text"
-          class="form-control"
-          formControlName="city"
-          [ngbTypeahead]="typeaheadSearch"
-          placeholder="Enter a city"
-          aria-label="City"
-          [attr.aria-invalid]="searchForm.controls['city'].invalid ? true : null"
-          [attr.aria-describedby]="searchForm.controls['city'].errors ? 'city-error' : null"
-        />
-        <!-- Error Message for City -->
-        <div *ngIf="searchForm.controls['city'].errors" id="city-error" class="error" style="display: none">City is required.</div>
-      </div>
-    </div>
-    <!-- Price Input -->
-    <div class="col-md">
-      <div class="form-group">
-        <label for="price" class="sr-only">Price(£):</label>
-        <input
-          type="text"
-          formControlName="price"
-          id="price"
-          class="form-control"
-          placeholder="Enter price in (£)"
-          aria-label="Price"
-          [attr.aria-invalid]="searchForm.controls['price'].invalid ? true : null"
-          [attr.aria-describedby]="searchForm.controls['price'].errors ? 'price-error' : null"
-        />
-        <!-- Error Message for Price -->
-        <div *ngIf="searchForm.controls['price'].errors" id="price-error" class="error" style="display: none">
-          Price must be a valid number.
+  <!-- Main Row for Inputs and Search Button -->
+  <div class="row full-width-row justify-content-end">
+    <!-- First Column -->
+    <div class="col-md-10">
+      <!-- First Row -->
+      <div class="row">
+        <!-- City Input -->
+        <div class="col-md-3 col-sm-6">
+          <!-- City Input Field -->
+          <div class="form-group">
+            <label for="city" class="sr-only">City:</label>
+            <input
+              id="city"
+              type="text"
+              class="form-control"
+              formControlName="city"
+              [ngbTypeahead]="typeaheadSearch"
+              placeholder="Enter a city"
+              aria-label="City"
+              [attr.aria-invalid]="searchForm.controls['city'].invalid ? true : null"
+              [attr.aria-describedby]="searchForm.controls['city'].errors ? 'city-error' : null"
+            />
+            <!-- Error Message for City -->
+            <div *ngIf="searchForm.controls['city'].errors" id="city-error" class="error" style="display: none">City is required.</div>
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- Distance Input -->
-    <div class="col-md">
-      <div class="form-group">
-        <label for="distance" class="sr-only">Distance(km):</label>
-        <input
-          type="text"
-          formControlName="distance"
-          id="distance"
-          class="form-control"
-          placeholder="Enter distance"
-          aria-label="Distance"
-          [attr.aria-invalid]="searchForm.controls['distance'].invalid ? true : null"
-          [attr.aria-describedby]="searchForm.controls['distance'].errors ? 'distance-error' : null"
-        />
-        <!-- Error Message for Distance -->
-        <div *ngIf="searchForm.controls['distance'].errors" id="distance-error" class="error" style="display: none">
-          Distance must be a valid number.
+        <!-- Price Input -->
+        <div class="col-sm-6 col-md-3">
+          <!-- Price Input Field -->
+          <div class="form-group">
+            <label for="price" class="sr-only">Price(£):</label>
+            <input
+              type="text"
+              formControlName="price"
+              id="price"
+              class="form-control"
+              placeholder="Enter price in (£)"
+              aria-label="Price"
+              [attr.aria-invalid]="searchForm.controls['price'].invalid ? true : null"
+              [attr.aria-describedby]="searchForm.controls['price'].errors ? 'price-error' : null"
+            />
+            <!-- Error Message for Price -->
+            <div *ngIf="searchForm.controls['price'].errors" id="price-error" class="error" style="display: none">
+              Price must be a valid number.
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- Tags Input -->
-    <div class="col-md form-group">
-      <div class="tag-input-container">
-        <div class="input-button-container" ngbDropdown>
-          <label for="tags" class="sr-only">Tags:</label>
-          <input
-            type="text"
-            id="tags"
-            class="form-control tag-input"
-            ngbDropdownToggle
-            placeholder="Type to search tags..."
-            [ngbTypeahead]="typeaheadTags"
-            (selectItem)="onSelectTag($event)"
-          />
-          <button type="button" class="btn btn-outline-primary arrow-button" ngbDropdownToggle>
-            <i class="fas fa-caret-down"></i>
-          </button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <!-- Dropdown Checkbox for Tags -->
-            <button class="dropdown-item" *ngFor="let tag of allTags" (click)="toggleTagSelection(tag); $event.preventDefault()">
-              <input type="checkbox" [checked]="isSelectedTag(tag)" (click)="toggleTagSelection(tag)" /> {{ tag.name }}
-            </button>
+        <!-- Distance Input -->
+        <div class="col-sm-6 col-md-3">
+          <!-- Distance Input Field -->
+          <div class="form-group">
+            <label for="distance" class="sr-only">Distance(km):</label>
+            <input
+              type="text"
+              formControlName="distance"
+              id="distance"
+              class="form-control"
+              placeholder="Enter distance"
+              aria-label="Distance"
+              [attr.aria-invalid]="searchForm.controls['distance'].invalid ? true : null"
+              [attr.aria-describedby]="searchForm.controls['distance'].errors ? 'distance-error' : null"
+            />
+            <!-- Error Message for Distance -->
+            <div *ngIf="searchForm.controls['distance'].errors" id="distance-error" class="error" style="display: none">
+              Distance must be a valid number.
+            </div>
+          </div>
+        </div>
+        <!-- Tags Input -->
+        <div class="col-sm-6 col-md-3">
+          <!-- Tags Input Field -->
+          <div class="form-group">
+            <div class="tag-input-container">
+              <div class="input-button-container" ngbDropdown>
+                <label for="tags" class="sr-only">Tags:</label>
+                <input
+                  type="text"
+                  id="tags"
+                  class="form-control tag-input"
+                  ngbDropdownToggle
+                  placeholder="Type to search tags..."
+                  [ngbTypeahead]="typeaheadTags"
+                  (selectItem)="onSelectTag($event)"
+                />
+                <button type="button" class="btn btn-outline-primary arrow-button" ngbDropdownToggle>
+                  <i class="fas fa-caret-down"></i>
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <!-- Dropdown Checkbox for Tags -->
+                  <button class="dropdown-item" *ngFor="let tag of allTags" (click)="toggleTagSelection(tag); $event.preventDefault()">
+                    <input type="checkbox" [checked]="isSelectedTag(tag)" (click)="toggleTagSelection(tag)" /> {{ tag.name }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Second Row -->
+        <div class="row mt-3">
+          <!-- Tag Cloud Field -->
+          <div class="col-md-12">
+            <!-- Tag Cloud Content -->
+            <div class="selected-tags mt-2">
+              <!-- Display Selected Tags -->
+              <span class="badge bg-primary" *ngFor="let tag of selectedTags"
+                >{{ tag.name }}
+                <!-- Remove Tag Button -->
+                <span class="tag-close" (click)="removeTag(tag); $event.stopPropagation()">×</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
-      <!-- Selected Tags -->
-      <div class="selected-tags mt-2">
-        <!-- Display Selected Tags -->
-        <span class="badge bg-primary" *ngFor="let tag of selectedTags">
-          {{ tag.name }}
-          <!-- Remove Tag Button -->
-          <span class="tag-close" (click)="removeTag(tag); $event.stopPropagation()">×</span>
-        </span>
-      </div>
     </div>
-    <!-- Search Button -->
-    <div class="col-md">
-      <div class="form-group">
-        <label for="search" class="sr-only">Search:</label>
-        <!-- Added label for search button -->
-        <button type="submit" id="search" class="btn btn-primary" aria-label="Perform search">Search</button>
+    <!-- Second Column -->
+    <div class="col-md-2">
+      <!-- First Row (Search Button) -->
+      <div class="row justify-content-end">
+        <div class="col-md-12">
+          <!-- Search Button -->
+          <div class="form-group">
+            <label for="search" class="sr-only">Search:</label>
+            <!-- Added label for search button -->
+            <button type="submit" id="search" class="btn btn-primary" aria-label="Perform search">Search</button>
+          </div>
+        </div>
+      </div>
+      <!-- Second Row (Empty) -->
+      <div class="row mt-3">
+        <div class="col-md">
+          <!-- Leave Empty -->
+        </div>
       </div>
     </div>
   </div>

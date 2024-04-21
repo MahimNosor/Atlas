@@ -67,12 +67,15 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
-            <span>
-              <fa-icon icon="th-list"></fa-icon>
-              <span>Entities</span>
-            </span>
-          </a>
+          <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
+              <span>
+                <fa-icon icon="th-list"></fa-icon>
+                <span>Entities</span>
+              </span>
+            </a>
+          </div>
+
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
             <li>
               <a
@@ -277,7 +280,12 @@
           </ul>
         </li>
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <button class="nav-link" (click)="toggleDarkMode()" title="Switch between light/dark mode">
+          <button
+            class="nav-link"
+            (click)="toggleDarkMode()"
+            title="Switch between light/dark mode"
+            style="background-color: transparent; color: #eee; border: 2px solid #eee; border-radius: 10%"
+          >
             <span>
               <fa-icon [icon]="moonIcon"></fa-icon>
             </span>

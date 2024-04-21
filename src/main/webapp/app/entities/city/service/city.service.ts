@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -49,6 +50,10 @@ export class CityService {
 
   compareCity(o1: Pick<ICity, 'id'> | null, o2: Pick<ICity, 'id'> | null): boolean {
     return o1 && o2 ? this.getCityIdentifier(o1) === this.getCityIdentifier(o2) : o1 === o2;
+  }
+
+  getCities(): Observable<ICity[]> {
+    return this.query().pipe(map((response: EntityArrayResponseType) => response.body ?? []));
   }
 
   addCityToCollectionIfMissing<Type extends Pick<ICity, 'id'>>(

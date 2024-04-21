@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import * as jwtDecode from 'jwt-decode';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { IAppUser } from 'app/entities/app-user/app-user.model'; // Adjust the path as needed
 
 interface TokenPayload {
   sub: string; // Assuming 'sub' contains the username. Adjust as needed based on your token's structure.
@@ -15,6 +14,10 @@ interface TokenPayload {
 export class AuthService {
   isLoggedIn = false; // Track user's login status
   constructor(private http: HttpClient) {}
+
+  getToken(): string | null {
+    return localStorage.getItem('jhi-authenticationToken') || sessionStorage.getItem('jhi-authenticationToken');
+  }
 
   isAuthenticated(): boolean {
     return this.isLoggedIn;
@@ -33,18 +36,5 @@ export class AuthService {
       console.error('Error decoding token:', error);
       return null;
     }
-  }
-  //   getToken(): string | null {//method by chi for fixing foryoupage
-  //      return localStorage.getItem('jhi-authenticationToken') || sessionStorage.getItem('jhi-authenticationToken');
-  //    }
-
-  getAppUserIdByUsername(username: string): Observable<number | null> {
-    return this.http.get<IAppUser>(`/api/app-users/by-username/${username}`).pipe(
-      map(appUser => (appUser.id ? appUser.id : null)), // Adjusted to handle possible null
-      catchError(error => {
-        console.error('Error fetching AppUser by username', error);
-        return of(null); // Correctly return Observable of null on error
-      })
-    );
   }
 }
