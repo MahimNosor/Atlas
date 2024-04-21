@@ -37,9 +37,9 @@ export class NavbarComponent implements OnInit {
     private darkModeService: DarkModeService, // Inject DarkModeService
     private fontSizeService: FontSizeService
   ) {
-    if (VERSION) {
-      this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
-    }
+    // if (VERSION) {
+    //   this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
+    // }
   }
 
   ngOnInit(): void {
