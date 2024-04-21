@@ -283,6 +283,41 @@
             </span>
           </button>
         </li>
+        <li class="nav-item dropdown pointer" ngbDropdown display="dynamic">
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="font-size-menu" data-cy="fontSizeMenu">
+            <span>
+              <fa-icon icon="text-height"></fa-icon>
+              <span>Font Size</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="font-size-menu">
+            <li>
+              <a class="dropdown-item" (click)="setFontSize('extra-small')" href="javascript:void(0);">
+                <span>Extra Small</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="setFontSize('small')" href="javascript:void(0);">
+                <span>Small</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="setFontSize('regular')" href="javascript:void(0);">
+                <span>Regular</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="setFontSize('large')" href="javascript:void(0);">
+                <span>Large</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="setFontSize('extra-large')" href="javascript:void(0);">
+                <span>Extra Large</span>
+              </a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>
