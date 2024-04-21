@@ -16,28 +16,29 @@ export class ForYouComponent implements OnInit {
   constructor(private routeService: RouteService, private tagService: TagService) {}
 
   ngOnInit(): void {
-    // Call the loadRoutes method after 1 second
-    setTimeout(() => {
-      this.loadRoutes();
-    }, 1000);
+    // Call the loadRoutes method when the component initializes
+    this.loadRoutes();
   }
 
   loadRoutes() {
-    this.routeService.getRoutes().subscribe(routes => {
-      // Shuffle the routes array
-      this.routes = this.shuffleArray(routes);
-      // Select only the first three routes
-      this.routes = this.routes.slice(0, 3);
+    // Simulate loading for 1 second
+    setTimeout(() => {
+      this.routeService.getRoutes().subscribe(routes => {
+        // Shuffle the routes array
+        this.routes = this.shuffleArray(routes);
+        // Select only the first three routes
+        this.routes = this.routes.slice(0, 3);
 
-      // Call displayRoutes to process or display the routes
-      this.displayRoutes();
-      console.log(this.showLoadMoreButton);
+        // Call displayRoutes to process or display the routes
+        this.displayRoutes();
+        console.log(this.showLoadMoreButton);
 
-      // Set showLoadMoreButton to true after loading completes
-      this.showLoadMoreButton = true;
-      // Set showLoadingMessage to false to hide the loading message
-      this.showLoadingMessage = false;
-    });
+        // Set showLoadMoreButton to true after loading completes
+        this.showLoadMoreButton = true;
+        // Set showLoadingMessage to false to hide the loading message
+        this.showLoadingMessage = false;
+      });
+    }, 1000); // Delay loading by 1 second
   }
 
   displayRoutes(): void {
@@ -52,10 +53,8 @@ export class ForYouComponent implements OnInit {
   }
 
   loadMore() {
-    // Simulate loading for 2 seconds before refreshing the page
-    setTimeout(() => {
-      window.location.reload(); // Refresh the page
-    }, 2000);
+    // Refresh the page immediately
+    window.location.reload();
   }
 
   // Function to shuffle an array
