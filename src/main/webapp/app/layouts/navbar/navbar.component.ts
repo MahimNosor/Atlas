@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
   isDarkMode: boolean = false;
   moonIcon = faMoon;
   a = faA;
-  fontSize: string = 'md';
+  fontSize: string = 'regular';
 
   constructor(
     private loginService: LoginService,
@@ -60,6 +60,7 @@ export class NavbarComponent implements OnInit {
     });
     this.fontSizeService.fontSize$.subscribe(size => {
       this.fontSize = size;
+      this.updateFontSize();
     });
   }
 
@@ -94,7 +95,12 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  updateFontSize(): void {
+    document.body.className = ''; // Reset all classes
+    document.body.classList.add(this.fontSize);
+  }
+
   setFontSize(size: string): void {
-    this.fontSizeService.setFontSize(size); // Update font size via service
+    this.fontSizeService.setFontSize(size);
   }
 }
