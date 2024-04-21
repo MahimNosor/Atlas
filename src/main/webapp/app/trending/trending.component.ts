@@ -1,18 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouteService } from '../entities/route/service/route.service'; // Update the path as necessary
 import { IRoute } from '../entities/route/route.model';
-
-interface City {
-  id: number;
-  name: string;
-  imageUrl: string;
-}
-
-interface Spot {
-  id: number;
-  name: string;
-  imageUrl: string;
-}
+import { CityService } from '../entities/city/service/city.service';
+import { ICity } from 'app/entities/city/city.model';
 
 @Component({
   selector: 'jhi-trending',
@@ -20,79 +10,24 @@ interface Spot {
   styleUrls: ['./trending.component.scss'],
 })
 export class TrendingComponent implements OnInit {
-  cities: City[] = []; // Initialized as an empty array
-  spots: Spot[] = [];
+  cities: ICity[] = [];
   routes: IRoute[] = []; // Declare the routes property
   selectedRoute: IRoute | null = null;
-  constructor(private routeService: RouteService) {} // Inject RouteService
+  filteredRoutes: IRoute[] = []; // To store routes for the selected city
+
+  constructor(private routeService: RouteService, private cityService: CityService) {} // Inject RouteService
 
   ngOnInit(): void {
-    this.cities = [
-      {
-        id: 1,
-        name: 'New York',
-        imageUrl: '../../content/images/new-york.jpg',
+    this.cityService.query().subscribe({
+      next: response => {
+        this.cities = response.body ?? [];
       },
-      {
-        id: 2,
-        name: 'Paris',
-        imageUrl: '../../content/images/paris.jpg',
+      error: error => {
+        console.error('Error fetching cities:', error);
       },
-      {
-        id: 3,
-        name: 'Paris',
-        imageUrl: '../../content/images/paris.jpg',
-      },
-      {
-        id: 4,
-        name: 'Paris',
-        imageUrl: '../../content/images/paris.jpg',
-      },
-      {
-        id: 5,
-        name: 'Paris',
-        imageUrl: '../../content/images/paris.jpg',
-      },
-      {
-        id: 6,
-        name: 'Paris',
-        imageUrl: '../../content/images/paris.jpg',
-      },
-      // Add more cities as needed
-    ];
+    });
 
-    this.spots = [
-      {
-        id: 1,
-        name: 'Statue of Liberty',
-        imageUrl: '../../content/images/liberty-statue.jpg',
-      },
-      {
-        id: 2,
-        name: 'Camp Nou',
-        imageUrl: '../../content/images/camp-nou-3.jpg',
-      },
-      {
-        id: 3,
-        name: 'Camp Nou',
-        imageUrl: '../../content/images/camp-nou-3.jpg',
-      },
-      {
-        id: 4,
-        name: 'Camp Nou',
-        imageUrl: '../../content/images/camp-nou-3.jpg',
-      },
-      {
-        id: 5,
-        name: 'Camp Nou',
-        imageUrl: '../../content/images/camp-nou-3.jpg',
-      },
-      {
-        id: 6,
-        name: 'Camp Nou',
-        imageUrl: '../../content/images/camp-nou-3.jpg',
-      },
-    ];
+    this.setCityImages();
 
     this.routeService.findAll().subscribe({
       next: response => {
@@ -115,7 +50,29 @@ export class TrendingComponent implements OnInit {
       },
     });
   }
+
+  onCitySelected(city: ICity): void {
+    // Assuming each route has a city property that includes the city ID
+    this.filteredRoutes = this.routes.filter(route => route.city?.id === city.id);
+  }
+
+  clearFilter(): void {
+    this.filteredRoutes = [...this.routes];
+  }
+
   onRouteClicked(route: IRoute): void {
     this.selectedRoute = route;
+  }
+
+  setCityImages(): void {
+    this.cities.forEach(city => {
+      if (city.id === 1001) {
+        city.imageUrl = '.../../content/images/new-york.jpg';
+      } else if (city.id === 1003) {
+        city.imageUrl = '../../content/images/paris.jpg';
+      }
+      console.log(city.imageUrl);
+      // Add other conditions for other city IDs
+    });
   }
 }
