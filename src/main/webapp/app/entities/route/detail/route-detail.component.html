@@ -1,7 +1,9 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="route">
-      <h2 data-cy="routeDetailsHeading"><span>Route</span></h2>
+      <h2 data-cy="routeDetailsHeading">
+        <span>{{ route.title }}</span>
+      </h2>
 
       <hr />
 
@@ -10,14 +12,6 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span>ID</span></dt>
-        <dd>
-          <span>{{ route.id }}</span>
-        </dd>
-        <dt><span>Title</span></dt>
-        <dd>
-          <span>{{ route.title }}</span>
-        </dd>
         <dt><span>Description</span></dt>
         <dd>
           <span>{{ route.description }}</span>
