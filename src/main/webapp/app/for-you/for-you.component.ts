@@ -11,12 +11,15 @@ import { forkJoin } from 'rxjs';
 export class ForYouComponent implements OnInit {
   routes: any[] = [];
   showLoadMoreButton: boolean = false;
+  showLoadingMessage: boolean = true; // Initially set to true
 
   constructor(private routeService: RouteService, private tagService: TagService) {}
 
   ngOnInit(): void {
-    console.log(this.showLoadMoreButton);
-    this.loadRoutes();
+    // Call the loadRoutes method after 1 second
+    setTimeout(() => {
+      this.loadRoutes();
+    }, 1000);
   }
 
   loadRoutes() {
@@ -26,12 +29,14 @@ export class ForYouComponent implements OnInit {
       // Select only the first three routes
       this.routes = this.routes.slice(0, 3);
 
-      // Check if there are more routes available
-      this.showLoadMoreButton = routes.length > 3;
-
       // Call displayRoutes to process or display the routes
       this.displayRoutes();
       console.log(this.showLoadMoreButton);
+
+      // Set showLoadMoreButton to true after loading completes
+      this.showLoadMoreButton = true;
+      // Set showLoadingMessage to false to hide the loading message
+      this.showLoadingMessage = false;
     });
   }
 

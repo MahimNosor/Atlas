@@ -13,15 +13,22 @@
     </header>
     <!-- Update the section in your for-you.component.html file -->
     <div class="container">
-      <section *ngFor="let route of routes">
-        <p>
-          <strong>[Route#{{ route.id }}]</strong> <br />
-          - {{ route.distance }} Km <br />
-          - Rating: {{ route.rating }}
-        </p>
-        <a class="learn-more" [routerLink]="['/route', route.id, 'view']">Learn More</a>
-      </section>
-      <div class="load-more" *ngIf="showLoadMoreButton">
+      <div *ngIf="showLoadingMessage">
+        <!-- Display loading message if showLoadingMessage is true -->
+        <p>Loading...</p>
+      </div>
+      <div *ngIf="!showLoadingMessage">
+        <!-- Display recommendation component if showLoadingMessage is false -->
+        <section *ngFor="let route of routes">
+          <p>
+            <strong>[Route#{{ route.id }}]</strong> <br />
+            - {{ route.distance }} Km <br />
+            - Rating: {{ route.rating }}
+          </p>
+          <a class="learn-more" [routerLink]="['/route', route.id, 'view']">Learn More</a>
+        </section>
+      </div>
+      <div class="load-more" *ngIf="showLoadMoreButton && !showLoadingMessage">
         <button (click)="loadMore()">Load Other Recommended Routes</button>
       </div>
     </div>
