@@ -196,18 +196,26 @@ body {
   font-size: $regular-font-size; // Default font size (regular)
 }
 
-body.extra-small {
+body.extra-small,
+h1.extra-small,
+h2.extra-small {
   font-size: $extra-small-font-size; // Apply extra small font size
 }
 
-body.small {
+body.small,
+h1.small,
+h2.small {
   font-size: $small-font-size; // Apply small font size
 }
 
-body.large {
+body.large,
+h1.large,
+h2.large {
   font-size: $large-font-size; // Apply large font size
 }
 
-body.extra-large {
+body.extra-large,
+h1.extra-large,
+h2.extra-large {
   font-size: $extra-large-font-size; // Apply extra large font size
 }
