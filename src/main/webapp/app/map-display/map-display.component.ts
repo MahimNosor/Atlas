@@ -13,6 +13,8 @@ import { IRoute } from '../entities/route/route.model';
 import { IStop } from '../entities/stop/stop.model';
 import { NewReview } from '../entities/review/review.model';
 
+import { ActivatedRoute, Router } from '@angular/router'; //Enables the component to view the current app-routing and respond to it, as well as route to another page
+
 @Component({
   selector: 'jhi-map-display',
   templateUrl: './map-display.component.html',
@@ -56,12 +58,38 @@ export class MapDisplayComponent implements OnInit {
 
   private map: any;
 
-  constructor(private mapDisplayService: MapDisplayService, private authService: AuthService) {}
+  constructor(
+    private mapDisplayService: MapDisplayService,
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getAllRoutes();
     this.initMap();
     this.getAppUserId();
+    this.setupRouteSubscription(); // Subscribe to route params after initialising the component
+  }
+  setupRouteSubscription(): void {
+    this.route.params.subscribe(params => {
+      // Access route ID parameter
+      const routeId = +params['routeId'];
+      if (routeId) {
+        // Call method to display route using the selectedRouteId
+        this.selectedRouteId = routeId;
+        this.displayRoute();
+      } else {
+        this.router
+          .navigate(['/mapDisplay'])
+          .then(() => {
+            console.log('Route ID parameter is missing');
+          })
+          .catch(error => {
+            console.error('Error navigating to mapDisplay:', error);
+          });
+      }
+    });
   }
 
   clearAll(): void {

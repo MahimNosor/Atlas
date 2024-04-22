@@ -21,7 +21,7 @@
           <!-- Updated routerLink to navigate to the route viewer page -->
           <div class="card shadow-sm">
             <div class="card-body">
-              <a [routerLink]="['/mapDisplay']" class="card-title">{{ route.title }}</a>
+              <a [routerLink]="['/mapDisplay', route.id]" class="card-title">{{ route.title }}</a>
               <p class="card-text">{{ route.description }}</p>
               <p class="card-text">Cost: {{ route.cost }}</p>
               <p class="card-text">Distance: {{ route.distance }}</p>

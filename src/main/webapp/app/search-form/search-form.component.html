@@ -47,8 +47,8 @@
               class="form-control"
               placeholder="Enter price in (£)"
               aria-label="Price"
-              [attr.aria-invalid]="searchForm.controls['price']?.invalid ? true : null"
-              [attr.aria-describedby]="searchForm.controls['price']?.errors ? 'price-error' : null"
+              [attr.aria-invalid]="searchForm.controls['price'].invalid ? true : null"
+              [attr.aria-describedby]="searchForm.controls['price'].errors ? 'price-error' : null"
             />
             <!-- Error Message Card for Price -->
             <div
@@ -74,8 +74,8 @@
               class="form-control"
               placeholder="Enter distance"
               aria-label="Distance"
-              [attr.aria-invalid]="searchForm.controls['distance']?.invalid ? true : null"
-              [attr.aria-describedby]="searchForm.controls['distance']?.errors ? 'distance-error' : null"
+              [attr.aria-invalid]="searchForm.controls['distance'].invalid ? true : null"
+              [attr.aria-describedby]="searchForm.controls['distance'].errors ? 'distance-error' : null"
             />
             <!-- Error Message Card for Distance -->
             <div
