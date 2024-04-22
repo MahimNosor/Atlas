@@ -3,8 +3,8 @@
 </head>
 
 <div class="divContainer">
-  <div class="routeMenuContainer">
-    <h2 style="background-color: transparent; color: #eee">Create your own route!</h2>
+  <div class="routeMenuContainer" [class.dark-mode]="isDarkMode">
+    <h2 style="background-color: transparent">Create your own route!</h2>
     <p *ngIf="routeFound">Total time: {{ travelTime }}h</p>
     <p *ngIf="routeFound">Total distance: {{ travelDistance }}km</p>
     <form>
@@ -45,7 +45,7 @@
       </div>
       <div class="form-group">
         <label for="tags">Select Tags:</label>
-        <div class="tags-container">
+        <div class="tags-container" [class.dark-mode]="isDarkMode">
           <div class="form-check" *ngFor="let tag of tagsSharedCollection; let i = index">
             <input
               class="form-check-input"

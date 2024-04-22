@@ -7,6 +7,8 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { RouteInterface } from '../search-form/services/route.interface';
 
+import { DarkModeService } from '../dark-mode/dark-mode.service';
+
 @Component({
   selector: 'jhi-home',
   templateUrl: './home.component.html',
@@ -17,7 +19,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private readonly destroy$ = new Subject<void>();
 
-  constructor(private accountService: AccountService, private router: Router) {}
+  isDarkMode: boolean = false;
+
+  constructor(private accountService: AccountService, private router: Router, private darkModeService: DarkModeService) {}
   submitted: boolean = false;
   returnedRoutes: RouteInterface[] = [];
 
@@ -34,6 +38,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => (this.account = account));
+
+    // Subscribe to dark mode state changes
+    this.darkModeService.darkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+    });
   }
 
   login(): void {

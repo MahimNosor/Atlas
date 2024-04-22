@@ -143,3 +143,13 @@
   font-size: 0.8rem; /* Adjust the font size as needed */
   padding: 0.5rem; /* Adjust the padding as needed */
 }
+
+.box:not(.dark-mode) {
+  background-color: #fff;
+  color: #212529;
+}
+
+.box.dark-mode {
+  background-color: #555;
+  color: #ddd;
+}

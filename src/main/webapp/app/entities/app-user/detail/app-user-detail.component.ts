@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouteService } from '../../route/service/route.service';
 import { IAppUser } from '../app-user.model';
+import { DarkModeService } from '../../../dark-mode/dark-mode.service';
 
 @Component({
   selector: 'jhi-app-user-detail',
@@ -10,8 +11,9 @@ import { IAppUser } from '../app-user.model';
 export class AppUserDetailComponent implements OnInit {
   appUser: IAppUser | null = null;
   routes: any[] = [];
+  isDarkMode: boolean = false;
 
-  constructor(protected activatedRoute: ActivatedRoute, private routeService: RouteService) {}
+  constructor(protected activatedRoute: ActivatedRoute, private routeService: RouteService, private darkModeService: DarkModeService) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ appUser }) => {
@@ -21,6 +23,10 @@ export class AppUserDetailComponent implements OnInit {
           this.routes = fetchedRoutes;
         });
       }
+    });
+
+    this.darkModeService.darkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
     });
   }
 

@@ -3,8 +3,19 @@
   height: 900px;
 }
 
-.routeMenuContainer {
-  background-color: #333;
+.routeMenuContainer:not(.dark-mode) {
+  background-color: #eee;
+  color: #333;
+  height: auto;
+  width: 30%;
+  display: inline;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-y: auto;
+}
+
+.routeMenuContainer.dark-mode {
+  background-color: #444;
   color: white;
   height: auto;
   width: 30%;
