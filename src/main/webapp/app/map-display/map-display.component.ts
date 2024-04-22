@@ -13,6 +13,8 @@ import { IRoute } from '../entities/route/route.model';
 import { IStop } from '../entities/stop/stop.model';
 import { NewReview } from '../entities/review/review.model';
 
+import { DarkModeService } from '../dark-mode/dark-mode.service';
+
 @Component({
   selector: 'jhi-map-display',
   templateUrl: './map-display.component.html',
@@ -56,12 +58,18 @@ export class MapDisplayComponent implements OnInit {
 
   private map: any;
 
-  constructor(private mapDisplayService: MapDisplayService, private authService: AuthService) {}
+  isDarkMode: boolean = false;
+
+  constructor(private mapDisplayService: MapDisplayService, private authService: AuthService, private darkModeService: DarkModeService) {}
 
   ngOnInit(): void {
     this.getAllRoutes();
     this.initMap();
     this.getAppUserId();
+
+    this.darkModeService.darkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+    });
   }
 
   clearAll(): void {

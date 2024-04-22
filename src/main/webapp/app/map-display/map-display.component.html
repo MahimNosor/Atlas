@@ -1,6 +1,6 @@
 <div class="divContainer">
-  <div class="routeMenuContainer">
-    <h2 style="background-color: transparent; color: #eee">Route Viewer</h2>
+  <div class="routeMenuContainer" [class.dark-mode]="isDarkMode">
+    <h2 style="background-color: transparent">Route Viewer</h2>
     <form class="routeSelectorForm">
       <div>
         <label for="routeIdSelector">Select route: </label>
@@ -14,7 +14,7 @@
       </div>
     </form>
     <div *ngIf="isRouteSelected">
-      <h3 style="background-color: transparent; color: #eee">Route Summary</h3>
+      <h3 style="background-color: transparent">Route Summary</h3>
       <p>Title: {{ routeTitle }}</p>
       <p>Description: {{ routeDescription }}</p>
       <p>Rating: {{ routeRating }}/5</p>
@@ -27,7 +27,7 @@
           <p *ngIf="!isLoggedIn" id="logInHint">Log in to post a review!</p>
           <div *jhiHasAnyAuthority="'ROLE_USER'">
             <div *ngIf="!hasUserPostedReview" id="userReviewForm">
-              <h3 style="background-color: transparent; color: #eee">Rate this route:</h3>
+              <h3 style="background-color: transparent">Rate this route:</h3>
               <label for="reviewTitle">Title:</label>
               <input
                 type="text"

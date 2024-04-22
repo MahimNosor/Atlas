@@ -10,6 +10,7 @@ import '../../../../../node_modules/leaflet-control-geocoder/dist/Control.Geocod
 import { CityService } from 'app/entities/city/service/city.service';
 import { TagService } from 'app/entities/tag/service/tag.service'; // Adjust the path as necessary
 import { ITag } from 'app/entities/tag/tag.model'; // Adjust the path as necessary
+import { DarkModeService } from '../dark-mode/dark-mode.service';
 
 // Inside your component class:
 
@@ -45,12 +46,15 @@ export class RatingComponent implements OnInit {
   cities: ICity[] = [];
   routeCost = '';
 
+  isDarkMode: boolean = false;
+
   constructor(
     private routeService: RouteService,
     private stopService: StopService,
     private authService: AuthService,
     private cityService: CityService,
-    private tagService: TagService
+    private tagService: TagService,
+    private darkModeService: DarkModeService
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +62,10 @@ export class RatingComponent implements OnInit {
     this.testGetAppUserId(); // Add this line to test the method
     this.loadCities();
     this.loadTags();
+
+    this.darkModeService.darkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+    });
   }
   loadTags(): void {
     this.tagService.query().subscribe({
