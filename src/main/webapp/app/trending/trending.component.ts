@@ -51,7 +51,9 @@ export class TrendingComponent implements OnInit {
 
   onCitySelected(city: ICity): void {
     // Assuming each route has a city property that includes the city ID
+    this.clearFilter();
     this.filteredRoutes = this.routes.filter(route => route.city?.id === city.id);
+    console.log(this.filteredRoutes);
   }
 
   clearFilter(): void {
