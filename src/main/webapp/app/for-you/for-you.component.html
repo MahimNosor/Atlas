@@ -22,7 +22,8 @@
           <p>
             <strong>[Route#{{ route.id }}]</strong> <br />
             - {{ route.distance }} Km <br />
-            - Rating: {{ route.rating }}
+            - Rating: {{ route.rating }} <br />
+            - Tag : {{ route.tag }}
           </p>
           <a class="learn-more" [routerLink]="['/route', route.id, 'view']">Learn More</a>
         </section>
