@@ -12,13 +12,9 @@
 
 <!-- Use ONLY filteredRoutes list for displaying routes -->
 <ul class="routes-list">
-  <li *ngFor="let route of filteredRoutes" (click)="onRouteClicked(route)"></li>
-
-  <li *ngFor="let route of routes">
+  <li *ngFor="let route of filteredRoutes" (click)="onRouteClicked(route)">
     <div class="route-item">
-      <h3 class="route-title">
-        <button class="select-button" type="button" (click)="onRouteClicked(route)">{{ route.title }}</button>
-      </h3>
+      <h3 class="route-title">{{ route.title }}</h3>
       <div class="route-info">
         <p>Rating: {{ route.rating }}</p>
         <p>Distance: {{ route.distance }} km</p>
@@ -32,11 +28,9 @@
 <h3>Ranked Routes:</h3>
 <p>Our best rated journeys!</p>
 <ul class="routes-list">
-  <li *ngFor="let route of routes">
+  <li *ngFor="let route of routes" (click)="onRouteClicked(route)">
     <div class="route-item">
-      <h3 class="route-title">
-        <button class="select-button" type="button" (click)="onRouteClicked(route)">{{ route.title }}</button>
-      </h3>
+      <h3 class="route-title">{{ route.title }}</h3>
       <div class="route-info">
         <p>Rating: {{ route.rating }}</p>
         <p>Distance: {{ route.distance }} km</p>
