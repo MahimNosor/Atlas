@@ -1,22 +1,25 @@
 <h1>Trending</h1>
 
-<h3>Cities</h3>
-
+<h3>Featured Cities!</h3>
+<p>Pick a city, and click to see its popular routes</p>
 <div class="horizontal-scroll">
   <div *ngFor="let city of cities" class="scroll-item">
-    <img [src]="city.imageUrl" alt="{{ city.name }}" />
-    <h3>{{ city.name }}</h3>
+    <p class="city-name">
+      <button class="select-button" type="button" (click)="onCitySelected(city)">{{ city.name }}</button>
+    </p>
   </div>
 </div>
 
+<!-- Use ONLY filteredRoutes list for displaying routes -->
 <ul class="routes-list">
+  <li *ngFor="let route of filteredRoutes" (click)="onRouteClicked(route)"></li>
+
   <li *ngFor="let route of routes">
     <div class="route-item">
       <h3 class="route-title">
-        <button id="route-title-button" type="button" (click)="onRouteClicked(route)">{{ route.title }}</button>
+        <button class="select-button" type="button" (click)="onRouteClicked(route)">{{ route.title }}</button>
       </h3>
       <div class="route-info">
-        <p>City: {{ route.city?.id }}</p>
         <p>Rating: {{ route.rating }}</p>
         <p>Distance: {{ route.distance }} km</p>
         <p>Cost: ${{ route.cost }}</p>
@@ -26,14 +29,20 @@
   </li>
 </ul>
 
-<!-- Details section, displayed when a route is clicked -->
-<div *ngIf="selectedRoute" class="route-details">
-  <h2>{{ selectedRoute.title }}</h2>
-  <p>Description: {{ selectedRoute.description }}</p>
-  <p>City: {{ selectedRoute.city }}</p>
-  <p>Rating: {{ selectedRoute.rating }}</p>
-  <p>Distance: {{ selectedRoute.distance }}</p>
-  <p>Cost: {{ selectedRoute.cost }}</p>
-  <p>Number of Reviews: {{ selectedRoute.numReviews }}</p>
-  <!-- Add more details as needed -->
-</div>
+<h3>Ranked Routes:</h3>
+<p>Our best rated journeys!</p>
+<ul class="routes-list">
+  <li *ngFor="let route of routes">
+    <div class="route-item">
+      <h3 class="route-title">
+        <button class="select-button" type="button" (click)="onRouteClicked(route)">{{ route.title }}</button>
+      </h3>
+      <div class="route-info">
+        <p>Rating: {{ route.rating }}</p>
+        <p>Distance: {{ route.distance }} km</p>
+        <p>Cost: ${{ route.cost }}</p>
+        <p>Number of Reviews: {{ route.numReviews }}</p>
+      </div>
+    </div>
+  </li>
+</ul>

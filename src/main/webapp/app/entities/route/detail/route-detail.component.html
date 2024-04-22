@@ -1,7 +1,9 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="route">
-      <h2 data-cy="routeDetailsHeading"><span>Route</span></h2>
+      <h2 data-cy="routeDetailsHeading">
+        <span>{{ route.title }}</span>
+      </h2>
 
       <hr />
 
@@ -10,14 +12,6 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span>ID</span></dt>
-        <dd>
-          <span>{{ route.id }}</span>
-        </dd>
-        <dt><span>Title</span></dt>
-        <dd>
-          <span>{{ route.title }}</span>
-        </dd>
         <dt><span>Description</span></dt>
         <dd>
           <span>{{ route.description }}</span>
@@ -51,19 +45,13 @@
             <a [routerLink]="['/city', route.city.id, 'view']">{{ route.city.id }}</a>
           </div>
         </dd>
-        <dt><span>App User</span></dt>
-        <dd>
-          <div *ngIf="route.appUser">
-            <a [routerLink]="['/app-user', route.appUser.id, 'view']">{{ route.appUser.id }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/route', route.id, 'edit']" class="btn btn-primary">
+      <button type="button" [routerLink]="['/route', route.id, 'edit']" class="btn btn-primary" *jhiHasAnyAuthority="'ROLE_ADMIN'">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
       </button>
     </div>
@@ -72,19 +60,18 @@
 
 <style>
   .row-md.jh-entity-details {
-    /* Maintain existing styles for the data list */
-    background-color: #444; /* Adjust background color for data list (optional) */
-    color: #ddd; /* Match route creation form text color */
-    padding: 20px; /* Add padding for content */
-    border-radius: 4px; /* Add rounded corners */
+    background-color: #444;
+    color: #ddd;
+    padding: 20px;
+    border-radius: 4px;
   }
 
   h2[data-cy='routeDetailsHeading'] {
-    color: #ffffff; /* Match route creation form text color */
-    font-size: 2rem; /* Adjust font size as needed */
-    margin-bottom: 20px; /* Add some margin for spacing */
-    background-color: #444; /* Set background color to match data list */
-    padding: 5px 10px; /* Add optional padding for the heading */
+    color: #ffffff;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    background-color: #444;
+    padding: 5px 10px;
     border-radius: 4px;
   }
 </style>

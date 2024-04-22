@@ -1,28 +1,22 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="appUser">
-      <h2 class="user-details-heading" data-cy="appUserDetailsHeading"><span>App User</span></h2>
+      <h2 class="user-details-heading" data-cy="appUserDetailsHeading">
+        <span>{{ appUser.user?.login }}</span>
+      </h2>
       <hr />
 
       <jhi-alert-error></jhi-alert-error>
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span>ID</span></dt>
-        <dd>
-          <span>{{ appUser.id }}</span>
-        </dd>
-        <dt><span>Num Routes</span></dt>
+        <dt><span>Num routes</span></dt>
         <dd>
           <span>{{ appUser.numRoutes }}</span>
         </dd>
         <dt><span>Num Reviews</span></dt>
         <dd>
           <span>{{ appUser.numReviews }}</span>
-        </dd>
-        <dt><span>User</span></dt>
-        <dd>
-          <span>{{ appUser.user?.login }}</span>
         </dd>
         <dt><span>Tag</span></dt>
         <dd>
@@ -45,7 +39,7 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/app-user', appUser.id, 'edit']" class="btn btn-primary">
+      <button type="button" [routerLink]="['/app-user', appUser.id, 'edit']" class="btn btn-primary" *jhiHasAnyAuthority="'ROLE_ADMIN'">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
       </button>
     </div>
@@ -54,23 +48,22 @@
 
 <style>
   .row-md.jh-entity-details {
-    /* Maintain existing styles for the data list */
-    background-color: #444; /* Match route creation form background color */
-    color: #ddd; /* Match route creation form text color */
-    padding: 20px; /* Add padding for content */
-    border-radius: 4px; /* Add rounded corners */
+    background-color: #444;
+    color: #ddd;
+    padding: 20px;
+    border-radius: 4px;
   }
 
   .dt span {
-    font-weight: bold; /* Make definition terms bolder */
+    font-weight: bold;
   }
 
   .user-details-heading {
-    color: #ffffff; /* Match route creation form text color */
-    font-size: 2rem; /* Adjust font size as needed */
-    margin-bottom: 20px; /* Add some margin for spacing */
-    background-color: #444; /* Set background color to match data list */
-    padding: 5px 10px; /* Add optional padding for the heading */
-    border-radius: 4px; /* Add rounded corners */
+    color: #ffffff;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    background-color: #444;
+    padding: 5px 10px;
+    border-radius: 4px;
   }
 </style>

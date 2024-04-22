@@ -6,11 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RouteService {
-  private apiUrl = 'http://localhost:8080/api/routes';
+  private baseUrl = 'api'; // Adjust this URL based on your backend API endpoint
 
   constructor(private http: HttpClient) {}
 
   getRoutes(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(`${this.baseUrl}/routes`);
+  }
+
+  getTagsForRoute(routeId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/routes/${routeId}/tags`);
   }
 }

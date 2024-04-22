@@ -4,57 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>For You Page</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f8f8f8;
-      }
-      header {
-        background-color: #333;
-        color: #fff;
-        padding: 10px 0;
-        text-align: center;
-        font-size: 24px; /* Increase header font size */
-      }
-      .container {
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 0 20px;
-      }
-      section {
-        background-color: #fff;
-        margin-bottom: 40px; /* Add wider space between sections */
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        display: flex;
-        align-items: center; /* Align items vertically */
-      }
-      section p {
-        flex: 1; /* Expand text to fill remaining space */
-        font-size: 18px; /* Increase font size for route details */
-      }
-    </style>
   </head>
   <body>
     <header>
+      <h1>Welcome Back, User</h1>
       <h1 style="background-color: transparent; color: #eeeeee">Welcome Back, User 2651</h1>
       <p>Prepare for your next journey?</p>
     </header>
+    <!-- Update the section in your for-you.component.html file -->
     <div class="container">
-      <ng-container *ngFor="let route of routes; let i = index">
-        <section>
-          <!-- Existing code for displaying route information -->
-          <img [src]="'image' + route.id + '.jpg'" [alt]="'Route#' + route.id" />
-          <p>- {{ route.distance }} Km <br />- Tags: {{ route.tags?.join(', ') }}<br />- Rating: {{ route.rating }}</p>
+      <div *ngIf="showLoadingMessage">
+        <!-- Display loading message if showLoadingMessage is true -->
+        <p>Loading...</p>
+      </div>
+      <div *ngIf="!showLoadingMessage">
+        <!-- Display recommendation component if showLoadingMessage is false -->
+        <section *ngFor="let route of routes">
+          <p>
+            <strong>[Route#{{ route.id }}]</strong> <br />
+            - {{ route.distance }} Km <br />
+            - Rating: {{ route.rating }}
+          </p>
+          <a class="learn-more" [routerLink]="['/route', route.id, 'view']">Learn More</a>
         </section>
-        <!-- Add a button after the third recommended element -->
-        <ng-container *ngIf="i === 2">
-          <button (click)="loadMore()">Load More</button>
-        </ng-container>
-      </ng-container>
+      </div>
+      <div class="load-more" *ngIf="showLoadMoreButton && !showLoadingMessage">
+        <button (click)="loadMore()">Load Other Recommended Routes</button>
+      </div>
     </div>
   </body>
 </html>

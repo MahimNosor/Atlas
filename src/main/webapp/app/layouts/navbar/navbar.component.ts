@@ -9,7 +9,8 @@ import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import { DarkModeService } from 'app/dark-mode/dark-mode.service'; // Update with correct path
-import { faMoon } from '@fortawesome/free-solid-svg-icons';
+import { faMoon, faA } from '@fortawesome/free-solid-svg-icons';
+import { FontSizeService } from '../../font-size/font-size.service';
 
 @Component({
   selector: 'jhi-navbar',
@@ -25,17 +26,20 @@ export class NavbarComponent implements OnInit {
   entitiesNavbarItems: any[] = [];
   isDarkMode: boolean = false;
   moonIcon = faMoon;
+  a = faA;
+  fontSize: string = 'regular';
 
   constructor(
     private loginService: LoginService,
     private accountService: AccountService,
     private profileService: ProfileService,
     private router: Router,
-    private darkModeService: DarkModeService // Inject DarkModeService
+    private darkModeService: DarkModeService, // Inject DarkModeService
+    private fontSizeService: FontSizeService
   ) {
-    if (VERSION) {
-      this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
-    }
+    // if (VERSION) {
+    //   this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
+    // }
   }
 
   ngOnInit(): void {
@@ -53,6 +57,10 @@ export class NavbarComponent implements OnInit {
     this.darkModeService.darkMode$.subscribe(isDarkMode => {
       this.isDarkMode = isDarkMode;
       this.updateTheme();
+    });
+    this.fontSizeService.fontSize$.subscribe(size => {
+      this.fontSize = size;
+      this.updateFontSize();
     });
   }
 
@@ -85,5 +93,14 @@ export class NavbarComponent implements OnInit {
     } else {
       document.body.classList.remove('dark-mode');
     }
+  }
+
+  updateFontSize(): void {
+    document.body.className = ''; // Reset all classes
+    document.body.classList.add(this.fontSize);
+  }
+
+  setFontSize(size: string): void {
+    this.fontSizeService.setFontSize(size);
   }
 }
