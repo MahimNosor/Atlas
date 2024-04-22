@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouteService } from './route.service';
 import { TagService } from './tag.service';
 import { forkJoin } from 'rxjs';
+import { DarkModeService } from '../dark-mode/dark-mode.service';
 
 @Component({
   selector: 'jhi-for-you',
@@ -12,12 +13,17 @@ export class ForYouComponent implements OnInit {
   routes: any[] = [];
   showLoadMoreButton: boolean = false;
   showLoadingMessage: boolean = true; // Initially set to true
+  isDarkMode: boolean = false;
 
-  constructor(private routeService: RouteService, private tagService: TagService) {}
+  constructor(private routeService: RouteService, private tagService: TagService, private darkModeService: DarkModeService) {}
 
   ngOnInit(): void {
     // Call the loadRoutes method when the component initializes
     this.loadRoutes();
+    // Subscribe to dark mode state changes
+    this.darkModeService.darkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+    });
   }
 
   loadRoutes() {

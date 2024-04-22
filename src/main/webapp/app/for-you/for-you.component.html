@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>For You Page</title>
   </head>
-  <body>
-    <header>
-      <h1>Welcome Back, User</h1>
-      <h1 style="background-color: transparent; color: #eeeeee">Welcome Back, User 2651</h1>
+  <body [class.dark-mode]="isDarkMode">
+    <header [class.dark-mode]="isDarkMode">
+      <h1 style="background-color: transparent">Welcome Back, User</h1>
       <p>Prepare for your next journey?</p>
     </header>
     <!-- Update the section in your for-you.component.html file -->
@@ -19,7 +18,7 @@
       </div>
       <div *ngIf="!showLoadingMessage">
         <!-- Display recommendation component if showLoadingMessage is false -->
-        <section *ngFor="let route of routes">
+        <section *ngFor="let route of routes" [class.dark-mode]="isDarkMode">
           <p>
             <strong>[Route#{{ route.id }}]</strong> <br />
             - {{ route.distance }} Km <br />
