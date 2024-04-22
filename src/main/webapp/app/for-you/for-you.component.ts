@@ -2,6 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { RouteService } from './route.service';
 import { TagService } from './tag.service';
 import { forkJoin } from 'rxjs';
+import { DarkModeService } from '../dark-mode/dark-mode.service';
+
+interface Route {
+  id: number;
+  title: string;
+  description: string;
+  rating: number;
+  distance: number;
+  cost: number;
+  numReviews: number;
+  stops: any[]; // adjust types as necessary
+  reviews: any[]; // adjust types as necessary
+  tags: { id: number; name: string }[]; // adjust types as necessary
+  // add more properties if needed
+}
 
 @Component({
   selector: 'jhi-for-you',
@@ -12,12 +27,17 @@ export class ForYouComponent implements OnInit {
   routes: any[] = [];
   showLoadMoreButton: boolean = false;
   showLoadingMessage: boolean = true; // Initially set to true
+  isDarkMode: boolean = false;
 
-  constructor(private routeService: RouteService, private tagService: TagService) {}
+  constructor(private routeService: RouteService, private tagService: TagService, private darkModeService: DarkModeService) {}
 
   ngOnInit(): void {
     // Call the loadRoutes method when the component initializes
     this.loadRoutes();
+    // Subscribe to dark mode state changes
+    this.darkModeService.darkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+    });
   }
 
   loadRoutes() {
@@ -29,6 +49,17 @@ export class ForYouComponent implements OnInit {
         // Select only the first three routes
         this.routes = this.routes.slice(0, 3);
 
+        for (let route of this.routes) {
+          this.routeService.getRoute(route.id).subscribe((_route: Route) => {
+            console.log(_route);
+            let tags = '';
+            for (let tag of _route.tags) {
+              tags += tag.name + ', '; // Assuming tag has a 'name' property
+            }
+            route.tag = tags.slice(0, -2);
+          });
+        }
+
         // Call displayRoutes to process or display the routes
         this.displayRoutes();
         console.log(this.showLoadMoreButton);
@@ -38,7 +69,7 @@ export class ForYouComponent implements OnInit {
         // Set showLoadingMessage to false to hide the loading message
         this.showLoadingMessage = false;
       });
-    }, 1000); // Delay loading by 1 second
+    }, 100); // Delay loading by 1 second
   }
 
   displayRoutes(): void {

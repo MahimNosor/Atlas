@@ -1,9 +1,8 @@
-// search.component.ts
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from './search.service';
 import { forkJoin, Observable, of } from 'rxjs';
 import { RouteService } from '../entities/route/service/route.service';
-import { DarkModeService } from '../dark-mode/dark-mode.service'; // Update with correct path
+import { DarkModeService } from '../dark-mode/dark-mode.service';
 
 @Component({
   selector: 'jhi-search',

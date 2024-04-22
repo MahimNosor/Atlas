@@ -15,6 +15,8 @@ import { NewReview } from '../entities/review/review.model';
 
 import { ActivatedRoute, Router } from '@angular/router'; //Enables the component to view the current app-routing and respond to it, as well as route to another page
 
+import { DarkModeService } from '../dark-mode/dark-mode.service';
+
 @Component({
   selector: 'jhi-map-display',
   templateUrl: './map-display.component.html',
@@ -58,17 +60,24 @@ export class MapDisplayComponent implements OnInit {
 
   private map: any;
 
+  isDarkMode: boolean = false;
+
   constructor(
     private mapDisplayService: MapDisplayService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private darkModeService: DarkModeService
   ) {}
 
   ngOnInit(): void {
     this.getAllRoutes();
     this.initMap();
     this.getAppUserId();
+
+    this.darkModeService.darkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+    });
     this.setupRouteSubscription(); // Subscribe to route params after initialising the component
   }
   setupRouteSubscription(): void {

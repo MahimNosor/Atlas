@@ -2,16 +2,27 @@
   display: flex;
   flex-direction: row;
   height: 900px;
-  color: #ffffff;
 }
 
-.routeMenuContainer {
-  background-color: #333;
+.routeMenuContainer:not(.dark-mode) {
+  background-color: #eee;
+  color: #333;
   flex-basis: 30%;
   padding: 20px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+}
+
+.routeMenuContainer.dark-mode {
+  background-color: #444;
+  color: white;
+  flex-basis: 30%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  color: white;
 }
 
 .form-control,
@@ -35,10 +46,20 @@
   font-size: 1.1rem;
 }
 
-.tags-container {
+.tags-container:not(.dark-mode) {
   max-height: 200px;
   overflow-y: auto;
-  background-color: #444;
+  background-color: #ddd;
+  border: none;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.tags-container.dark-mode {
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #555;
   border: none;
   padding: 10px;
   margin-bottom: 20px;

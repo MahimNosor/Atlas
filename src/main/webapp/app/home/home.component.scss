@@ -31,7 +31,7 @@ Main page styles
 }
 
 /////card css begin
-.behindCard {
+.behindCard:not(.dark-mode) {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -40,6 +40,21 @@ Main page styles
   transition: box-shadow 0.3s ease;
   margin: 0 auto;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the child elements */
+  align-items: center; /* Horizontally center the child elements */
+}
+
+.behindCard.dark-mode {
+  border: 1px solid #333;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 80%;
+  transition: box-shadow 0.3s ease;
+  margin: 0 auto;
+  background-color: #222;
   display: flex;
   flex-direction: column;
   justify-content: center; /* Vertically center the child elements */
@@ -78,8 +93,19 @@ Main page styles
 .mySlides {
 }
 
-.text {
+.text:not(.dark-mode) {
   background-color: #ffffff;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.text.dark-mode {
+  background-color: #222;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

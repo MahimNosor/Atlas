@@ -1,13 +1,28 @@
-body {
+body:not(.dark-mode) {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f8f8f8;
 }
 
-header {
-  background-color: #333;
-  color: #fff;
+body.dark-mode {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #555;
+}
+
+header:not(.dark-mode) {
+  background-color: #dddddd;
+  color: #333;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 24px; /* Increase header font size */
+}
+
+header.dark-mode {
+  background-color: #444;
+  color: #eee;
   padding: 10px 0;
   text-align: center;
   font-size: 24px; /* Increase header font size */
@@ -19,8 +34,20 @@ header {
   padding: 0 20px;
 }
 
-section {
+section:not(.dark-mode) {
   background-color: #fff;
+  margin-bottom: 40px; /* Add wider space between sections */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center; /* Align items vertically */
+  justify-content: space-between; /* Add space between elements */
+}
+
+section.dark-mode {
+  background-color: #444;
+  color: #eee;
   margin-bottom: 40px; /* Add wider space between sections */
   padding: 20px;
   border-radius: 5px;

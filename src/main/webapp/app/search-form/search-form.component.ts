@@ -9,6 +9,7 @@ import { TagService } from './services/tag.service';
 import { Tag } from './services/tag.interface';
 import { CityInterface } from './services/city.interface';
 import { RouteInterface } from './services/route.interface';
+import { DarkModeService } from '../dark-mode/dark-mode.service';
 
 @Component({
   selector: 'jhi-search-form',
@@ -33,12 +34,15 @@ export class SearchFormComponent implements OnInit {
   @Output() submittedEvent = new EventEmitter<boolean>();
   @Output() returnedRoutesEvent = new EventEmitter<RouteInterface[]>();
 
+  isDarkMode: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private typeaheadConfig: NgbTypeaheadConfig,
     private cityService: CityService,
     private routeService: RouteService,
-    private tagService: TagService
+    private tagService: TagService,
+    private darkModeService: DarkModeService
   ) {
     this.typeaheadConfig.showHint = false;
   }
@@ -53,6 +57,11 @@ export class SearchFormComponent implements OnInit {
 
     this.fetchCities();
     this.fetchTags();
+
+    // Subscribe to dark mode state changes
+    this.darkModeService.darkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+    });
   }
 
   handleDropdownKeyDown(event: KeyboardEvent): void {

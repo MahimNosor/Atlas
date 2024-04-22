@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="route">
-      <h2 data-cy="routeDetailsHeading">
+      <h2 data-cy="routeDetailsHeading" [class.dark-mode]="isDarkMode">
         <span>{{ route.title }}</span>
       </h2>
 
@@ -11,7 +11,7 @@
 
       <jhi-alert></jhi-alert>
 
-      <dl class="row-md jh-entity-details">
+      <dl class="row-md jh-entity-details" [class.dark-mode]="isDarkMode">
         <dt><span>Description</span></dt>
         <dd>
           <span>{{ route.description }}</span>
@@ -59,18 +59,34 @@
 </div>
 
 <style>
-  .row-md.jh-entity-details {
+  .row-md.jh-entity-details.dark-mode {
     background-color: #444;
     color: #ddd;
     padding: 20px;
     border-radius: 4px;
   }
 
-  h2[data-cy='routeDetailsHeading'] {
-    color: #ffffff;
+  .row-md.jh-entity-details:not(.dark-mode) {
+    background-color: #ddd;
+    color: #444;
+    padding: 20px;
+    border-radius: 4px;
+  }
+
+  h2[data-cy='routeDetailsHeading'].dark-mode {
+    color: #ddd;
     font-size: 2rem;
     margin-bottom: 20px;
     background-color: #444;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+
+  h2[data-cy='routeDetailsHeading']:not(dark-mode) {
+    color: #444;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    background-color: #ddd;
     padding: 5px 10px;
     border-radius: 4px;
   }

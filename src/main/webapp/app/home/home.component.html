@@ -2,11 +2,11 @@
   <div class="adventurous">
     <h1 style="background-color: transparent; color: #eee">Choose your Adventure</h1>
   </div>
-  <div class="behindCard">
+  <div class="behindCard" [class.dark-mode]="isDarkMode">
     <div class="mySlides">
       <jhi-carousel><p>Caption Text</p></jhi-carousel>
-      <div class="text">
-        <h2 style="background-color: transparent; color: #000000">Customise a Tour</h2>
+      <div class="text" [class.dark-mode]="isDarkMode">
+        <h2 style="background-color: transparent">Customise a Tour</h2>
       </div>
       <jhi-search-form (submittedEvent)="handleSubmitted($event)" (returnedRoutesEvent)="handleReturnedRoutes($event)"> </jhi-search-form>
     </div>

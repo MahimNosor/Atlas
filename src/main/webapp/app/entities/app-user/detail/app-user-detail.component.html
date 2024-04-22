@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="appUser">
-      <h2 class="user-details-heading" data-cy="appUserDetailsHeading">
+      <h2 class="user-details-heading" [class.dark-mode]="isDarkMode" data-cy="appUserDetailsHeading">
         <span>{{ appUser.user?.login }}</span>
       </h2>
       <hr />
@@ -9,7 +9,7 @@
       <jhi-alert-error></jhi-alert-error>
       <jhi-alert></jhi-alert>
 
-      <dl class="row-md jh-entity-details">
+      <dl class="row-md jh-entity-details" [class.dark-mode]="isDarkMode">
         <dt><span>Num routes</span></dt>
         <dd>
           <span>{{ appUser.numRoutes }}</span>
@@ -47,7 +47,14 @@
 </div>
 
 <style>
-  .row-md.jh-entity-details {
+  .row-md.jh-entity-details:not(.dark-mode) {
+    background-color: #ddd;
+    color: #444;
+    padding: 20px;
+    border-radius: 4px;
+  }
+
+  .row-md.jh-entity-details.dark-mode {
     background-color: #444;
     color: #ddd;
     padding: 20px;
@@ -58,8 +65,17 @@
     font-weight: bold;
   }
 
-  .user-details-heading {
-    color: #ffffff;
+  .user-details-heading:not(.dark-mode) {
+    color: #444;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    background-color: #ddd;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+
+  .user-details-heading.dark-mode {
+    color: #ddd;
     font-size: 2rem;
     margin-bottom: 20px;
     background-color: #444;
