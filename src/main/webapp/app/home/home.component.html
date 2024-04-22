@@ -19,18 +19,16 @@
       <div class="route-card-container">
         <div *ngFor="let route of returnedRoutes" class="card-container">
           <!-- Updated routerLink to navigate to the route viewer page -->
-          <a [routerLink]="['/mapDisplay']" class="route-link">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">{{ route.title }}</h5>
-                <p class="card-text">{{ route.description }}</p>
-                <p class="card-text">Cost: {{ route.cost }}</p>
-                <p class="card-text">Distance: {{ route.distance }}</p>
-                <p class="card-text">Rating: {{ route.rating }}</p>
-                <!-- You can display more details like city, tags, etc. -->
-              </div>
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <a [routerLink]="['/mapDisplay']" class="card-title">{{ route.title }}</a>
+              <p class="card-text">{{ route.description }}</p>
+              <p class="card-text">Cost: {{ route.cost }}</p>
+              <p class="card-text">Distance: {{ route.distance }}</p>
+              <p class="card-text">Rating: {{ route.rating }}</p>
+              <!-- You can display more details like city, tags, etc. -->
             </div>
-          </a>
+          </div>
         </div>
       </div>
     </div>
