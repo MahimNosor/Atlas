@@ -40,7 +40,7 @@ export class SearchFormComponent implements OnInit {
     private routeService: RouteService,
     private tagService: TagService
   ) {
-    this.typeaheadConfig.showHint = true;
+    this.typeaheadConfig.showHint = false;
   }
 
   ngOnInit(): void {
