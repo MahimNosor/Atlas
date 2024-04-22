@@ -4,31 +4,41 @@
     <!-- First Column -->
     <div class="col-md-10">
       <!-- First Row -->
-      <div class="row">
+      <div class="row justify-content-evenly">
         <!-- City Input -->
         <div class="col-md-3 col-sm-6">
-          <!-- City Input Field -->
-          <div class="form-group">
-            <label for="city" class="sr-only">City:</label>
-            <input
-              id="city"
-              type="text"
-              class="form-control"
-              formControlName="city"
-              [ngbTypeahead]="typeaheadSearch"
-              placeholder="Enter a city"
-              aria-label="City"
-              [attr.aria-invalid]="searchForm.controls['city'].invalid ? true : null"
-              [attr.aria-describedby]="searchForm.controls['city'].errors ? 'city-error' : null"
-            />
-            <!-- Error Message for City -->
-            <div *ngIf="searchForm.controls['city'].errors" id="city-error" class="error" style="display: none">City is required.</div>
+          <div class="input-container">
+            <!-- City Input Field -->
+            <div class="form-group position-relative">
+              <label for="city" class="sr-only">City:</label>
+              <input
+                id="city"
+                type="text"
+                class="form-control"
+                formControlName="city"
+                [ngbTypeahead]="typeaheadSearch"
+                placeholder="Enter a city"
+                aria-label="City"
+                [attr.aria-invalid]="searchForm.controls['city'].invalid ? true : null"
+                [attr.aria-describedby]="searchForm.controls['city'].errors ? 'city-error' : null"
+              />
+              <!-- Error Message Card for City -->
+              <div
+                *ngIf="searchForm.get('city')?.invalid && searchForm.get('city')?.touched"
+                class="error-card position-absolute start-50 translate-middle-x"
+                style="bottom: -100%; transform: translateX(-50%)"
+              >
+                <div class="card">
+                  <div class="card-body text-danger">City is required!</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- Price Input -->
         <div class="col-sm-6 col-md-3">
           <!-- Price Input Field -->
-          <div class="form-group">
+          <div class="form-group position-relative">
             <label for="price" class="sr-only">Price(£):</label>
             <input
               type="text"
@@ -37,19 +47,25 @@
               class="form-control"
               placeholder="Enter price in (£)"
               aria-label="Price"
-              [attr.aria-invalid]="searchForm.controls['price'].invalid ? true : null"
-              [attr.aria-describedby]="searchForm.controls['price'].errors ? 'price-error' : null"
+              [attr.aria-invalid]="searchForm.controls['price']?.invalid ? true : null"
+              [attr.aria-describedby]="searchForm.controls['price']?.errors ? 'price-error' : null"
             />
-            <!-- Error Message for Price -->
-            <div *ngIf="searchForm.controls['price'].errors" id="price-error" class="error" style="display: none">
-              Price must be a valid number.
+            <!-- Error Message Card for Price -->
+            <div
+              *ngIf="searchForm.get('price')?.invalid && searchForm.get('price')?.touched"
+              class="error-card position-absolute start-50 translate-middle-x"
+              style="bottom: -100%; transform: translateX(-50%)"
+            >
+              <div class="card">
+                <div class="card-body text-danger">Price is required!</div>
+              </div>
             </div>
           </div>
         </div>
         <!-- Distance Input -->
         <div class="col-sm-6 col-md-3">
           <!-- Distance Input Field -->
-          <div class="form-group">
+          <div class="form-group position-relative">
             <label for="distance" class="sr-only">Distance(km):</label>
             <input
               type="text"
@@ -58,12 +74,18 @@
               class="form-control"
               placeholder="Enter distance"
               aria-label="Distance"
-              [attr.aria-invalid]="searchForm.controls['distance'].invalid ? true : null"
-              [attr.aria-describedby]="searchForm.controls['distance'].errors ? 'distance-error' : null"
+              [attr.aria-invalid]="searchForm.controls['distance']?.invalid ? true : null"
+              [attr.aria-describedby]="searchForm.controls['distance']?.errors ? 'distance-error' : null"
             />
-            <!-- Error Message for Distance -->
-            <div *ngIf="searchForm.controls['distance'].errors" id="distance-error" class="error" style="display: none">
-              Distance must be a valid number.
+            <!-- Error Message Card for Distance -->
+            <div
+              *ngIf="searchForm.get('distance')?.invalid && searchForm.get('distance')?.touched"
+              class="error-card position-absolute start-50 translate-middle-x"
+              style="bottom: -100%; transform: translateX(-50%)"
+            >
+              <div class="card">
+                <div class="card-body text-danger">Distance is required!</div>
+              </div>
             </div>
           </div>
         </div>
@@ -83,31 +105,19 @@
                   [ngbTypeahead]="typeaheadTags"
                   (selectItem)="onSelectTag($event)"
                 />
-                <button type="button" class="btn btn-outline-primary arrow-button" ngbDropdownToggle>
-                  <i class="fas fa-caret-down"></i>
-                </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                   <!-- Dropdown Checkbox for Tags -->
-                  <button class="dropdown-item" *ngFor="let tag of allTags" (click)="toggleTagSelection(tag); $event.preventDefault()">
+                  <button
+                    class="dropdown-item"
+                    *ngFor="let tag of allTags"
+                    (click)="toggleTagSelection(tag); $event.preventDefault()"
+                    tabindex="0"
+                    (keydown)="handleDropdownKeyDown($event)"
+                  >
                     <input type="checkbox" [checked]="isSelectedTag(tag)" (click)="toggleTagSelection(tag)" /> {{ tag.name }}
                   </button>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <!-- Second Row -->
-        <div class="row mt-3">
-          <!-- Tag Cloud Field -->
-          <div class="col-md-12">
-            <!-- Tag Cloud Content -->
-            <div class="selected-tags mt-2">
-              <!-- Display Selected Tags -->
-              <span class="badge bg-primary" *ngFor="let tag of selectedTags"
-                >{{ tag.name }}
-                <!-- Remove Tag Button -->
-                <span class="tag-close" (click)="removeTag(tag); $event.stopPropagation()">×</span>
-              </span>
             </div>
           </div>
         </div>
@@ -116,13 +126,13 @@
     <!-- Second Column -->
     <div class="col-md-2">
       <!-- First Row (Search Button) -->
-      <div class="row justify-content-end">
+      <div class="row">
         <div class="col-md-12">
           <!-- Search Button -->
           <div class="form-group">
             <label for="search" class="sr-only">Search:</label>
             <!-- Added label for search button -->
-            <button type="submit" id="search" class="btn btn-primary" aria-label="Perform search">Search</button>
+            <button type="submit" id="search" class="btn btn-primary" aria-label="Perform search" tabindex="5">Search</button>
           </div>
         </div>
       </div>
@@ -134,20 +144,19 @@
       </div>
     </div>
   </div>
-</form>
-
-<!-- Search Results Container -->
-<div *ngIf="returnedRoutes && returnedRoutes.length > 0" class="search-results">
-  <h3>Search Results</h3>
-  <!-- Iterate over search results and display them -->
-  <div class="route" *ngFor="let route of returnedRoutes">
-    <h4>{{ route.title }}</h4>
-    <p>{{ route.description }}</p>
-    <!-- Display other route details... -->
+  <!-- Second Row -->
+  <div class="row mt-3">
+    <!-- Tag Cloud Field -->
+    <div class="col-md-12">
+      <!-- Tag Cloud Content -->
+      <div class="selected-tags mt-2">
+        <!-- Display Selected Tags -->
+        <span class="badge bg-primary" *ngFor="let tag of selectedTags"
+          >{{ tag.name }}
+          <!-- Remove Tag Button -->
+          <span class="tag-close" (click)="removeTag(tag); $event.stopPropagation()">×</span>
+        </span>
+      </div>
+    </div>
   </div>
-</div>
-
-<!-- No Results Message -->
-<div *ngIf="submitted && (!returnedRoutes || returnedRoutes.length === 0)" class="no-results">
-  <p>No routes found matching your search criteria.</p>
-</div>
+</form>

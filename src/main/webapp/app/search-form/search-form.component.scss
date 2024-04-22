@@ -43,7 +43,7 @@
   color: #ffffff;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   text-align: center;
-
+  margin-top: 10px;
   min-width: fit-content;
   max-width: 100%;
 
@@ -89,20 +89,6 @@
   position: relative; // Set the position to relative to contain the tag cloud
 }
 
-.tag-cloud-container {
-  position: absolute; // Position the tag cloud absolutely within the parent container
-  top: calc(100% + 10px); // Position the tag cloud below the selected tags with some space
-  left: 0; // Align the tag cloud to the left edge of the parent container
-  width: 100%; // Make the tag cloud span the entire width of the parent container
-  background-color: #ffffff; // Set background color for the tag cloud
-  border: 1px solid #ced4da; // Add a border around the tag cloud
-  border-radius: 5px; // Add border radius to soften the edges
-  padding: 10px; // Add padding to the tag cloud for spacing
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); // Add shadow to the tag cloud for depth
-  z-index: 999; // Ensure the tag cloud appears above other content
-  display: none; // Initially hide the tag cloud
-}
-
 .selected-tags:hover .tag-cloud-container {
   display: block; // Show the tag cloud when hovering over the selected tags
 }
@@ -111,9 +97,49 @@
   margin-left: 5px;
   cursor: pointer;
 }
-.col-md-3 {
-  margin-top: 5px;
-}
+
 .full-width-row {
   width: 100%;
+}
+.has-error .form-control {
+  border-color: red; /* Change border color to red */
+}
+
+.has-error .form-control:focus {
+  border-color: red; /* Change border color to red when the input is focused */
+}
+
+.has-error .error {
+  color: red; /* Set error message color to red */
+}
+
+.position-relative {
+  position: relative;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.start-0 {
+  left: 0;
+}
+
+.translate-middle-x {
+  transform: translateX(-50%);
+}
+
+.error-card {
+  z-index: 10000; /* Adjust as needed to ensure the card appears above other elements */
+  width: 80%;
+  align-self: flex-end;
+  flex-grow: 1;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+.card-body {
+  font-size: 0.8rem; /* Adjust the font size as needed */
+  padding: 0.5rem; /* Adjust the padding as needed */
 }

@@ -27,7 +27,7 @@ Main page styles
   /* Adjust the color codes as needed */
   background-size: cover;
   background: linear-gradient(to bottom, #005757, #000000) center;
-  min-height: 100vh; /* Ensures that the background covers the entire viewport height */
+  min-height: 150vh; /* Ensures that the background covers the entire viewport height */
 }
 
 /////card css begin
@@ -40,6 +40,10 @@ Main page styles
   transition: box-shadow 0.3s ease;
   margin: 0 auto;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the child elements */
+  align-items: center; /* Horizontally center the child elements */
 }
 
 .behindCard:hover {
@@ -75,7 +79,7 @@ Main page styles
 }
 
 .text {
-  background-color: #000000;
+  background-color: #ffffff;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -94,4 +98,65 @@ Main page styles
   justify-content: center;
   align-items: center;
   color: white;
+}
+
+.search-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+}
+
+.route-card-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Set the width of the container */
+}
+
+.card-container {
+  margin-bottom: 10px; /* Adjust margin between cards */
+  width: 100%; /* Make each card take up the full width of the container */
+}
+
+.card {
+  width: 100%; /* Make the card take up the full width of its container */
+}
+.mySlides jhi-carousel {
+  margin-top: 10px; /* Adjust as needed */
+  margin-bottom: 10px; /* Adjust as needed */
+}
+@media screen and (min-width: 768px) {
+  .behindCard {
+    width: 80%;
+  }
+}
+.resultsCard {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 80%;
+  transition: box-shadow 0.3s ease;
+  margin: 0 auto;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the child elements */
+  align-items: center; /* Horizontally center the child elements */
+  margin-top: 2%;
+  height: auto;
+  flex-grow: 1;
+}
+
+.search-results {
+  height: 100%;
+  overflow-y: auto; /* Add vertical scroll if content overflows */
+  width: 80%;
+}
+
+.resultsCard .title {
+  border-bottom: 1px solid #000;
+  padding-bottom: 5px;
+}
+.resultsCard.hidden {
+  display: none;
 }

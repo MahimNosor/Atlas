@@ -91,6 +91,7 @@ public class SecurityConfiguration {
             .antMatchers(HttpMethod.GET,"/api/stops/by-routeId/{routeId}").permitAll()
             .antMatchers("/api/tags").permitAll()
             .antMatchers("/api/cities").permitAll()
+            .antMatchers("/api/routes/search").permitAll()
 
 
 

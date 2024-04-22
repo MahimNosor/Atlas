@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, OperatorFunction, switchMap } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
@@ -8,7 +8,6 @@ import { RouteService } from './services/route.service';
 import { TagService } from './services/tag.service';
 import { Tag } from './services/tag.interface';
 import { CityInterface } from './services/city.interface';
-
 import { RouteInterface } from './services/route.interface';
 
 @Component({
@@ -31,6 +30,8 @@ export class SearchFormComponent implements OnInit {
 
   returnedRoutes!: RouteInterface[];
   tagSearch: string = '';
+  @Output() submittedEvent = new EventEmitter<boolean>();
+  @Output() returnedRoutesEvent = new EventEmitter<RouteInterface[]>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,14 +45,60 @@ export class SearchFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
-      city: [''],
-      price: ['', [Validators.pattern(/^\d*\.?\d*$/)]], // Accepts only numeric characters and decimals
-      distance: ['', [Validators.pattern(/^\d*\.?\d*$/)]], // Accepts only numeric characters and decimals
+      city: ['', Validators.required],
+      price: ['', [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]], // Accepts only numeric characters and decimals
+      distance: ['', [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]], // Accepts only numeric characters and decimals
       tags: [[] as Tag[]],
     });
 
     this.fetchCities();
     this.fetchTags();
+  }
+
+  handleDropdownKeyDown(event: KeyboardEvent): void {
+    const dropdownMenu = event.currentTarget as HTMLElement;
+    const activeElement = document.activeElement as HTMLElement;
+    const firstItem = dropdownMenu.querySelector('.dropdown-item:first-child') as HTMLButtonElement;
+    const lastItem = dropdownMenu.querySelector('.dropdown-item:last-child') as HTMLButtonElement;
+
+    switch (event.key) {
+      case 'Tab':
+        const searchButton = document.getElementById('search');
+        if (searchButton) {
+          event.preventDefault(); // Prevent the default Tab behavior
+          searchButton.focus(); // Move focus to the search button
+          console.log('Search button focused:', document.activeElement === searchButton);
+        }
+        break;
+      case 'ArrowUp':
+        if (activeElement === firstItem) {
+          lastItem.focus();
+        } else {
+          (activeElement.previousElementSibling as HTMLButtonElement)?.focus();
+        }
+        event.preventDefault();
+        break;
+      case 'ArrowDown':
+        if (activeElement === lastItem) {
+          firstItem.focus();
+        } else {
+          (activeElement.nextElementSibling as HTMLButtonElement)?.focus();
+        }
+        event.preventDefault();
+        break;
+      case 'Home':
+        firstItem.focus();
+        event.preventDefault();
+        break;
+      case 'End':
+        lastItem.focus();
+        event.preventDefault();
+        break;
+
+      default:
+        // Handle other key presses if needed
+        break;
+    }
   }
 
   fetchCities(): void {
@@ -127,6 +174,7 @@ export class SearchFormComponent implements OnInit {
       this.selectedDistance = parseFloat(distance);
       this.submitted = true;
 
+      this.submittedEvent.emit(this.submitted);
       // Call the service method and subscribe to the returned observable
       this.fetchRoutes();
     } else {
@@ -137,18 +185,37 @@ export class SearchFormComponent implements OnInit {
   fetchRoutes(): void {
     setTimeout(() => {
       console.log('Selected tags:', this.selectedTags);
-      this.routeService.fetchRoutesByCity(this.selectedCity, this.selectedPrice, this.selectedDistance, this.selectedTags).subscribe({
-        next: (routes: RouteInterface[]) => {
-          // Handle the fetched routes
-          console.log('Routes:', routes);
-          // Assign the fetched routes to a component property to display them in the template
-          this.returnedRoutes = routes;
-        },
-        error: (error: any) => {
-          console.error('Error fetching routes:', error);
-          // Handle error appropriately (e.g., display error message)
-        },
-      });
+      if (this.selectedTags.length === 0) {
+        // No tags selected, fetch routes without filtering by tags
+        this.routeService.fetchRoutesByCity(this.selectedCity, this.selectedPrice, this.selectedDistance, []).subscribe({
+          next: (routes: RouteInterface[]) => {
+            // Handle the fetched routes
+            console.log('Routes:', routes);
+            // Assign the fetched routes to a component property to display them in the template
+            this.returnedRoutes = routes;
+            this.returnedRoutesEvent.emit(this.returnedRoutes);
+          },
+          error: (error: any) => {
+            console.error('Error fetching routes:', error);
+            // Handle error appropriately (e.g., display error message)
+          },
+        });
+      } else {
+        // Tags selected, fetch routes with filtering by tags
+        this.routeService.fetchRoutesByCity(this.selectedCity, this.selectedPrice, this.selectedDistance, this.selectedTags).subscribe({
+          next: (routes: RouteInterface[]) => {
+            // Handle the fetched routes
+            console.log('Routes:', routes);
+            // Assign the fetched routes to a component property to display them in the template
+            this.returnedRoutes = routes;
+            this.returnedRoutesEvent.emit(this.returnedRoutes);
+          },
+          error: (error: any) => {
+            console.error('Error fetching routes:', error);
+            // Handle error appropriately (e.g., display error message)
+          },
+        });
+      }
     }, 100); // Adjust the delay time as needed
   }
 
@@ -162,8 +229,8 @@ export class SearchFormComponent implements OnInit {
     const selectedTag: Tag = event.item;
     if (this.searchForm && this.searchForm.get('tags')) {
       this.toggleTagSelection(selectedTag);
-      this.tagSearch = '';
     }
+    this.tagSearch = '';
   }
 
   isSelectedTag(tag: Tag): boolean {

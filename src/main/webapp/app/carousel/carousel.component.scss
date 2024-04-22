@@ -5,7 +5,9 @@
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  height: 100vh;
+  width: 100%; /* Ensure the carousel fills the container */
+  height: auto; /* Set initial height to 0 */
+
   display: flex;
   justify-content: center;
   align-items: center;

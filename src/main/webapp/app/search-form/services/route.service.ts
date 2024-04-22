@@ -34,12 +34,11 @@ export class RouteService {
     // Construct the query parameters
     let params = new HttpParams().set('cityId', cityId.toString()).set('price', price.toString()).set('distance', distance.toString());
 
-    // Extract tagIds from the tags array
-    const tagIds = tags.map(tag => tag.id);
+    // Set the tagId to zero if no tags are selected
+    const tagIds = tags.length > 0 ? tags.map(tag => tag.id) : [0];
 
-    if (tagIds.length > 0) {
-      tagIds.forEach(tagId => (params = params.append('tagId', tagId.toString())));
-    }
+    // Add tagIds to the parameters
+    tagIds.forEach(tagId => (params = params.append('tagId', tagId.toString())));
 
     // Log the constructed parameters
     console.log('Query Parameters:', params.toString());
