@@ -29,7 +29,7 @@
         <dd>
           <ul>
             <li *ngFor="let route of routes; let last = last">
-              <a [routerLink]="['/route', route.id, 'view']">{{ route.title }}</a> {{ last ? '' : ', ' }}
+              <a [routerLink]="['/mapDisplay', route.id]">{{ route.title }}</a> {{ last ? '' : ', ' }}
             </li>
           </ul>
         </dd>
