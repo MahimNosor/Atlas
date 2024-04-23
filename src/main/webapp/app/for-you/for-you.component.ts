@@ -44,7 +44,7 @@ export class ForYouComponent implements OnInit {
         // Set showLoadingMessage to false to hide the loading message
         this.showLoadingMessage = false;
       });
-    }, 1000); // Delay loading by 1 second
+    }, 100); // Delay loading by 1 second
   }
 
   displayRoutes(): void {
