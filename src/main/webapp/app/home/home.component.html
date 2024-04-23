@@ -1,4 +1,4 @@
-<div class="background">
+<div class="background" [class.dark-mode]="isDarkMode">
   <div class="adventurous">
     <h1 style="background-color: transparent; color: #eee">Choose your Adventure</h1>
   </div>
@@ -11,15 +11,15 @@
       <jhi-search-form (submittedEvent)="handleSubmitted($event)" (returnedRoutesEvent)="handleReturnedRoutes($event)"> </jhi-search-form>
     </div>
   </div>
-  <div class="resultsCard" [ngClass]="{ hidden: !returnedRoutes || returnedRoutes.length === 0 }">
+  <div class="resultsCard" [ngClass]="{ hidden: !returnedRoutes || returnedRoutes.length === 0 }" [class.dark-mode]="isDarkMode">
     <!-- Search Results Container -->
     <div *ngIf="returnedRoutes && returnedRoutes.length > 0" class="search-results">
-      <h3>Available Routes</h3>
+      <h3 style="background-color: transparent">Available Routes</h3>
       <!-- Iterate over search results and display them -->
       <div class="route-card-container">
         <div *ngFor="let route of returnedRoutes" class="card-container">
           <!-- Updated routerLink to navigate to the route viewer page -->
-          <div class="card shadow-sm">
+          <div class="card shadow-sm" [class.dark-mode]="isDarkMode">
             <div class="card-body">
               <a [routerLink]="['/mapDisplay', route.id]" class="card-title">{{ route.title }}</a>
               <p class="card-text">{{ route.description }}</p>
