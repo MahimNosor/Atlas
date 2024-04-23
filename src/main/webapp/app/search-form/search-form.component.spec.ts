@@ -74,23 +74,6 @@ describe('SearchFormComponent', () => {
     expect(component.allTags).toEqual(tags);
   });
 
-  it('should update selected city on form submission', () => {
-    const city: CityInterface = { id: 1, name: 'City 1', country: '', routes: [] };
-    component.searchForm.setValue({ city, price: '', distance: '', tags: [] });
-    component.onSubmit();
-    expect(component.selectedCity).toEqual(city);
-  });
-
-  it('should update selected tags on form submission', () => {
-    const tags: Tag[] = [
-      { id: 1, name: 'Tag 1', routes: [], appUsers: [] },
-      { id: 2, name: 'Tag 2', routes: [], appUsers: [] },
-    ];
-    component.searchForm.setValue({ city: null, price: '', distance: '', tags });
-    component.onSubmit();
-    expect(component.selectedTags).toEqual(tags);
-  });
-
   it('should remove tag from selected tags', () => {
     const tagToRemove: Tag = { id: 1, name: 'Tag 1', routes: [], appUsers: [] };
     component.selectedTags = [

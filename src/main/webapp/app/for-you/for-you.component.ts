@@ -4,6 +4,20 @@ import { TagService } from './tag.service';
 import { forkJoin } from 'rxjs';
 import { DarkModeService } from '../dark-mode/dark-mode.service';
 
+interface Route {
+  id: number;
+  title: string;
+  description: string;
+  rating: number;
+  distance: number;
+  cost: number;
+  numReviews: number;
+  stops: any[]; // adjust types as necessary
+  reviews: any[]; // adjust types as necessary
+  tags: { id: number; name: string }[]; // adjust types as necessary
+  // add more properties if needed
+}
+
 @Component({
   selector: 'jhi-for-you',
   templateUrl: './for-you.component.html',
@@ -34,6 +48,17 @@ export class ForYouComponent implements OnInit {
         this.routes = this.shuffleArray(routes);
         // Select only the first three routes
         this.routes = this.routes.slice(0, 3);
+
+        for (let route of this.routes) {
+          this.routeService.getRoute(route.id).subscribe((_route: Route) => {
+            console.log(_route);
+            let tags = '';
+            for (let tag of _route.tags) {
+              tags += tag.name + ', '; // Assuming tag has a 'name' property
+            }
+            route.tag = tags.slice(0, -2);
+          });
+        }
 
         // Call displayRoutes to process or display the routes
         this.displayRoutes();

@@ -38,6 +38,10 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           loadChildren: () => import('./map-display/map-display.module').then(m => m.MapDisplayModule),
         },
         {
+          path: 'mapDisplay/:routeId', // Activated if you pass a route with routeId parameter
+          loadChildren: () => import('./map-display/map-display.module').then(m => m.MapDisplayModule),
+        },
+        {
           path: 'search',
           loadChildren: () => import('./search/search-module').then(m => m.SearchModule),
         },

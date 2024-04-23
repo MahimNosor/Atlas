@@ -13,6 +13,8 @@ import { IRoute } from '../entities/route/route.model';
 import { IStop } from '../entities/stop/stop.model';
 import { NewReview } from '../entities/review/review.model';
 
+import { ActivatedRoute, Router } from '@angular/router'; //Enables the component to view the current app-routing and respond to it, as well as route to another page
+
 import { DarkModeService } from '../dark-mode/dark-mode.service';
 
 @Component({
@@ -60,7 +62,13 @@ export class MapDisplayComponent implements OnInit {
 
   isDarkMode: boolean = false;
 
-  constructor(private mapDisplayService: MapDisplayService, private authService: AuthService, private darkModeService: DarkModeService) {}
+  constructor(
+    private mapDisplayService: MapDisplayService,
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private darkModeService: DarkModeService
+  ) {}
 
   ngOnInit(): void {
     this.getAllRoutes();
@@ -69,6 +77,27 @@ export class MapDisplayComponent implements OnInit {
 
     this.darkModeService.darkMode$.subscribe(isDarkMode => {
       this.isDarkMode = isDarkMode;
+    });
+    this.setupRouteSubscription(); // Subscribe to route params after initialising the component
+  }
+  setupRouteSubscription(): void {
+    this.route.params.subscribe(params => {
+      // Access route ID parameter
+      const routeId = +params['routeId'];
+      if (routeId) {
+        // Call method to display route using the selectedRouteId
+        this.selectedRouteId = routeId;
+        this.displayRoute();
+      } else {
+        this.router
+          .navigate(['/mapDisplay'])
+          .then(() => {
+            console.log('Route ID parameter is missing');
+          })
+          .catch(error => {
+            console.error('Error navigating to mapDisplay:', error);
+          });
+      }
     });
   }
 

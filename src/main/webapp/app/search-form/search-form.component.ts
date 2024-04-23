@@ -74,8 +74,8 @@ export class SearchFormComponent implements OnInit {
       case 'Tab':
         const searchButton = document.getElementById('search');
         if (searchButton) {
-          event.preventDefault(); // Prevent the default Tab behavior
-          searchButton.focus(); // Move focus to the search button
+          event.preventDefault();
+          searchButton.focus();
           console.log('Search button focused:', document.activeElement === searchButton);
         }
         break;
@@ -105,7 +105,6 @@ export class SearchFormComponent implements OnInit {
         break;
 
       default:
-        // Handle other key presses if needed
         break;
     }
   }
@@ -213,7 +212,6 @@ export class SearchFormComponent implements OnInit {
         // Tags selected, fetch routes with filtering by tags
         this.routeService.fetchRoutesByCity(this.selectedCity, this.selectedPrice, this.selectedDistance, this.selectedTags).subscribe({
           next: (routes: RouteInterface[]) => {
-            // Handle the fetched routes
             console.log('Routes:', routes);
             // Assign the fetched routes to a component property to display them in the template
             this.returnedRoutes = routes;
@@ -221,7 +219,6 @@ export class SearchFormComponent implements OnInit {
           },
           error: (error: any) => {
             console.error('Error fetching routes:', error);
-            // Handle error appropriately (e.g., display error message)
           },
         });
       }
