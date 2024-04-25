@@ -40,6 +40,7 @@ public class RouteService {
      */
     public Route save(Route route) {
         log.debug("Request to save Route : {}", route);
+        appUserRepository.updateNumRoutes(route.getAppUser().getId());
         return routeRepository.save(route);
     }
 
