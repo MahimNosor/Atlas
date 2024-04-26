@@ -1,8 +1,13 @@
 <!--<p>carousel works!</p>-->
-<div class="carousel">
-  <div class="carousel-slide" *ngFor="let image of images; let i = index" [class.active]="currentIndex === i">
+<div class="carousel" aria-label="Image Carousel">
+  <div
+    class="carousel-slide"
+    *ngFor="let image of images; let i = index"
+    [class.active]="currentIndex === i"
+    [attr.aria-hidden]="currentIndex !== i ? 'true' : null"
+  >
     <img [src]="image.src" [alt]="image.alt" />
   </div>
-  <button class="carousel-prev" (click)="prevSlide()">&#10094;</button>
-  <button class="carousel-next" (click)="nextSlide()">&#10095;</button>
+  <button class="carousel-prev" (click)="prevSlide()" aria-label="Previous Slide">&#10094;</button>
+  <button class="carousel-next" (click)="nextSlide()" aria-label="Next Slide">&#10095;</button>
 </div>

@@ -1,27 +1,32 @@
 <div class="background" [class.dark-mode]="isDarkMode">
   <div class="adventurous">
-    <h1 style="background-color: transparent; color: #eee">Choose your Adventure</h1>
+    <h1 tabindex="0" style="background-color: transparent; color: #eee" aria-label="Choose your Adventure">Choose your Adventure</h1>
   </div>
   <div class="behindCard" [class.dark-mode]="isDarkMode">
     <div class="mySlides">
-      <jhi-carousel><p>Caption Text</p></jhi-carousel>
+      <jhi-carousel></jhi-carousel>
       <div class="text" [class.dark-mode]="isDarkMode">
-        <h2 style="background-color: transparent">Customise a Tour</h2>
+        <h2 tabindex="0" style="background-color: transparent" aria-label="Customize a Tour">Customise a Tour</h2>
       </div>
-      <jhi-search-form (submittedEvent)="handleSubmitted($event)" (returnedRoutesEvent)="handleReturnedRoutes($event)"> </jhi-search-form>
+      <jhi-search-form
+        aria-label="Search Form"
+        (submittedEvent)="handleSubmitted($event)"
+        (returnedRoutesEvent)="handleReturnedRoutes($event)"
+      >
+      </jhi-search-form>
     </div>
   </div>
   <div class="resultsCard" [ngClass]="{ hidden: !returnedRoutes || returnedRoutes.length === 0 }" [class.dark-mode]="isDarkMode">
     <!-- Search Results Container -->
     <div *ngIf="returnedRoutes && returnedRoutes.length > 0" class="search-results">
-      <h3 style="background-color: transparent">Available Routes</h3>
+      <h3 style="background-color: transparent" aria-label="Available Routes">Available Routes</h3>
       <!-- Iterate over search results and display them -->
       <div class="route-card-container">
         <div *ngFor="let route of returnedRoutes" class="card-container">
           <!-- Updated routerLink to navigate to the route viewer page -->
           <div class="card shadow-sm" [class.dark-mode]="isDarkMode">
             <div class="card-body">
-              <a [routerLink]="['/mapDisplay', route.id]" class="card-title">{{ route.title }}</a>
+              <a [routerLink]="['/mapDisplay', route.id]" class="card-title" [attr.aria-label]="route.title">{{ route.title }}</a>
               <p class="card-text">{{ route.description }}</p>
               <p class="card-text">Cost: {{ route.cost }}</p>
               <p class="card-text">Distance: {{ route.distance }}</p>
@@ -35,7 +40,11 @@
   </div>
 
   <!-- No Results Message -->
-  <div *ngIf="submitted && (!returnedRoutes || returnedRoutes.length === 0)" class="no-results">
+  <div
+    *ngIf="submitted && (!returnedRoutes || returnedRoutes.length === 0)"
+    class="no-results"
+    aria-label="No routes found matching your search criteria."
+  >
     <p>No routes found matching your search criteria.</p>
   </div>
 </div>

@@ -27,14 +27,14 @@ Main page styles
   /* Adjust the color codes as needed */
   background-size: cover;
   background: linear-gradient(to bottom, #005757, #000000) center;
-  min-height: 150vh; /* Ensures that the background covers the entire viewport height */
+  min-height: 130vh; /* Ensures that the background covers the entire viewport height */
 }
 
 .background:not(.dark-mode) {
   /* Adjust the color codes as needed */
   background-size: cover;
   background: linear-gradient(to bottom, #005757, #0a7e8c) center;
-  min-height: 150vh; /* Ensures that the background covers the entire viewport height */
+  min-height: 130vh; /* Ensures that the background covers the entire viewport height */
 }
 
 /////card css begin
@@ -98,6 +98,11 @@ Main page styles
 //////card css end
 
 .mySlides {
+  width: 100%;
+}
+
+.mySlides jhi-carousel {
+  width: 100%;
 }
 
 .text:not(.dark-mode) {

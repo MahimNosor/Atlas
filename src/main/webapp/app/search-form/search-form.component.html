@@ -136,7 +136,7 @@
           <div class="form-group">
             <label for="search" class="sr-only">Search:</label>
             <!-- Added label for search button -->
-            <button type="submit" id="search" class="btn btn-primary" aria-label="Perform search">Search</button>
+            <button tabindex="0" type="submit" id="search" class="btn btn-primary" aria-label="Perform search">Search</button>
           </div>
         </div>
       </div>
@@ -155,10 +155,21 @@
       <!-- Tag Cloud Content -->
       <div class="selected-tags mt-2">
         <!-- Display Selected Tags -->
-        <span class="badge bg-primary" *ngFor="let tag of selectedTags"
+        <span
+          class="badge bg-primary"
+          *ngFor="let tag of selectedTags"
+          role="button"
+          tabindex="0"
+          [attr.aria-label]="'Selected tag: ' + tag.name"
           >{{ tag.name }}
           <!-- Remove Tag Button -->
-          <span class="tag-close" (click)="removeTag(tag); $event.stopPropagation()">×</span>
+          <span
+            class="tag-close"
+            (click)="removeTag(tag); $event.stopPropagation()"
+            tabindex="0"
+            [attr.aria-label]="'Remove tag: ' + tag.name"
+            >×</span
+          >
         </span>
       </div>
     </div>

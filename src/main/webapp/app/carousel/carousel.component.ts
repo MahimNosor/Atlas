@@ -7,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CarouselComponent implements OnInit {
   images = [
-    { src: '../content/images/ITALY.jpg', alt: 'Image 1' },
-    { src: '../content/images/VIETNAM.jpg', alt: 'Image 2' },
-    { src: '../content/images/LOUVRE.jpg', alt: 'Image 3' },
-    { src: '../content/images/SWITZERLAND.jpg', alt: 'Image 4' },
-    { src: '../content/images/INDIA.jpg', alt: 'Image 5' },
+    { src: '../content/images/ITALY.jpg', alt: 'ITALY' },
+    { src: '../content/images/VIETNAM.jpg', alt: 'VIETNAM' },
+    { src: '../content/images/LOUVRE.jpg', alt: 'LOUVRE' },
+    { src: '../content/images/SWITZERLAND.jpg', alt: 'SWITZERLAND' },
+    { src: '../content/images/INDIA.jpg', alt: 'INDIA' },
 
     // Add more images as needed
   ];
