@@ -63,4 +63,12 @@ public interface AppUserRepository extends AppUserRepositoryWithBagRelationships
         ")"
     )
     void deleteByLogin(@Param("login") String login);
+
+    @Modifying
+    @Query("UPDATE AppUser appUser SET appUser.numRoutes = appUser.numRoutes + 1 WHERE appUser.id = :id")
+    void updateNumRoutes(@Param("id") Long id);
+
+    @Modifying
+    @Query("UPDATE AppUser appUser SET appUser.numReviews = appUser.numReviews + 1 WHERE appUser.id = :id")
+    void updateNumReviews(@Param("id") Long id);
 }

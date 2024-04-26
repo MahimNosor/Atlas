@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team.bham.domain.Review;
+import team.bham.repository.AppUserRepository;
 import team.bham.repository.ReviewRepository;
 
 /**
@@ -20,9 +21,11 @@ public class ReviewService {
     private final Logger log = LoggerFactory.getLogger(ReviewService.class);
 
     private final ReviewRepository reviewRepository;
+    private final AppUserRepository appUserRepository;
 
-    public ReviewService(ReviewRepository reviewRepository) {
+    public ReviewService(ReviewRepository reviewRepository, AppUserRepository appUserRepository) {
         this.reviewRepository = reviewRepository;
+        this.appUserRepository = appUserRepository;
     }
 
     /**
@@ -33,6 +36,7 @@ public class ReviewService {
      */
     public Review save(Review review) {
         log.debug("Request to save Review : {}", review);
+        appUserRepository.updateNumReviews(review.getAppUser().getId());
         return reviewRepository.save(review);
     }
 
